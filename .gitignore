@@ -1,0 +1,18 @@
+# executables
+binary/*
+
+#library
+library/*
+
+#main
+source/main.cpp
+
+#not my headers
+include/glad/*
+include/GLFW/*
+include/KHR/*
+
+#not my source
+source/glad.c
+source/Mathril.cpp
+
