@@ -1,8 +1,13 @@
 #include "Engine.h"
 
+int Engine::width = 512;
+int Engine::height = 512;
+
 Engine::Engine()
 {
-
+    Engine::width = 800;
+    Engine::height = 600;
+    loopThread = new std::thread(&Engine::loop, this);
 }
 
 Engine::~Engine()
@@ -37,12 +42,14 @@ void Engine::loop()
 
 void Engine::initialize()
 {
-
+    window = new Window(Engine::width,Engine::height);
+    
 }
 
 void Engine::input()
 {
 
+    window->pollEvents();
 }
 
 void Engine::update()
@@ -52,5 +59,7 @@ void Engine::update()
 
 void Engine::render(double dt)
 {
-    
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    window->swap();
 }

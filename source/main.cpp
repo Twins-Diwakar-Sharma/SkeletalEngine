@@ -1,10 +1,8 @@
-    #include <glad/glad.h>
-    #include <GLFW/glfw3.h>
-    #include <iostream>
+    #include "Engine.h"
    
-
     int main()
     {
-        std::cout << "Starting" << std::endl;
+        Engine engine;
+        engine.loop();
         return 0;
     }
