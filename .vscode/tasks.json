@@ -2,31 +2,18 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "buildandrunGLFW",
-			"dependsOrder": "sequence",
-			"dependsOn": [
-				"buildIt",
-				"runIt"
-			],
-			"problemMatcher": [],
-			"group":{
-				"kind": "build",
-				"isDefault": true
-			}
-		},
-		{
-			"type": "process",
-			"label": "buildIt",
-			"command": "C:\\msys64\\mingw64\\bin\\g++.exe",
+			"type": "cppbuild",
+			"label": "buildGLFW",
+			"command": "C:\\mingw\\MinGW\\bin\\g++.exe",
 			"args": [
 				"-g",
 				"-std=c++17",
 				"-I${workspaceFolder}\\include",
 				"-L${workspaceFolder}\\library",
 				"-pthread",
-				"${workspaceFolder}\\source\\*.c*",
+				"${workspaceFolder}\\source\\*.cpp",
 				"-o",
-				"${workspaceFolder}\\binary\\${workspaceFolderBasename}.exe",
+				"${workspaceFolder}\\binary\\${workspaceFolderBasename}",
 				"-lglad",
 				"-lglfw3dll"
 			],
@@ -34,20 +21,34 @@
 				"cwd": "${workspaceFolder}"
 			},
 			"problemMatcher": [
-				//"$gcc"
+				"$gcc"
 			],
 			"group": "build",
-			"detail": "compiler: C:\\msys64\\mingw64\\bin\\g++.exe"
+			"detail": "compiler: C:\\mingw\\MinGW\\bin\\g++.exe"
 		},
 		{
-			"label": "runIt",
+			"label": "runGLFW",
 			"type": "shell",
 			"command": "${workspaceFolder}\\binary\\${workspaceFolderBasename}",
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
 			"problemMatcher": [],
-			"group": "build",
+			"group": "build"
+		},
+		{
+			"label": "buildandrunGLFW",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"buildGLFW",
+				"runGLFW"
+			],
+			"problemMatcher": [],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		}
 	]
 }
+

@@ -12,7 +12,6 @@ private:
     std::thread* loopThread;
     float fps = 120.0f;
     float ms_per_update=1000.0f/fps;
-    static int width,height;
 
     Window* window;
 

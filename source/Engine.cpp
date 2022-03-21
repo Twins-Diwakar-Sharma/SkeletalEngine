@@ -1,19 +1,16 @@
 #include "Engine.h"
 
-int Engine::width = 512;
-int Engine::height = 512;
-
 Engine::Engine()
 {
-    Engine::width = 800;
-    Engine::height = 600;
     loopThread = new std::thread(&Engine::loop, this);
+    loopThread->join();
 }
 
 Engine::~Engine()
 {
 
 }
+
 
 void Engine::loop()
 {
@@ -22,8 +19,8 @@ void Engine::loop()
     clock_t curr = clock();
     initialize();
 
-
-    while(true) // ! window close
+    std::cout << "Loop start" << std::endl;
+    while(!window->close()) // ! window close
     {
         elapsed = ((double)curr - (double)prev) * 1000 / CLOCKS_PER_SEC;
 		lag += elapsed;
@@ -38,11 +35,12 @@ void Engine::loop()
         render(lag/ms_per_update);
         curr = clock();
     }
+    std::cout << "Loop end" << std::endl;
 }
 
 void Engine::initialize()
 {
-    window = new Window(Engine::width,Engine::height);
+    window = new Window();
     
 }
 
