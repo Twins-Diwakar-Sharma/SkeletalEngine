@@ -2,8 +2,8 @@
 
 Engine::Engine()
 {
-    loopThread = new std::thread(&Engine::loop, this);
-    loopThread->join();
+    //loopThread = new std::thread(&Engine::loop, this);
+    //loopThread->join();
 }
 
 Engine::~Engine()
