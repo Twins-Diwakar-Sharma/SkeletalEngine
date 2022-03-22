@@ -31,7 +31,7 @@ Mesh::Mesh()
 
 Mesh::Mesh(std::string name)
 {
-	std::string path = "Inventory/Models/" + name + ".stc";
+	std::string path = "inventory/models/" + name + ".stc";
 	std::ifstream ifs(path);
 	std::string line;
 	
@@ -64,7 +64,8 @@ void Mesh::createPlane()
 		-0.5f, 0.5f, 0.0f,   0.0f, 0.0f,   0.0f, 1.0f, 0.0f,// top left
 	};
 
-	indices = { 0, 1, 3, 0, 3, 2 };
+	// 0 1 2  0 3 2
+	indices = { 0, 1, 2, 3, 0, 2 };
 	generate();
 
 }

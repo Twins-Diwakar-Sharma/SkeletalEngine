@@ -10,21 +10,30 @@ void proj::setPerspective(float fov, float near, float far, float aspectRatio)
     perspective[0][0] = d / aspectRatio;
     perspective[1][1] = d;
     perspective[2][2] = (near + far) / (near - far);
-    perspective[2][3] = (2 * near * far) / (near - far);
-    perspective[3][2] = -1.0f;
+    perspective[3][2] = (2 * near * far) / (near - far);
+    perspective[2][3] = -1.0f;
 }
 
 Renderer::Renderer()
 {
-
+    shaderProgram = new ShaderProgram("objects");
+    shaderProgram->mapUniform("projection");
 }
 
 Renderer::~Renderer()
 {
-
+    delete shaderProgram;
 }
 
-void Renderer::render()
+void Renderer::render(Mesh* mesh)
 {
+    shaderProgram->use();
+    shaderProgram->setUniform("projection",proj::perspective);
+    mesh->bind();
+    glEnableVertexAttribArray(0);
+    glDrawElements(GL_TRIANGLES, mesh->indicesSize(), GL_UNSIGNED_INT, 0);
+    glDisableVertexAttribArray(0);
+    mesh->unbind();
 
+    shaderProgram->unuse();
 }

@@ -5,6 +5,7 @@
 #include <time.h>
 #include <thread>
 #include "Window.h"
+#include "Renderer.h"
 
 class Engine
 {
@@ -20,6 +21,8 @@ private:
     void input();
     void render(double);
 
+    Mesh* testMesh;
+    Renderer* objectsRenderer;
 
 public:
     Engine();

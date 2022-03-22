@@ -13,7 +13,7 @@
 class ShaderProgram
 {
 private:
-    std::string path = "Inventory/Shaders/";
+    std::string path = "inventory/shaders/";
     std::map<std::string, int> uniformMap;
     unsigned int programID, vertexID, fragmentID;
 

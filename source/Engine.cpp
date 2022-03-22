@@ -40,8 +40,12 @@ void Engine::loop()
 
 void Engine::initialize()
 {
+
     window = new Window();
-    
+    proj::setPerspective(60.0f,0.1f,1000.0f,window->getAspect());
+    objectsRenderer = new Renderer();
+    testMesh = new Mesh();
+    testMesh->createPlane();
 }
 
 void Engine::input()
@@ -58,6 +62,8 @@ void Engine::update()
 void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    objectsRenderer->render(testMesh);
 
     window->swap();
 }

@@ -17,6 +17,11 @@ ShaderProgram::ShaderProgram(std::string name)
 void ShaderProgram::createShader(unsigned int& shaderID, int shaderType, std::string filename)
 {
 	std::ifstream file(filename);
+	if(file.bad())
+	{
+		std::cerr << filename << " not found " << std::endl;
+		return;
+	}
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	std::string shaderCode = buffer.str();

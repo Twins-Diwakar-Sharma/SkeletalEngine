@@ -1,13 +1,12 @@
 #ifndef H_R3nD3r3R_H
 #define H_R3nD3r3R_H
 
-//#include "Shader.h"
-//#include "Mesh.h"
-
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "Mathril.h"
 #include <glad/glad.h>
+#include "ShaderProgram.h"
+#include "Mesh.h"
 
 namespace proj
 {
@@ -19,11 +18,11 @@ namespace proj
 class Renderer
 {
 private:
-    //Shader* shader;
+    ShaderProgram* shaderProgram;
 public:
     Renderer();
     ~Renderer();
-    void render(/*Mesh* mesh, */ );
+    void render(Mesh* mesh);
 };
 
 #endif
