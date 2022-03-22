@@ -493,19 +493,25 @@ Vec4::operator float() const
 Mat2::Mat2()
 {
     data = new float*[2];
+    data[0] = new float[4];
+
     for(int i=0; i<2; i++)
     {
-        data[i] = new float[2];
+        if(i > 0)
+            data[i] = data[i-1] + 2;
         for(int j=0; j<2; j++)
+        {
             data[i][j] = 0;
+        }
     }
 }
 
 Mat2::Mat2(float m00, float m01, float m10, float m11)
 {
     data = new float*[2];
-    for(int i=0; i<2; i++)
-        data[i] = new float[2];
+    data[0] = new float[4];
+    for(int i=1; i<2; i++)
+        data[i] = data[i-1] + 2;
 
     data[0][0] = m00;
     data[0][1] = m01;
@@ -516,11 +522,16 @@ Mat2::Mat2(float m00, float m01, float m10, float m11)
 Mat2::Mat2(Mat2& m)
 {
     data = new float*[2];
+    data[0] = new float[4];
+
     for(int i=0; i<2; i++)
     {
-        data[i] = new float[2];
+        if(i > 0)
+            data[i] = data[i-1] + 2;
         for(int j=0; j<2; j++)
+        {
             data[i][j] = m.data[i][j];
+        }
     }
 }
 
@@ -534,8 +545,7 @@ Mat2::~Mat2()
 {
     if(data)
     {
-        for(int i=0; i<2; i++)
-            delete [] data[i];
+        delete [] data[0];
         delete [] data;
     }
 }
@@ -755,9 +765,11 @@ std::ostream& operator<<(std::ostream& os, const Mat2& m)
 Mat3::Mat3()
 {
     data = new float*[3];
+    data[0] = new float[9];
     for(int i=0; i<3; i++)
     {
-        data[i] = new float[3];
+        if(i>0)
+             data[i] = data[i-1] + 3;
         for(int j=0; j<3; j++)
         {
             data[i][j] = 0;
@@ -771,9 +783,10 @@ Mat3::Mat3(float m00, float m01, float m02,
 {
 
     data = new float*[3];
-    for(int i=0; i<3; i++)
+    data[0] = new float[9];
+    for(int i=1; i<3; i++)
     {
-        data[i] = new float[3];
+        data[i] = data[i-1] + 3;
     }
 
     data[0][0] = m00; data[0][1] = m01; data[0][2] = m02;
@@ -784,9 +797,11 @@ Mat3::Mat3(float m00, float m01, float m02,
 Mat3::Mat3(Mat3& mat)
 {
     data = new float*[3];
+    data[0] = new float[9];
     for(int i=0; i<3; i++)
     {
-        data[i] = new float[3];
+        if(i > 0)
+         data[i] = data[i-1] + 3;
         for(int j=0; j<3; j++)
         {
             data[i][j] = mat.data[i][j];
@@ -804,10 +819,7 @@ Mat3::~Mat3()
 {
     if(data)
     {
-        for(int i=0; i<3; i++)
-        {
-             delete [] data[i];
-        }
+        delete [] data[0];
         delete [] data;
     }
 }
@@ -1038,13 +1050,10 @@ Mat4::Mat4()
 {
     data = new float*[4];
     data[0] = new float[16];
-    for(int i=1; i<4; i++)
-    {
-        data[i] = data[i-1] + 4;
-    }
-
     for(int i=0; i<4; i++)
     {
+        if(i>0)
+             data[i] = data[i-1] + 4;
         for(int j=0; j<4; j++)
             data[i][j] = 0;
     }
@@ -1060,9 +1069,7 @@ Mat4::Mat4(
     data = new float*[4];
     data[0] = new float[16];
     for(int i=1; i<4; i++)
-    {
         data[i] = data[i-1] + 4;
-    }
 
     data[0][0] = m00;   data[0][1] = m01;   data[0][2] = m02;   data[0][3] = m03;
     data[1][0] = m10;   data[1][1] = m11;   data[1][2] = m12;   data[1][3] = m13;
@@ -1073,9 +1080,11 @@ Mat4::Mat4(
 Mat4::Mat4(Mat4& m)
 {
     data = new float*[4];
+    data[0] = new float[16];
     for(int i=0; i<4; i++)
     {
-        data[i] = new float[4];
+        if(i > 0)
+             data[i] = data[i-1] + 4;
         for(int j=0; j<4; j++)
             data[i][j] = m.data[i][j];
     }
@@ -1091,8 +1100,9 @@ Mat4::~Mat4()
 {
     if(data)
     {
-        delete data[0];
-        delete data;
+
+        delete [] data[0];
+        delete [] data;
     }
 }
 

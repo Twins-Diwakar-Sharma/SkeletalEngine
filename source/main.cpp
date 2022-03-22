@@ -12,7 +12,7 @@
 
         std::cout << mat << std::endl;
 
-        float* arr = &(mat[0][0]);
+        float* arr = (mat[0]);
         for(int i=0; i<16; i++)
         {
             std::cout << arr[i] << " ";
