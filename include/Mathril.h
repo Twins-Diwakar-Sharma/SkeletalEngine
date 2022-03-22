@@ -203,8 +203,9 @@ class Mat3
 class Mat4
 {
     private:
-         float** data;
+        // float** data;
     public:
+    float** data;
          Mat4();
          Mat4(
                  float m00, float m01, float m02, float m03,

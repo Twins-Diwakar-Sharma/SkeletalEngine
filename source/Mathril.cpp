@@ -1037,9 +1037,14 @@ std::ostream& operator<<(std::ostream& os, const Mat3& m)
 Mat4::Mat4()
 {
     data = new float*[4];
+    data[0] = new float[16];
+    for(int i=1; i<4; i++)
+    {
+        data[i] = data[i-1] + 4;
+    }
+
     for(int i=0; i<4; i++)
     {
-        data[i] = new float[4];
         for(int j=0; j<4; j++)
             data[i][j] = 0;
     }
@@ -1053,8 +1058,11 @@ Mat4::Mat4(
                                                 )
 {
     data = new float*[4];
-    for(int i=0; i<4; i++)
-        data[i] = new float[4];
+    data[0] = new float[16];
+    for(int i=1; i<4; i++)
+    {
+        data[i] = data[i-1] + 4;
+    }
 
     data[0][0] = m00;   data[0][1] = m01;   data[0][2] = m02;   data[0][3] = m03;
     data[1][0] = m10;   data[1][1] = m11;   data[1][2] = m12;   data[1][3] = m13;
@@ -1083,9 +1091,8 @@ Mat4::~Mat4()
 {
     if(data)
     {
-        for(int i=0; i<4; i++)
-            delete [] data[i];
-        delete [] data;
+        delete data[0];
+        delete data;
     }
 }
 
