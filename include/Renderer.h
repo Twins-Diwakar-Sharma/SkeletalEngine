@@ -7,6 +7,7 @@
 #include "ShaderProgram.h"
 #include "Mesh.h"
 #include "Projection.h"
+#include "Object.h"
 
 
 class Renderer
@@ -16,7 +17,7 @@ private:
 public:
     Renderer();
     ~Renderer();
-    void render(Mesh* mesh);
+    void render(Object* object);
 };
 
 #endif

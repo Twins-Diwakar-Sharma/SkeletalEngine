@@ -1,8 +1,13 @@
 #version 400
 
+in vec2 fragTex;
+
 out vec4 color;
+uniform sampler2D albedo;
 
 void main()
 {
-    color = vec4(0,0.8f,0.2f,1);
+    color = texture(albedo,fragTex);
+    if(color.a < 0.4)
+        discard;
 }

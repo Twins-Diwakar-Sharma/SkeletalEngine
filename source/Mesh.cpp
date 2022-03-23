@@ -56,7 +56,7 @@ Mesh::~Mesh()
 
 void Mesh::createPlane()
 {
-	vertexData = {
+/*	vertexData = {
 		// positions          // texture	  // normals
 		 0.5f,  0.5f, 0.0f,	  1.0f, 1.0f,   0.0f, 1.0f, 0.0f,// top right
 		 0.5f, -0.5f, 0.0f,   1.0f, 0.0f,   0.0f, 1.0f, 0.0f,// bottom right
@@ -66,6 +66,20 @@ void Mesh::createPlane()
 
 	// 0 1 2  0 3 2
 	indices = { 0, 1, 2, 3, 0, 2 };
+*/
+	vertexData = {
+		1.0f,	1.0f,	0.0f,	1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+		1.0f,	-1.0f,	0.0f,	1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f,	1.0f,	0.0f,	0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f,	-1.0f,	0.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+	};
+
+	indices = {
+		0,	1,	3,
+		0,	3,	2
+	};
+
+
 	generate();
 
 }

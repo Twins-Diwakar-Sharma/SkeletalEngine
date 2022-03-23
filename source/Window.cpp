@@ -1,7 +1,7 @@
 #include "Window.h"
 
 int Window::width = 512;
-int Window::height = 256;
+int Window::height = 512;
 
 
 Window::Window()
@@ -30,13 +30,6 @@ Window::Window()
 
     glfwSetFramebufferSizeCallback(win,resize);
 
-}
-
-Window::Window(int width, int height)
-{
-    Window::height = height;
-    Window::width = width;
-    Window();
 }
 
 void Window::resize(GLFWwindow* w, int width, int height)

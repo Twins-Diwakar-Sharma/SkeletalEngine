@@ -17,7 +17,6 @@ private:
 
 public:
     Window();
-    Window(int width, int height);
     bool close();
     void terminate();
     void swap();

@@ -21,7 +21,7 @@ private:
     void input();
     void render(double);
 
-    Mesh* testMesh;
+    Object* testObject;
     Renderer* objectsRenderer;
 
 public:

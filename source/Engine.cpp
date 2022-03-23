@@ -40,12 +40,20 @@ void Engine::loop()
 
 void Engine::initialize()
 {
-
-    window = new Window();
     proj::setPerspective(60.0f,0.1f,1000.0f,window->getAspect());
+    
+    window = new Window();
     objectsRenderer = new Renderer();
-    testMesh = new Mesh();
-    testMesh->createPlane();
+    Mesh* testMesh = new Mesh("alienAlpine");
+
+    Texture* testTexture = new Texture("alienAlpine");
+
+    testObject = new Object(testMesh,testTexture);
+
+    testObject->setScale(0.2f,0.2f,0.2f);
+    testObject->setPosition(0,-2,-8);
+
+    glEnable(GL_DEPTH_TEST);
 }
 
 void Engine::input()
@@ -56,14 +64,14 @@ void Engine::input()
 
 void Engine::update()
 {
-
+    testObject->rotate(0,1,0);
 }
 
 void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectsRenderer->render(testMesh);
+    objectsRenderer->render(testObject);
 
     window->swap();
 }

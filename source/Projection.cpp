@@ -19,6 +19,4 @@ void proj::setPerspective(float fov, float near, float far, float aspectRatio)
     perspective[2][2] = (near + far) / (near - far);
     perspective[2][3] = (2 * near * far) / (near - far);
     perspective[3][2] = -1.0f;
-
-    
 }
