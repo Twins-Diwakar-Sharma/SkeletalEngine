@@ -90,5 +90,5 @@ void ShaderProgram::setUniform(std::string name, Mat4& m)
 {
 	int loc = uniformMap[name];
 	
-	glUniformMatrix4fv(loc, 1, false, m[0]);
+	glUniformMatrix4fv(loc, 1, true, m[0]);
 }

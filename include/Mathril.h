@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 
+#define PI 3.141592653589793
 class Vec2
 {
     private:

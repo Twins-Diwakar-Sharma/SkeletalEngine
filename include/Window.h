@@ -4,12 +4,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include "Projection.h"
 
 class Window
 {
 private:
     GLFWwindow* win;
-    int width=800, height=600;
+    static int width, height;
     const char* title="Skeletal Engine";
     void static resize(GLFWwindow* w, int width, int height);
     float senstivity = 0.05f;

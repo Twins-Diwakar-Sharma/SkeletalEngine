@@ -1,5 +1,9 @@
 #include "Window.h"
 
+int Window::width = 512;
+int Window::height = 256;
+
+
 Window::Window()
 {
     if(!glfwInit())
@@ -30,14 +34,17 @@ Window::Window()
 
 Window::Window(int width, int height)
 {
-    this->height = height;
-    this->width = width;
+    Window::height = height;
+    Window::width = width;
     Window();
 }
 
 void Window::resize(GLFWwindow* w, int width, int height)
 {
+    Window::width = width;
+    Window::height = height;
     glViewport(0,0,width,height);
+    proj::setPerspective(proj::fov,proj::near,proj::far,(float)width/height);
 }
 
 bool Window::close()
@@ -57,7 +64,7 @@ void Window::swap()
 
 float Window::getAspect()
 {
-    return (float)width/height;
+    return (float)Window::width/Window::height;
 }
 
 void Window::handleKey(float& t, float& s, float val)
