@@ -44,9 +44,9 @@ void Engine::initialize()
     
     window = new Window();
     objectsRenderer = new Renderer();
-    Mesh* testMesh = new Mesh("alienAlpine");
+    Mesh* testMesh = new Mesh("alpine");
 
-    Texture* testTexture = new Texture("alienAlpine");
+    Texture* testTexture = new Texture("alpine");
 
     testObject = new Object(testMesh,testTexture);
 
