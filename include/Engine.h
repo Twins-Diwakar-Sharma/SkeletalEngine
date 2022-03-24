@@ -6,6 +6,8 @@
 #include <thread>
 #include "Window.h"
 #include "Renderer.h"
+#include "Light.h"
+#include <vector>
 
 class Engine
 {
@@ -30,6 +32,9 @@ private:
     Renderer* objectsRenderer;
 
     Object* plane;
+    DirectionalLight* sun;
+
+    std::vector<Object*> objects;
 
 public:
     Engine();

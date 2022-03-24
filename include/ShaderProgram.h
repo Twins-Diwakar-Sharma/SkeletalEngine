@@ -10,6 +10,7 @@
 #include <map>
 #include "Mathril.h"
 #include "Camera.h"
+#include "Light.h"
 
 class ShaderProgram
 {
@@ -25,6 +26,7 @@ public:
     void unuse();
     void mapUniform(std::string uniform);
     void mapCameraUniform(std::string uniform);
+    void mapDirectionalLightUniform(std::string uniform);
 
     void setUniform(std::string, float, float);
 	void setUniform(std::string, int);
@@ -32,6 +34,7 @@ public:
 	void setUniform(std::string, Vec3&&);
 	void setUniform(std::string, Mat4&);
     void setUniform(std::string name, Camera& cam);
+    void setUniform(std::string name, DirectionalLight& light);
 	
 };
 

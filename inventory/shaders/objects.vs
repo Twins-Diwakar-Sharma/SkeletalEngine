@@ -7,12 +7,14 @@ struct Camera
 
 layout (location = 0) in vec3 pos;
 layout (location = 1) in vec2 tex;
+layout (location = 2) in vec3 nor;
 
 uniform mat4 projection;
 uniform mat4 transform;
 uniform Camera cam;
 
 out vec2 fragTex;
+out vec3 fragNor;
 
 vec4 quatRotate(vec4 action, vec4 victim)
 {
@@ -42,4 +44,5 @@ void main()
 	gl_Position = projectedPos;
 
     fragTex = tex;
+	fragNor = normalize((transform * vec4(nor,0.0) ).xyz) ;
 }

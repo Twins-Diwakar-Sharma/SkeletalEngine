@@ -52,17 +52,20 @@ void Engine::initialize()
 
     testObject->setScale(0.2f,0.2f,0.2f);
     testObject->setPosition(0,-2,-8);
+    objects.push_back(testObject);
 
     Mesh* planeMesh = new Mesh();
     planeMesh->createPlane();
-    Texture* planeTex = new Texture("ta");
+    Texture* planeTex = new Texture("path");
     plane = new Object(planeMesh,planeTex);
     plane->setPosition(0,-2,-8);
-    plane->setScale(100,0,100);
+    plane->setScale(25,0,25);
+    objects.push_back(plane);
 
     cam = new Camera();
-
 	cam->setPosition(0,1,0);
+
+    sun = new DirectionalLight(Vec3(-1,-0.5,0),Vec3(1,1,1));
 
     glEnable(GL_DEPTH_TEST);
 }
@@ -89,8 +92,6 @@ void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectsRenderer->render(testObject, cam);
-    objectsRenderer->render(plane, cam);
-
+    objectsRenderer->render(objects, cam, sun);
     window->swap();
 }

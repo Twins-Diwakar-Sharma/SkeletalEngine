@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Projection.h"
 #include "Object.h"
+#include <vector>
 
 class Renderer
 {
@@ -16,7 +17,7 @@ private:
 public:
     Renderer();
     ~Renderer();  
-    void render(Object* object, Camera* cam);
+    void render(std::vector<Object*>& objects, Camera* cam, DirectionalLight* sun);
 };
 
 #endif

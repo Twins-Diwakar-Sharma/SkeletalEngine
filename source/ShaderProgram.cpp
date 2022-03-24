@@ -71,6 +71,16 @@ void ShaderProgram::mapCameraUniform(std::string camName)
 	uniformMap.insert(std::pair <std::string,int> (camName+".pos", posLoc));
 }
 
+void ShaderProgram::mapDirectionalLightUniform(std::string lightName)
+{
+	const char* cUniformDir = (lightName + ".dir").c_str();
+	const char* cUniformPos = (lightName + ".col").c_str();
+	int dirLoc = glGetUniformLocation(programID, cUniformDir);
+	int posLoc = glGetUniformLocation(programID,cUniformPos);
+	uniformMap.insert(std::pair <std::string,int> (lightName + ".dir", dirLoc));
+	uniformMap.insert(std::pair <std::string,int> (lightName+".col", posLoc));
+}
+
 
 void ShaderProgram::setUniform(std::string uniformName, float x, float y)
 {
@@ -104,4 +114,15 @@ void ShaderProgram::setUniform(std::string name, Camera& cam)
 
 	glUniform4f(uniformMap[spin],  cam.spin[1], cam.spin[2], cam.spin[3], cam.spin[0]);
 	glUniform3f(uniformMap[pos], cam.position[0], cam.position[1], cam.position[2]);	
+}
+
+void ShaderProgram::setUniform(std::string name, DirectionalLight& light)
+{
+	std::string dirName = name + ".dir";
+	std::string colName = name + ".col";
+	Vec3 dir = light.getDirection();
+	Vec3 col = light.getColor();
+
+	glUniform3f(uniformMap[dirName],  dir[1], dir[2], dir[2]);
+	glUniform3f(uniformMap[colName], col[0], col[1], col[2]);	
 }
