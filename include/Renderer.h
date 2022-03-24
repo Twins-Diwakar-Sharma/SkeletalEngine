@@ -9,15 +9,14 @@
 #include "Projection.h"
 #include "Object.h"
 
-
 class Renderer
 {
 private:
     ShaderProgram* shaderProgram;
 public:
     Renderer();
-    ~Renderer();
-    void render(Object* object);
+    ~Renderer();  
+    void render(Object* object, Camera* cam);
 };
 
 #endif

@@ -15,6 +15,11 @@ private:
     float ms_per_update=1000.0f/fps;
 
     Window* window;
+    Camera* cam;
+
+    float translateForward, translateSide;
+	float transVal = 0.05f;
+	float rotx, roty;
 
     void initialize();
     void update();
@@ -23,6 +28,8 @@ private:
 
     Object* testObject;
     Renderer* objectsRenderer;
+
+    Object* plane;
 
 public:
     Engine();

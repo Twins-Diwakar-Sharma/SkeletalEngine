@@ -6,6 +6,7 @@ Renderer::Renderer()
     shaderProgram->mapUniform("projection");
     shaderProgram->mapUniform("transform");
     shaderProgram->mapUniform("albedo");
+    shaderProgram->mapCameraUniform("cam");
 }
 
 Renderer::~Renderer()
@@ -13,12 +14,13 @@ Renderer::~Renderer()
     delete shaderProgram;
 }
 
-void Renderer::render(Object* object)
+void Renderer::render(Object* object, Camera* cam)
 {
     shaderProgram->use();
     shaderProgram->setUniform("projection",proj::perspective);
     shaderProgram->setUniform("transform",object->getTransform());
     shaderProgram->setUniform("albedo",0);
+    shaderProgram->setUniform("cam",*cam);
 
     object->bind();
     glActiveTexture(GL_TEXTURE0);

@@ -53,25 +53,44 @@ void Engine::initialize()
     testObject->setScale(0.2f,0.2f,0.2f);
     testObject->setPosition(0,-2,-8);
 
+    Mesh* planeMesh = new Mesh();
+    planeMesh->createPlane();
+    Texture* planeTex = new Texture("ta");
+    plane = new Object(planeMesh,planeTex);
+    plane->setPosition(0,-2,-8);
+    plane->setScale(100,0,100);
+
+    cam = new Camera();
+
+	cam->setPosition(0,1,0);
+
     glEnable(GL_DEPTH_TEST);
 }
 
 void Engine::input()
 {
+    window->handleKey(translateForward, translateSide, transVal);
+	window->handleMouse(rotx, roty);
 
     window->pollEvents();
-}
+}   
 
 void Engine::update()
 {
+    cam->rotate(rotx, roty, 0);
+	rotx = 0;	roty = 0;
+	cam->translate(translateForward, translateSide);
+
     testObject->rotate(0,1,0);
+    translateForward = 0; translateSide = 0;
 }
 
 void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectsRenderer->render(testObject);
+    objectsRenderer->render(testObject, cam);
+    objectsRenderer->render(plane, cam);
 
     window->swap();
 }
