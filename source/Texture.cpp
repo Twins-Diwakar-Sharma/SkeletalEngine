@@ -30,6 +30,7 @@ Texture::Texture(std::string name)
 
 Texture::~Texture()
 {
+	glDeleteTextures(1, &id);
 }
 
 unsigned int Texture::getTextureId()

@@ -4,6 +4,11 @@ ShaderProgram::ShaderProgram(std::string name): ShaderProgram(name, NOTHING)
 {
 }
 
+ShaderProgram::~ShaderProgram()
+{
+	glDeleteProgram(programID);
+}
+
 ShaderProgram::ShaderProgram(std::string name, int sophistication)
 {
 
@@ -42,7 +47,7 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 		glAttachShader(programID, tessEvalID);
 		glAttachShader(programID, geometryID);
 	}
-		
+		 
 
 	glAttachShader(programID, vertexID);
 	glAttachShader(programID, fragmentID);

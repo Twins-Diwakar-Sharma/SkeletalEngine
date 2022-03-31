@@ -25,7 +25,6 @@ Window::Window()
 
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         std::cerr << "Failed to initialize glad" <<std::endl;
-
     glViewport(0,0,width,height);
 
     glfwSetFramebufferSizeCallback(win,resize);

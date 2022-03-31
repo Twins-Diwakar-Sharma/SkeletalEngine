@@ -4,8 +4,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include <iostream>
 #include <map>
 #include "Mathril.h"
@@ -27,6 +27,7 @@ private:
 public:
     ShaderProgram(std::string name);
     ShaderProgram(std::string name, int sophistication);
+    ~ShaderProgram();
     void createShader(unsigned int& shaderID, int shaderType, std::string filename);
     void use();
     void unuse();

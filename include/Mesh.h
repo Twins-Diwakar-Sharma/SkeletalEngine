@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 
 class Mesh

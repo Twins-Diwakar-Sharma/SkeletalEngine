@@ -35,6 +35,7 @@ void Engine::loop()
         render(lag/ms_per_update);
         curr = clock();
     }
+    clean();
     std::cout << "Loop end" << std::endl;
 }
 
@@ -44,20 +45,22 @@ void Engine::initialize()
     
     window = new Window();
     objectsRenderer = new Renderer();
+
     Mesh* testMesh = new Mesh("alpine");
-
+    meshMap.insert({"testMesh",testMesh});
     Texture* testTexture = new Texture("alpine");
-
-    testObject = new Object(testMesh,testTexture);
-
+    textureMap.insert({"testTexture",testTexture});
+    Object* testObject = new Object(testMesh,testTexture);
     testObject->setScale(0.2f,0.2f,0.2f);
     testObject->setPosition(0,-2,-8);
     objects.push_back(testObject);
 
     Mesh* planeMesh = new Mesh();
     planeMesh->createPlane();
+    meshMap.insert({"planeMesh",planeMesh});
     Texture* planeTex = new Texture("path");
-    plane = new Object(planeMesh,planeTex);
+    textureMap.insert({"planeTex",planeTex});
+    Object* plane = new Object(planeMesh,planeTex);
     plane->setPosition(0,-2,-8);
     plane->setScale(25,0,25);
     objects.push_back(plane);
@@ -66,6 +69,9 @@ void Engine::initialize()
 	cam->setPosition(0,1,0);
 
     sun = new DirectionalLight(Vec3(-1,-0.5,0),Vec3(1,1,1));
+
+    //terrainRenderer = new TerrainRenderer();
+    //ringMesh = new RingMesh();
 
     glEnable(GL_DEPTH_TEST);
 }
@@ -84,7 +90,7 @@ void Engine::update()
 	rotx = 0;	roty = 0;
 	cam->translate(translateForward, translateSide);
 
-    testObject->rotate(0,1,0);
+    objects[0]->rotate(0,1,0);
     translateForward = 0; translateSide = 0;
 }
 
@@ -93,5 +99,31 @@ void Engine::render(double dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     objectsRenderer->render(objects, cam, sun);
+   // terrainRenderer->render(ringMesh, cam, 1);
+   // terrainRenderer->render(ringMesh, cam, 2);
+
     window->swap();
+}
+
+void Engine::clean()
+{
+     for(int i=0; i<objects.size(); i++)
+     {
+        delete objects[i];
+     }
+
+    for(auto it = textureMap.begin(); it!=textureMap.end(); it++)
+    {    
+        delete it->second;
+    }
+
+    for(auto it = meshMap.begin(); it!=meshMap.end(); it++)
+    {    
+        delete it->second;
+    }
+
+    delete window;
+    delete cam;
+    delete objectsRenderer;
+     
 }

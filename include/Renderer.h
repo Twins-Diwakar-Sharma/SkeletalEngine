@@ -3,7 +3,6 @@
 
 
 #include "Mathril.h"
-#include <glad/glad.h>
 #include "ShaderProgram.h"
 #include "Mesh.h"
 #include "Projection.h"

@@ -4,7 +4,7 @@
 
 void Mesh::generate()
 {
-	std::cout << "mesh generate " << std::endl;
+	
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
@@ -27,6 +27,9 @@ void Mesh::generate()
 
 Mesh::Mesh()
 {
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &ebo);
+	glDeleteVertexArrays(1, &vao);
 }
 
 Mesh::Mesh(std::string name)

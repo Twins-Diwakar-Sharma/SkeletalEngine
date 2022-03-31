@@ -1,7 +1,7 @@
 #ifndef H_T3XTUR3_H
 #define H_T3XTUR3_H
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 #include <string>
 
