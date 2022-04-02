@@ -4,7 +4,5 @@
     {
         Engine engine;
         engine.loop();
-
-
         return 0;
     }

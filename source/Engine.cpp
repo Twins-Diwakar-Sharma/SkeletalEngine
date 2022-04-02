@@ -47,9 +47,9 @@ void Engine::initialize()
     objectsRenderer = new Renderer();
 
     Mesh* testMesh = new Mesh("alpine");
-    meshMap.insert({"testMesh",testMesh});
+    meshes.push_back(testMesh);
     Texture* testTexture = new Texture("alpine");
-    textureMap.insert({"testTexture",testTexture});
+    textures.push_back(testTexture);
     Object* testObject = new Object(testMesh,testTexture);
     testObject->setScale(0.2f,0.2f,0.2f);
     testObject->setPosition(0,-2,-8);
@@ -57,9 +57,9 @@ void Engine::initialize()
 
     Mesh* planeMesh = new Mesh();
     planeMesh->createPlane();
-    meshMap.insert({"planeMesh",planeMesh});
+    meshes.push_back(planeMesh);
     Texture* planeTex = new Texture("path");
-    textureMap.insert({"planeTex",planeTex});
+    textures.push_back(planeTex);
     Object* plane = new Object(planeMesh,planeTex);
     plane->setPosition(0,-2,-8);
     plane->setScale(25,0,25);
@@ -71,9 +71,10 @@ void Engine::initialize()
     sun = new DirectionalLight(Vec3(-1,-0.5,0),Vec3(1,1,1));
 
     //terrainRenderer = new TerrainRenderer();
-    //ringMesh = new RingMesh();
-
+    ringMesh = new RingMesh();
+    glClearColor(0.8f,0.9f,1,1);
     glEnable(GL_DEPTH_TEST);
+
 }
 
 void Engine::input()
@@ -111,17 +112,14 @@ void Engine::clean()
      {
         delete objects[i];
      }
-
-    for(auto it = textureMap.begin(); it!=textureMap.end(); it++)
-    {    
-        delete it->second;
-    }
-
-    for(auto it = meshMap.begin(); it!=meshMap.end(); it++)
-    {    
-        delete it->second;
-    }
-
+     for(int i=0; i<meshes.size(); i++)
+     {
+         delete meshes[i];
+     }
+     for(int i=0; i<textures.size(); i++)
+     {
+         delete textures[i];
+     }
     delete window;
     delete cam;
     delete objectsRenderer;

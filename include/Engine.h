@@ -5,17 +5,17 @@
 #include <iostream>
 #include <time.h>
 #include <thread>
-#include "Window.h"
 #include "Renderer.h"
 #include "Light.h"
 #include <vector>
 #include "RingMesh.h"
 //#include "TerrainRenderer.h"
 
+
+#include "Window.h"
 class Engine
 {
 private:
-    //std::thread* loopThread;
     float fps = 120.0f;
     float ms_per_update=1000.0f/fps;
 
@@ -37,8 +37,11 @@ private:
     DirectionalLight* sun;
 
     std::vector<Object*> objects;
-    std::map<std::string,Texture*> textureMap;
-    std::map<std::string,Mesh*> meshMap;
+    std::vector<Mesh*> meshes;
+    std::vector<Texture*> textures;
+
+    // Problem makers
+    RingMesh* ringMesh;
     
 public:
     Engine();
