@@ -9,7 +9,7 @@
 #include "Light.h"
 #include <vector>
 #include "RingMesh.h"
-//#include "TerrainRenderer.h"
+#include "TerrainRenderer.h"
 
 
 #include "Window.h"
@@ -42,6 +42,7 @@ private:
 
     // Problem makers
     RingMesh* ringMesh;
+    TerrainRenderer* terrainRenderer;
     
 public:
     Engine();

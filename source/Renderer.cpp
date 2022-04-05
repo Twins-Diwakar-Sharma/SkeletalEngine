@@ -38,7 +38,6 @@ void Renderer::render(std::vector<Object*>& objects, Camera* cam, DirectionalLig
             glDisableVertexAttribArray(0);
             objects[i]->unbind();
     }
-
     
     shaderProgram->unuse();
 }

@@ -29,6 +29,8 @@ Window::Window()
 
     glfwSetFramebufferSizeCallback(win,resize);
 
+    glfwSetWindowPos(win,100,100);
+
 }
 
 void Window::resize(GLFWwindow* w, int width, int height)

@@ -70,11 +70,13 @@ void Engine::initialize()
 
     sun = new DirectionalLight(Vec3(-1,-0.5,0),Vec3(1,1,1));
 
-    //terrainRenderer = new TerrainRenderer();
-    ringMesh = new RingMesh();
     glClearColor(0.8f,0.9f,1,1);
     glEnable(GL_DEPTH_TEST);
 
+
+    // problem makers
+    ringMesh = new RingMesh();
+    terrainRenderer = new TerrainRenderer();
 }
 
 void Engine::input()
@@ -100,8 +102,8 @@ void Engine::render(double dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     objectsRenderer->render(objects, cam, sun);
-   // terrainRenderer->render(ringMesh, cam, 1);
-   // terrainRenderer->render(ringMesh, cam, 2);
+    terrainRenderer->render(ringMesh, cam, 1);
+    terrainRenderer->render(ringMesh, cam, 2);
 
     window->swap();
 }

@@ -1,4 +1,4 @@
-#version 400
+#version 430
 layout(quads, equal_spacing, cw) in;
 
 struct Camera

@@ -4,10 +4,7 @@ TerrainRenderer::TerrainRenderer()
 {
     ringShaderProgram = new ShaderProgram("terrainRing",TESS);
     ringShaderProgram->mapUniform("projection");
-    //shaderProgram->mapUniform("transform");
-    //shaderProgram->mapUniform("albedo");
     ringShaderProgram->mapCameraUniform("cam");
-    //shaderProgram->mapDirectionalLightUniform("sun");
     ringShaderProgram->mapUniform("size");
 }
 
@@ -20,9 +17,11 @@ void TerrainRenderer::render(RingMesh* ringMesh, Camera* cam, int size)
 {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+
+    glPatchParameteri(GL_PATCH_VERTICES, 4);
+
     ringShaderProgram->use();
 
-	glPatchParameteri(GL_PATCH_VERTICES, 4);
 
 	ringShaderProgram->setUniform("projection", proj::perspective);
 	ringShaderProgram->setUniform("cam", *cam);

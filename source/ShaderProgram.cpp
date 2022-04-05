@@ -18,7 +18,7 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 	createShader(vertexID, GL_VERTEX_SHADER, vertexFile);
 	createShader(fragmentID, GL_FRAGMENT_SHADER, fragmentFile);
 
-	unsigned int geometryID=-1, tessComputeID=-1, tessEvalID=-1;
+	unsigned int geometryID=-1, tessControlID=-1, tessEvalID=-1;
 
 	if (sophistication == GEO)
 	{
@@ -28,22 +28,22 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 	}
 	else if (sophistication == TESS)
 	{
-		std::string tessComputeFile(path + name + ".tcs");
-		std::string tessEvalFile(path + name + ".tes");
-		createShader(tessComputeID, GL_TESS_CONTROL_SHADER, tessComputeFile);
+		std::string tessControlFile(path + name + ".tesc");
+		std::string tessEvalFile(path + name + ".tese");
+		createShader(tessControlID, GL_TESS_CONTROL_SHADER, tessControlFile);
 		createShader(tessEvalID, GL_TESS_EVALUATION_SHADER, tessEvalFile);
-		glAttachShader(programID, tessComputeID);
+		glAttachShader(programID, tessControlID);
 		glAttachShader(programID, tessEvalID);
 	}
 	else if (sophistication == GEOTESS)
 	{
-		std::string tessComputeFile(path + name + ".tcs");
-		std::string tessEvalFile(path + name + ".tes");
+		std::string tessComputeFile(path + name + ".tesc");
+		std::string tessEvalFile(path + name + ".tese");
 		std::string geometryFile(path + name + ".gs");
 		createShader(geometryID, GL_GEOMETRY_SHADER, geometryFile);
-		createShader(tessComputeID, GL_TESS_CONTROL_SHADER, tessComputeFile);
+		createShader(tessControlID, GL_TESS_CONTROL_SHADER, tessComputeFile);
 		createShader(tessEvalID, GL_TESS_EVALUATION_SHADER, tessEvalFile);
-		glAttachShader(programID, tessComputeID);
+		glAttachShader(programID, tessControlID);
 		glAttachShader(programID, tessEvalID);
 		glAttachShader(programID, geometryID);
 	}
@@ -52,7 +52,14 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 	glAttachShader(programID, vertexID);
 	glAttachShader(programID, fragmentID);
 
+	int success;
+	char infoLog[256];
 	glLinkProgram(programID);
+	glGetProgramiv(programID, GL_LINK_STATUS, &success);
+	if(!success) {
+		glGetProgramInfoLog(programID, 512, NULL, infoLog);
+		std::cerr << "Failed to link " << name << " \n " << infoLog << std::endl;
+	}
 
 	glDeleteShader(vertexID);
 	glDeleteShader(fragmentID);
@@ -63,12 +70,12 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 	}
 	else if (sophistication == TESS)
 	{
-		glDeleteShader(tessComputeID);
+		glDeleteShader(tessControlID);
 		glDeleteShader(tessEvalID);
 	}
 	else if (sophistication == GEOTESS)
 	{
-		glDeleteShader(tessComputeID);
+		glDeleteShader(tessControlID);
 		glDeleteShader(tessEvalID);
 		glDeleteShader(geometryID);
 	}
