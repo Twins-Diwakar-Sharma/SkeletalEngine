@@ -3,11 +3,13 @@
 layout (location = 0) in vec2 pos;
 
 uniform int size;
+uniform vec2 position;
 
 void main()
 {
-	vec2 position = pos;
-	vec2 sizedpos = size*position;
-	gl_Position = vec4(sizedpos.x,0,sizedpos.y,1.0);
+	vec2 objectPos = pos;
+	vec2 sizedPos = size*objectPos;
+	vec2 worldPos = sizedPos + position;
+	gl_Position = vec4(worldPos.x,0,worldPos.y,1.0);
 }
  

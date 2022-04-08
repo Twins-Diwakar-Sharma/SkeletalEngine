@@ -6,7 +6,9 @@
 #include "ShaderProgram.h"
 #include "Projection.h"
 #include "RingMesh.h"
+#include "PlatformMesh.h"
 #include <vector>
+#include "Terrain.h"
 
 class TerrainRenderer
 {
@@ -15,7 +17,8 @@ private:
 public:
     TerrainRenderer();
     ~TerrainRenderer();  
-    void render(RingMesh* mesh, Camera* cam, int size);
+    void render(TerrainMesh* mesh, Camera* cam, int size);
+    void render(Terrain* terrain, Camera* cam);
 };
 
 #endif

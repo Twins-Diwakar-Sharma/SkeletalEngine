@@ -9,6 +9,7 @@
 #include "Light.h"
 #include <vector>
 #include "RingMesh.h"
+#include "PlatformMesh.h"
 #include "TerrainRenderer.h"
 
 
@@ -41,8 +42,8 @@ private:
     std::vector<Texture*> textures;
 
     // Problem makers
-    RingMesh* ringMesh;
     TerrainRenderer* terrainRenderer;
+    Terrain* terrain;
     
 public:
     Engine();

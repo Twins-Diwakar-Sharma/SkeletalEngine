@@ -75,7 +75,8 @@ void Engine::initialize()
 
 
     // problem makers
-    ringMesh = new RingMesh();
+    terrain = new Terrain(2);
+    terrain->reconfigure(8,1);
     terrainRenderer = new TerrainRenderer();
 }
 
@@ -94,6 +95,8 @@ void Engine::update()
 	cam->translate(translateForward, translateSide);
 
     objects[0]->rotate(0,1,0);
+    terrain->update(cam->position);
+
     translateForward = 0; translateSide = 0;
 }
 
@@ -102,8 +105,7 @@ void Engine::render(double dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     objectsRenderer->render(objects, cam, sun);
-    terrainRenderer->render(ringMesh, cam, 1);
-    terrainRenderer->render(ringMesh, cam, 2);
+    terrainRenderer->render(terrain,cam);
 
     window->swap();
 }

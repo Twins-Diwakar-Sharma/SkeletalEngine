@@ -36,6 +36,7 @@ public:
 
     void setUniform(std::string, float, float);
 	void setUniform(std::string, int);
+    void setUniform(std::string, Vec2&);
 	void setUniform(std::string, Vec3&);
 	void setUniform(std::string, Vec3&&);
 	void setUniform(std::string, Mat4&);

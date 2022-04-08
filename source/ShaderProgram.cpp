@@ -162,6 +162,11 @@ void ShaderProgram::setUniform(std::string uniformName, int value)
 	glUniform1i(uniformMap[uniformName], value);
 }
 
+void ShaderProgram::setUniform(std::string name, Vec2& v)
+{
+	glUniform2f(uniformMap[name], v[0], v[1]);
+}
+
 void ShaderProgram::setUniform(std::string name, Vec3& v)
 {
 	glUniform3f(uniformMap[name], v[0], v[1], v[2]);

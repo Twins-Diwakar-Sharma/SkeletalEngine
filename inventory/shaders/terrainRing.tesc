@@ -3,8 +3,7 @@
 layout (vertices = 4) out;
 
 
-//uniform int LOD;
-const int LOD = 2;
+uniform int LOD;
 
 void main(void)
 {

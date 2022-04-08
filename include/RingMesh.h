@@ -1,24 +1,16 @@
 #ifndef CHHALLA_JALA
 #define CHHALLA_JALA
 
-#include <vector>
-#include "glad/glad.h"
-#include <iostream>
+#include "TerrainMesh.h"
 
-class RingMesh
+class RingMesh : public TerrainMesh
 {
 protected:
-    std::vector<float> vertexData;
-	std::vector<unsigned int> indices;
-	unsigned int vao, vbo, ebo;
-
-    void generate();
+    void create();
 public:
     RingMesh();
     ~RingMesh();
-    void bind();
-	void unbind();
-	int indicesSize();
+
 };
 
 #endif
