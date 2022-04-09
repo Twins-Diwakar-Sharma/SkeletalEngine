@@ -75,7 +75,7 @@ void Engine::initialize()
 
 
     // problem makers
-    terrain = new Terrain(2);
+    terrain = new Terrain();
     terrain->reconfigure(8,1);
     terrainRenderer = new TerrainRenderer();
 }

@@ -1,11 +1,11 @@
 #include "Terrain.h"
 
-Terrain::Terrain(int noOfRings)
+Terrain::Terrain()
 {
-    this->noOfRings = noOfRings;
+    
     for(int i=0; i<noOfRings+1; i++)
     {
-        planes.push_back(new RingObject());
+        planes.push_back(new TerrainPlane());
     }
     startTesselatedSize = startScale/lod;
     ringMesh = new RingMesh();
@@ -85,7 +85,7 @@ void Terrain::unbindMesh()
     glBindVertexArray(0);
 }
 
-RingObject* Terrain::getPlanes(int i)
+TerrainPlane* Terrain::getPlanes(int i)
 {
     return planes[i];
 }

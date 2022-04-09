@@ -4,7 +4,7 @@
 #include "TerrainMesh.h"
 #include "PlatformMesh.h"
 #include "RingMesh.h"
-#include "RingObject.h"
+#include "TerrainPlane.h"
 
 class Terrain
 {
@@ -12,15 +12,15 @@ private:
     int startScale=32;
     int lod=32;
     int startTesselatedSize;
-    int noOfRings;
+    int noOfRings=2;
    
-    std::vector<RingObject*> planes;
+    std::vector<TerrainPlane*> planes;
     Vec2 distance;
 public:
  RingMesh* ringMesh;
     PlatformMesh* platformMesh;
     
-    Terrain(int noOfRings);
+    Terrain();
     ~Terrain();
     void reconfigure(int startScale,int lod);
     int getStartScale();
@@ -35,7 +35,7 @@ public:
     int getRingMeshIndicesSize();
 
     void unbindMesh();
-    RingObject* getPlanes(int);
+    TerrainPlane* getPlanes(int);
 
     int getNoOfRings();
 
