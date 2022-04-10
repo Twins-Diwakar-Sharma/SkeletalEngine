@@ -6,6 +6,7 @@
 class TerrainPlane
 {
 public:
+    TerrainPlane* coarse=nullptr;
     Vec2 position;
     Vec2 step;
     int scale;
@@ -15,6 +16,8 @@ public:
     TerrainPlane(TerrainPlane&);
     TerrainPlane(TerrainPlane&&);
     ~TerrainPlane();
+
+    void update(Vec2& dir);
 };
 
 #endif

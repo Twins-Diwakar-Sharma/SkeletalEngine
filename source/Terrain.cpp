@@ -6,6 +6,10 @@ Terrain::Terrain()
     for(int i=0; i<noOfRings+1; i++)
     {
         planes.push_back(new TerrainPlane());
+        if(i>0)
+        {
+            planes[i-1]->coarse = planes[i];
+        }
     }
     startTesselatedSize = startScale/lod;
     ringMesh = new RingMesh();
@@ -56,7 +60,15 @@ int Terrain::getLod()
 void Terrain::update(Vec3& campos)
 {
     distance[0] = campos[0] - planes[0]->position[0];
-    distance[1] = campos[2] - planes[0]->position[1];
+    distance[1] = campos[2] - planes[0]->position[1]; 
+
+    int limit = planes[0]->tesselatedSize/2;
+
+    distance[0] > limit ? dir[0] = 1 : (distance[0] < -limit ? dir[0] = -1 : dir[0] = 0);  
+    distance[1] > limit ? dir[1] = 1 : (distance[1] < -limit ? dir[1] = -1 : dir[1] = 0);
+    
+    planes[0]->update(dir);
+
 }
 
 void Terrain::bindPlatformMesh()
@@ -78,7 +90,6 @@ int Terrain::getRingMeshIndicesSize()
 {
     return ringMesh->indicesSize();
 }
-
 
 void Terrain::unbindMesh()
 {

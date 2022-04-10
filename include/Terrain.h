@@ -16,6 +16,7 @@ private:
    
     std::vector<TerrainPlane*> planes;
     Vec2 distance;
+    Vec2 dir;
 public:
  RingMesh* ringMesh;
     PlatformMesh* platformMesh;
