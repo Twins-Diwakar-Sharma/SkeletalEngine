@@ -78,6 +78,7 @@ void Engine::initialize()
     terrain = new Terrain();
     terrain->reconfigure(8,1);
     terrainRenderer = new TerrainRenderer();
+    plank = new PlankMesh();
 }
 
 void Engine::input()
@@ -106,7 +107,6 @@ void Engine::render(double dt)
 
     objectsRenderer->render(objects, cam, sun);
     terrainRenderer->render(terrain,cam);
-
     window->swap();
 }
 

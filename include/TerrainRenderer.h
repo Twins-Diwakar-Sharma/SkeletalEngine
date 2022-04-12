@@ -9,16 +9,19 @@
 #include "PlatformMesh.h"
 #include <vector>
 #include "Terrain.h"
+#include "PlankMesh.h"
 
 class TerrainRenderer
 {
 private:
     ShaderProgram* ringShaderProgram;
+    ShaderProgram* plankShaderProgram;
 public:
     TerrainRenderer();
     ~TerrainRenderer();  
-    void render(TerrainMesh* mesh, Camera* cam, int size);
     void render(Terrain* terrain, Camera* cam);
+    void renderPlanks(Terrain* terrain, Camera* cam);
+    
 };
 
 #endif

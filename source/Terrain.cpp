@@ -14,6 +14,7 @@ Terrain::Terrain()
     startTesselatedSize = startScale/lod;
     ringMesh = new RingMesh();
     platformMesh = new PlatformMesh();
+    plankMesh = new PlankMesh();
 
     int scale = startScale;
     int tessSize = startTesselatedSize;
@@ -89,6 +90,16 @@ void Terrain::bindRingMesh()
 int Terrain::getRingMeshIndicesSize()
 {
     return ringMesh->indicesSize();
+}
+
+void Terrain::bindPlankMesh()
+{
+    plankMesh->bind();
+}
+
+int Terrain::getPlankMeshIndicesSize()
+{
+    return plankMesh->indicesSize();
 }
 
 void Terrain::unbindMesh()

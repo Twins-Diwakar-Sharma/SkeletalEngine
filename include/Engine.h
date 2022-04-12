@@ -11,7 +11,7 @@
 #include "RingMesh.h"
 #include "PlatformMesh.h"
 #include "TerrainRenderer.h"
-
+#include "PlankMesh.h"
 
 #include "Window.h"
 class Engine
@@ -44,7 +44,8 @@ private:
     // Problem makers
     TerrainRenderer* terrainRenderer;
     Terrain* terrain;
-    
+    PlankMesh* plank;
+
 public:
     Engine();
     ~Engine();

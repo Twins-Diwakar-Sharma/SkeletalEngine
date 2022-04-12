@@ -5,6 +5,7 @@
 #include "PlatformMesh.h"
 #include "RingMesh.h"
 #include "TerrainPlane.h"
+#include "PlankMesh.h"
 
 class Terrain
 {
@@ -17,10 +18,12 @@ private:
     std::vector<TerrainPlane*> planes;
     Vec2 distance;
     Vec2 dir;
-public:
- RingMesh* ringMesh;
-    PlatformMesh* platformMesh;
     
+    RingMesh* ringMesh;
+    PlatformMesh* platformMesh;
+    PlankMesh* plankMesh;
+
+public:
     Terrain();
     ~Terrain();
     void reconfigure(int startScale,int lod);
@@ -34,6 +37,9 @@ public:
 
     void bindRingMesh();
     int getRingMeshIndicesSize();
+
+    void bindPlankMesh();
+    int getPlankMeshIndicesSize();
 
     void unbindMesh();
     TerrainPlane* getPlanes(int);
