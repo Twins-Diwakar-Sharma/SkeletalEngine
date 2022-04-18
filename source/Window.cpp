@@ -89,6 +89,15 @@ void Window::handleMouse(float& rx, float& ry)
 	glfwSetCursorPos(win, (double)width / 2, (double)height / 2);
 }
 
+void Window::handleHold(bool& hold)
+{
+    if(glfwGetKey(win, GLFW_KEY_H) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS)
+        hold = true;
+    if(glfwGetKey(win, GLFW_KEY_H) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        hold = false;
+    
+}
+
 void Window::pollEvents()
 {
     glfwPollEvents();

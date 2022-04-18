@@ -23,6 +23,7 @@ public:
     float getAspect();
     void handleKey(float& t, float& s, float val);
     void handleMouse(float& rx, float& ry);
+    void handleHold(bool& hold);
     void pollEvents();
 };
 

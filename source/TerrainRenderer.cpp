@@ -8,6 +8,12 @@ TerrainRenderer::TerrainRenderer()
     ringShaderProgram->mapUniform("size");
     ringShaderProgram->mapUniform("LOD");
     ringShaderProgram->mapUniform("position");
+    ringShaderProgram->mapUniform("heightMap");
+    ringShaderProgram->mapUniform("heightMapSize");
+    ringShaderProgram->mapDirectionalLightUniform("sun");
+    ringShaderProgram->mapUniform("step");
+    ringShaderProgram->mapUniform("tesselatedSize");
+    ringShaderProgram->mapUniform("size");
 
     plankShaderProgram = new ShaderProgram("terrainPlank",TESS);
     plankShaderProgram->mapUniform("projection");
@@ -16,6 +22,11 @@ TerrainRenderer::TerrainRenderer()
     plankShaderProgram->mapUniform("LOD");
     plankShaderProgram->mapUniform("position");
     plankShaderProgram->mapUniform("rotate");
+    plankShaderProgram->mapUniform("heightMap");
+    plankShaderProgram->mapUniform("heightMapSize");
+    plankShaderProgram->mapDirectionalLightUniform("sun");
+    plankShaderProgram->mapUniform("step");
+    plankShaderProgram->mapUniform("tesselatedSize");
 }
 
 TerrainRenderer::~TerrainRenderer()
@@ -23,9 +34,9 @@ TerrainRenderer::~TerrainRenderer()
     delete ringShaderProgram;
 }
 
-void TerrainRenderer::render(Terrain* terrain, Camera* cam)
+void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)
 {
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glPatchParameteri(GL_PATCH_VERTICES, 4);
 
@@ -34,11 +45,19 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam)
     ringShaderProgram->setUniform("LOD", terrain->getLod());
 	ringShaderProgram->setUniform("projection", proj::perspective);
 	ringShaderProgram->setUniform("cam", *cam);
+    ringShaderProgram->setUniform("heightMap",0);
+    ringShaderProgram->setUniform("heightMapSize", heightMap->mapSize);
+    ringShaderProgram->setUniform("sun", *sun);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, heightMap->getTextureId());
 
     terrain->bindPlatformMesh();
     glEnableVertexAttribArray(0);
     ringShaderProgram->setUniform("size", terrain->getPlanes(0)->scale);
     ringShaderProgram->setUniform("position", terrain->getPlanes(0)->position);
+    ringShaderProgram->setUniform("step", terrain->getPlanes(0)->step);
+    ringShaderProgram->setUniform("tesselatedSize", terrain->getPlanes(0)->tesselatedSize);
     glDrawElements(GL_PATCHES, terrain->getPlatformMeshIndicesSize(), GL_UNSIGNED_INT, 0);  
     glDisableVertexAttribArray(0);
     terrain->unbindMesh();
@@ -49,6 +68,8 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam)
         glEnableVertexAttribArray(0);
         ringShaderProgram->setUniform("size",terrain->getPlanes(i)->scale);
         ringShaderProgram->setUniform("position", terrain->getPlanes(i)->position);
+        ringShaderProgram->setUniform("step", terrain->getPlanes(i)->step);
+        ringShaderProgram->setUniform("tesselatedSize", terrain->getPlanes(i)->tesselatedSize);
         glDrawElements(GL_PATCHES, terrain->getRingMeshIndicesSize(), GL_UNSIGNED_INT, 0);  
         glDisableVertexAttribArray(0);
     }
@@ -57,12 +78,12 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam)
     ringShaderProgram->unuse();
 
     // render planks now
-    renderPlanks(terrain, cam);
+    renderPlanks(terrain, cam, heightMap, sun);
 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam)
+void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)
 {
 
     glPatchParameteri(GL_PATCH_VERTICES, 4);
@@ -72,8 +93,16 @@ void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam)
     plankShaderProgram->setUniform("LOD", terrain->getLod());
 	plankShaderProgram->setUniform("projection", proj::perspective);
 	plankShaderProgram->setUniform("cam", *cam);
+    plankShaderProgram->setUniform("heightMap",0);
+    plankShaderProgram->setUniform("heightMapSize", heightMap->mapSize);
+    plankShaderProgram->setUniform("sun", *sun);
 
-    Vec2 size(8,2);    // size should be Vec2(size, tesselatedSize)
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, heightMap->getTextureId());
+
+
+
+    Vec2 size(1,1);    // size should be Vec2(size, tesselatedSize)
     terrain->bindPlankMesh();
 
     for(int i=0; i<terrain->getNoOfRings()+1; i++)
@@ -81,6 +110,7 @@ void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam)
         size[0] = terrain->getPlanes(i)->scale;
         size[1] = terrain->getPlanes(i)->tesselatedSize;
         plankShaderProgram->setUniform("size", size);
+        plankShaderProgram->setUniform("step", terrain->getPlanes(i)->step);
 
         if(terrain->getPlanes(i)->step[1] != 0)
         {
