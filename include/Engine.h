@@ -45,11 +45,11 @@ private:
     // Problem makers
     TerrainRenderer* terrainRenderer;
     Terrain* terrain;
-    PlankMesh* plank;
     HeightMap* heightMap;
 
     bool hold=false;
-
+    bool wireframe=false;
+    bool updateTerrain=true;
 
 public:
     Engine();

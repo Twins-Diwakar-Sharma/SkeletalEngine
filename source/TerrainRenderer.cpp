@@ -13,7 +13,6 @@ TerrainRenderer::TerrainRenderer()
     ringShaderProgram->mapDirectionalLightUniform("sun");
     ringShaderProgram->mapUniform("step");
     ringShaderProgram->mapUniform("tesselatedSize");
-    ringShaderProgram->mapUniform("size");
 
     plankShaderProgram = new ShaderProgram("terrainPlank",TESS);
     plankShaderProgram->mapUniform("projection");
@@ -26,7 +25,6 @@ TerrainRenderer::TerrainRenderer()
     plankShaderProgram->mapUniform("heightMapSize");
     plankShaderProgram->mapDirectionalLightUniform("sun");
     plankShaderProgram->mapUniform("step");
-    plankShaderProgram->mapUniform("tesselatedSize");
 }
 
 TerrainRenderer::~TerrainRenderer()
@@ -104,6 +102,7 @@ void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam, HeightMap* hei
 
     Vec2 size(1,1);    // size should be Vec2(size, tesselatedSize)
     terrain->bindPlankMesh();
+
 
     for(int i=0; i<terrain->getNoOfRings()+1; i++)
     {

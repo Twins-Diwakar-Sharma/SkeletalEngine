@@ -20,9 +20,12 @@ uniform vec2 position;
 
 out vec3 fragWorldPos;
 
+const float threshold=1.5f;
+
 // debugs
 out vec2 fragAbsSteppedObjectPos;
 out float doMode;
+
 
 vec4 quatRotate(vec4 action, vec4 victim)
 {
@@ -82,19 +85,19 @@ void main()
     vec2 absSteppedSizedPos = abs(steppedSizedPos);
     vec2 absSteppedObjectPos = absSteppedSizedPos/float(size);
     doMode = 0;
-    if(absSteppedObjectPos.y >= 1.5 && int(mod(absSteppedSizedPos.x,2*tesselatedSize)) == tesselatedSize)
+    if(absSteppedObjectPos.y >= threshold && int(mod(absSteppedSizedPos.x,2*tesselatedSize)) == tesselatedSize)
     {
         doMode = 1;
-        float alpha = (absSteppedObjectPos.y - 1.5)/(2.0 - 1.5);
+        float alpha = (absSteppedObjectPos.y - threshold)/(2.0 - threshold);
         float heightLeft = getHeightFromTexture(worldPos.x - tesselatedSize, worldPos.z);
         float heightRight = getHeightFromTexture(worldPos.x + tesselatedSize, worldPos.z);
         float averageHeight = (heightLeft+heightRight)/2.0;
         worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
     }
-    if(absSteppedObjectPos.x >= 1.5 && int(mod(absSteppedSizedPos.y,2*tesselatedSize)) == tesselatedSize)
+    if(absSteppedObjectPos.x >= threshold && int(mod(absSteppedSizedPos.y,2*tesselatedSize)) == tesselatedSize)
     {
         doMode = 1;
-        float alpha = (absSteppedObjectPos.x - 1.5)/(2.0 - 1.5);
+        float alpha = (absSteppedObjectPos.x - threshold)/(2.0 - threshold);
         float heightFront = getHeightFromTexture(worldPos.x, worldPos.z - tesselatedSize);
         float heightBack = getHeightFromTexture(worldPos.x, worldPos.z + tesselatedSize);
         float averageHeight = (heightFront+heightBack)/2.0;

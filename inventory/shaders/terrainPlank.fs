@@ -53,7 +53,7 @@ void main()
 	vec3 toLight = normalize(-1*sun.dir);	
 	float diffuse = max(dot(toLight,fragNorm),0.3);
 	vec3 diffuseColor = diffuse*sun.col;
-	vec4 color = vec4(0,1,0,1);
+	vec4 color = vec4(1,1,0,1);
 	outColor = vec4(diffuseColor,1.0) * color;
 	
 }

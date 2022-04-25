@@ -78,7 +78,7 @@ void Engine::initialize()
     terrain = new Terrain();
     terrain->reconfigure(32,8);
     terrainRenderer = new TerrainRenderer();
-    plank = new PlankMesh();
+    
 
     heightMap = new HeightMap();
     heightMap->setHeightMapTexture("heightMap");
@@ -89,6 +89,8 @@ void Engine::input()
     window->handleKey(translateForward, translateSide, transVal);
 	window->handleMouse(rotx, roty);
     window->handleHold(hold);
+    window->handleTerrainUpdate(updateTerrain);
+    window->handleWireframe(wireframe);
     window->pollEvents();
 }   
 
@@ -108,7 +110,9 @@ void Engine::update()
     }
     
     objects[0]->rotate(0,1,0);
-   // terrain->update(cam->position);
+    
+    if(updateTerrain)
+        terrain->update(cam->position);
 
     translateForward = 0; translateSide = 0;
 }
@@ -118,6 +122,10 @@ void Engine::render(double dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     objectsRenderer->render(objects, cam, sun);
+    if(wireframe)
+         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    else
+         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     terrainRenderer->render(terrain,cam,heightMap,sun);
     window->swap();
 }

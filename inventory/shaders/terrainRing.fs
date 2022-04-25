@@ -63,7 +63,7 @@ void main()
     
     // debug
     if(fragAbsSteppedObjectPos.x > 1.5 || fragAbsSteppedObjectPos.y > 1.5)
-        color = (1.0-doMode)*vec4(0.7,0,1,1) + doMode*vec4(0,1,0,1);
+        color = (1.0-doMode)*vec4(0.5,0,1,1) + doMode*vec4(0,0.5,1,1);
 
 	outColor = vec4(diffuseColor,1.0) * color;
 	//outColor = color;
