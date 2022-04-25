@@ -74,9 +74,9 @@ void Engine::initialize()
     glEnable(GL_DEPTH_TEST);
 
 
-    // problem makers
+    // problem makers 
     terrain = new Terrain();
-    terrain->reconfigure(8,1);
+    terrain->reconfigure(32,8);
     terrainRenderer = new TerrainRenderer();
     plank = new PlankMesh();
 }

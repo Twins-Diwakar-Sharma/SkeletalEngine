@@ -10,6 +10,9 @@ uniform int rotate;
 void main()
 {
 	vec2 objectPos = pos;
+
+	vec2 sizedPos = size*objectPos;
+
 	if(rotate == 1)
 	{
 		mat2 rot = mat2(
@@ -17,9 +20,9 @@ void main()
 			-1, 0	// second column
 		);
 
-		objectPos = rot * objectPos;
+		sizedPos = rot * sizedPos;
 	}
-	vec2 sizedPos = size*objectPos;
+
 	vec2 worldPos = sizedPos + position;
 	gl_Position = vec4(worldPos.x,0,worldPos.y,1.0);
 }
