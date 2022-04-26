@@ -93,3 +93,28 @@ void Window::pollEvents()
 {
     glfwPollEvents();
 }
+
+void Window::handleHold(bool& hold)
+{
+    if(glfwGetKey(win, GLFW_KEY_H) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS)
+        hold = true;
+    if(glfwGetKey(win, GLFW_KEY_H) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        hold = false;
+    
+}
+
+void Window::handleWireframe(bool& wireframe)
+{
+    if(glfwGetKey(win, GLFW_KEY_O) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS)
+        wireframe = true;
+    if(glfwGetKey(win, GLFW_KEY_O) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        wireframe = false;
+}
+
+void Window::handleTerrainUpdate(bool& terrainUpdate)
+{
+    if(glfwGetKey(win, GLFW_KEY_L) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS)
+        terrainUpdate = true;
+    if(glfwGetKey(win, GLFW_KEY_L) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        terrainUpdate = false;
+}

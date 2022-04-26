@@ -68,7 +68,7 @@ void Engine::initialize()
     cam = new Camera();
 	cam->setPosition(0,1,0);
 
-    sun = new DirectionalLight(Vec3(-1,-0.5,0),Vec3(1,1,1));
+    sun = new DirectionalLight(Vec3(-1,-1,-1),Vec3(1,1,1));
 
     glClearColor(0.8f,0.9f,1,1);
     glEnable(GL_DEPTH_TEST);
@@ -78,25 +78,41 @@ void Engine::initialize()
     terrain = new Terrain();
     terrain->reconfigure(32,8);
     terrainRenderer = new TerrainRenderer();
-    plank = new PlankMesh();
+    
+
+    heightMap = new HeightMap();
+    heightMap->setHeightMapTexture("heightMap");
 }
 
 void Engine::input()
 {
     window->handleKey(translateForward, translateSide, transVal);
 	window->handleMouse(rotx, roty);
-
+    window->handleHold(hold);
+    window->handleTerrainUpdate(updateTerrain);
+    window->handleWireframe(wireframe);
     window->pollEvents();
 }   
 
 void Engine::update()
 {
-    cam->rotate(rotx, roty, 0);
-	rotx = 0;	roty = 0;
-	cam->translate(translateForward, translateSide);
-
+    if(hold)
+    {
+        cam->setPosition(0,0,0);
+        rotx = 0; roty = 0;
+        cam->spin[0] = 1; cam->spin[1] = 0; cam->spin[2] = 0; cam->spin[3] = 0;
+    }
+    else
+    {
+        cam->rotate(rotx, roty, 0);
+	    rotx = 0;	roty = 0;
+	    cam->translate(translateForward, translateSide);
+    }
+    
     objects[0]->rotate(0,1,0);
-    terrain->update(cam->position);
+    
+    if(updateTerrain)
+        terrain->update(cam->position);
 
     translateForward = 0; translateSide = 0;
 }
@@ -106,7 +122,11 @@ void Engine::render(double dt)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     objectsRenderer->render(objects, cam, sun);
-    terrainRenderer->render(terrain,cam);
+    if(wireframe)
+         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    else
+         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    terrainRenderer->render(terrain,cam,heightMap,sun);
     window->swap();
 }
 
@@ -127,5 +147,6 @@ void Engine::clean()
     delete window;
     delete cam;
     delete objectsRenderer;
+    delete heightMap;
      
 }
