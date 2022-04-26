@@ -2,7 +2,7 @@
 
 TerrainRenderer::TerrainRenderer()
 {
-    ringShaderProgram = new ShaderProgram("terrainRing",TESS);
+    ringShaderProgram = new ShaderProgram("terrainRing",GEOTESS);
     ringShaderProgram->mapUniform("projection");
     ringShaderProgram->mapCameraUniform("cam");
     ringShaderProgram->mapUniform("size");

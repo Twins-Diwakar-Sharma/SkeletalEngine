@@ -17,14 +17,17 @@ uniform int size;
 uniform int tesselatedSize;
 uniform vec2 step;
 uniform vec2 position;
-
-out vec3 fragWorldPos;
-
 const float threshold=1.5f;
 
+
+out TRI {
+    vec2 fragAbsSteppedObjectPos;
+    float doMode;
+    vec3 fragWorldPos;
+} tri;
+
 // debugs
-out vec2 fragAbsSteppedObjectPos;
-out float doMode;
+
 
 
 vec4 quatRotate(vec4 action, vec4 victim)
@@ -84,10 +87,10 @@ void main()
     vec2 steppedSizedPos = sizedPos + tesselatedSize*step;
     vec2 absSteppedSizedPos = abs(steppedSizedPos);
     vec2 absSteppedObjectPos = absSteppedSizedPos/float(size);
-    doMode = 0;
+    tri.doMode = 0;
     if(absSteppedObjectPos.y >= threshold && int(mod(absSteppedSizedPos.x,2*tesselatedSize)) == tesselatedSize)
     {
-        doMode = 1;
+        tri.doMode = 1;
         float alpha = (absSteppedObjectPos.y - threshold)/(2.0 - threshold);
         float heightLeft = getHeightFromTexture(worldPos.x - tesselatedSize, worldPos.z);
         float heightRight = getHeightFromTexture(worldPos.x + tesselatedSize, worldPos.z);
@@ -96,7 +99,7 @@ void main()
     }
     if(absSteppedObjectPos.x >= threshold && int(mod(absSteppedSizedPos.y,2*tesselatedSize)) == tesselatedSize)
     {
-        doMode = 1;
+        tri.doMode = 1;
         float alpha = (absSteppedObjectPos.x - threshold)/(2.0 - threshold);
         float heightFront = getHeightFromTexture(worldPos.x, worldPos.z - tesselatedSize);
         float heightBack = getHeightFromTexture(worldPos.x, worldPos.z + tesselatedSize);
@@ -116,7 +119,7 @@ void main()
 	vec4 projectedPos = projection * vec4(quatView.xyz,1.0);
 	gl_Position = projectedPos;
 
-    fragWorldPos = worldPos;
-    fragAbsSteppedObjectPos = abs((objectPos.xz)/float(size));
+    tri.fragWorldPos = worldPos;
+    tri.fragAbsSteppedObjectPos = abs((objectPos.xz)/float(size));
 
 }

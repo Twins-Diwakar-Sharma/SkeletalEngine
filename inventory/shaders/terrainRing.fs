@@ -2,7 +2,7 @@
 
 out vec4 outColor;
 
-in vec3 fragWorldPos;
+in vec3 fragWorldPosFRAG;
 
 
 struct DirectionalLight
@@ -18,8 +18,8 @@ uniform int heightMapSize;
 
 
 // debugs
-in vec2 fragAbsSteppedObjectPos;
-in float doMode;
+in vec2 fragAbsSteppedObjectPosFRAG;
+in float doModeFRAG;
 
 float getHeightFromTexture(float x, float z)
 {
@@ -44,7 +44,7 @@ float getHeightFromTexture(float x, float z)
 
 void main()
 {
-	vec3 worldPos = fragWorldPos;
+	vec3 worldPos = fragWorldPosFRAG;
 
 	float hL = getHeightFromTexture(worldPos.x-1, worldPos.z);
 	float hR = getHeightFromTexture(worldPos.x+1, worldPos.z);
@@ -62,8 +62,8 @@ void main()
 	vec4 color = vec4(1,0,0,1);
     
     // debug
-    if(fragAbsSteppedObjectPos.x > 1.5 || fragAbsSteppedObjectPos.y > 1.5)
-        color = (1.0-doMode)*vec4(0.5,0,1,1) + doMode*vec4(0,0.5,1,1);
+    if(fragAbsSteppedObjectPosFRAG.x > 1.5 || fragAbsSteppedObjectPosFRAG.y > 1.5)
+        color = (1.0-doModeFRAG)*vec4(0.5,0,1,1) + doModeFRAG*vec4(0,0.5,1,1);
 
 	outColor = vec4(diffuseColor,1.0) * color;
 	//outColor = color;
