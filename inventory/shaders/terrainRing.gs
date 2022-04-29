@@ -1,7 +1,7 @@
 #version 430
 
 layout (triangles) in;
-layout (triangle_strip, max_vertices = 3) out;
+layout (triangle_strip, max_vertices = 18) out;
 
 struct Camera
 {
@@ -61,40 +61,10 @@ float getHeightFromTexture(float x, float z)
     return heightMapValue;
 }
 
-void merge(int index)
+void worldToScreenPos(vec3 worldPos, vec3 sizedPos)
 {
-    vec3 objectPos = gl_in[index].gl_Position.xyz;
-
-    vec3 worldPos =  objectPos + vec3(position.x,0,position.y);
-    worldPos.y = getHeightFromTexture(worldPos.x,worldPos.z);
     
-    vec2 sizedPos = objectPos.xz;
-    vec2 steppedSizedPos = sizedPos + tesselatedSize*step;
-    vec2 absSteppedSizedPos = abs(steppedSizedPos);
-    vec2 absSteppedObjectPos = absSteppedSizedPos/float(size);
-    doMode = 0;
-    if(absSteppedObjectPos.y >= threshold && int(mod(absSteppedSizedPos.x,2*tesselatedSize)) == tesselatedSize)
-    {
-        doMode = 1;
-        float alpha = (absSteppedObjectPos.y - threshold)/(2.0 - threshold);
-        float heightLeft = getHeightFromTexture(worldPos.x - tesselatedSize, worldPos.z);
-        float heightRight = getHeightFromTexture(worldPos.x + tesselatedSize, worldPos.z);
-        float averageHeight = (heightLeft+heightRight)/2.0;
-        worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
-    }
-    if(absSteppedObjectPos.x >= threshold && int(mod(absSteppedSizedPos.y,2*tesselatedSize)) == tesselatedSize)
-    {
-        doMode = 1;
-        float alpha = (absSteppedObjectPos.x - threshold)/(2.0 - threshold);
-        float heightFront = getHeightFromTexture(worldPos.x, worldPos.z - tesselatedSize);
-        float heightBack = getHeightFromTexture(worldPos.x, worldPos.z + tesselatedSize);
-        float averageHeight = (heightFront+heightBack)/2.0;
-        worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
-    }
-
-    worldPos.y = 0;
-    
-	vec3 viewPos = worldPos.xyz - cam.pos;
+    vec3 viewPos = worldPos.xyz - cam.pos;
 	vec4 quatView = vec4(viewPos,0);
 	vec4 spinQuat = vec4(-cam.spin.xyz, cam.spin.w);
 	vec4 spinQuatInv = vec4(cam.spin);
@@ -106,15 +76,177 @@ void merge(int index)
 	gl_Position = projectedPos;
 
     fragWorldPos = worldPos;
-    fragAbsSteppedObjectPos = abs((objectPos.xz)/float(size));
+    fragAbsSteppedObjectPos = abs((sizedPos.xz)/float(size));
+}
 
+void createVertex(vec3 sizedPos)
+{
+    // if absSteppedSizedPos > 2 donot EmitVertex
+    vec3 worldPos = sizedPos + vec3(position.x, 0, position.y);
+    // find height 
+    worldToScreenPos(worldPos,sizedPos);
     EmitVertex();
+}
+
+void findAngleIndices(inout int indexX, inout int index90, inout int indexZ, inout vec3 sizedPos[3])
+{
+    vec2 dis[3];
+    dis[0] = normalize(sizedPos[1].xz - sizedPos[0].xz);
+    dis[1] = normalize(sizedPos[2].xz - sizedPos[1].xz);
+    dis[2] = normalize(sizedPos[0].xz - sizedPos[2].xz); 
+
+
+
+    if(dot(dis[0],dis[1]) == 0.0)
+    {
+        if(dis[0].x == 0)
+        {
+            indexZ = 0;
+            indexX = 2;
+        }
+        else
+        {
+            indexX = 0;
+            indexZ = 2;
+        }
+        index90 = 1;
+    }
+    if(dot(dis[1],dis[2]) == 0.0)
+    {
+        if(dis[1].x == 0)
+        {
+            indexZ = 1;
+            indexX = 0;
+        }
+        else
+        {
+            indexX = 1;
+            indexZ = 0;
+        }
+        index90 = 2;
+    }
+    if(dot(dis[2],dis[0]) == 0.0)
+    {
+        if(dis[2].x == 0)
+        {
+            indexZ = 2;
+            indexX = 1;
+        }
+        else
+        {
+            indexX = 2;
+            indexZ = 1;
+        }
+        index90 = 0;
+    }
+
 }
 
 void main()
 {
-    merge(0);
-    merge(1);
-    merge(2);
+    vec3 sizedPos[3];
+    sizedPos[1] = gl_in[1].gl_Position.xyz;
+    sizedPos[2] = gl_in[2].gl_Position.xyz;
+    sizedPos[0] = gl_in[0].gl_Position.xyz;
+
+    int indexX = 0;
+    int index90 = 1;
+    int indexZ = 2;
+    
+    findAngleIndices(indexX, index90, indexZ, sizedPos);
+    
+
+
+    vec2 objectPos[3];
+    objectPos[0] = gl_in[0].gl_Position.xz/size;
+    objectPos[1] = gl_in[1].gl_Position.xz/size;
+    objectPos[2] = gl_in[2].gl_Position.xz/size;
+
+    int isDefault = -200;
+    int removed = 0;
+    
+        if( step.y != 0 && (objectPos[indexZ].y == step.y*2 || objectPos[index90].y == step.y*2 || objectPos[indexX].y == step.y*2) )
+        {
+            // remove
+            isDefault = 200;
+            removed = 1;
+        }
+
+        if( step.x != 0 && (objectPos[indexZ].x == step.x*2 || objectPos[index90].x == step.x*2 || objectPos[indexX].x == step.x*2) )
+        {
+            // remove
+            isDefault = 200;
+            removed = 1;
+        }
+
+        if(removed == 0 && step.x != 0 && objectPos[indexZ].x == -step.x*2 && objectPos[index90].x == -step.x*2)
+        {
+            isDefault = 200;
+            vec3 extrudeZ = sizedPos[indexZ] -step.x*vec3(tesselatedSize,0,0);
+            vec3 extrude90 = sizedPos[index90] -step.x*vec3(tesselatedSize,0,0);
+            vec3 quadMid =  (extrudeZ + sizedPos[index90])/2.0;
+            vec3 hyptMid = (sizedPos[indexX] + sizedPos[indexZ])/2.0;
+
+            createVertex(sizedPos[indexX]);
+            createVertex(hyptMid);
+            createVertex(sizedPos[index90]);
+            createVertex(sizedPos[indexZ]);
+            createVertex(quadMid);
+            createVertex(extrudeZ);
+            createVertex(extrude90);
+            createVertex(quadMid);
+            createVertex(sizedPos[index90]);
+            if(step.y != 0) // create corner
+            {
+                vec3 botLeft = quadMid + vec3(-step.x*tesselatedSize/2,0,-step.y*tesselatedSize/2);
+                vec3 topLeft = botLeft + vec3(0,0,-step.y*tesselatedSize);
+                vec3 topRight = topLeft + vec3(step.x*tesselatedSize,0,0);
+                vec3 botRight = topRight + vec3(0,0,step.y*tesselatedSize);
+                vec3 newQuadMid = (topLeft + botRight)/2.0;
+                createVertex(sizedPos[index90]); // degenerate
+                createVertex(botLeft); // degenerate
+                createVertex(botLeft);
+                createVertex(topLeft);
+                createVertex(newQuadMid);
+                createVertex(topRight);
+                createVertex(botRight);
+                createVertex(newQuadMid);
+                createVertex(botLeft);
+            }
+
+        }
+
+        
+ 
+        if(removed == 0 && step.y != 0 && objectPos[indexX].y == -step.y*2 && objectPos[index90].y == -step.y*2)
+        {
+            isDefault = 200;
+            vec3 extrudeX = sizedPos[indexX] -step.y*vec3(0,0,tesselatedSize);
+            vec3 extrude90 = sizedPos[index90] -step.y*vec3(0,0,tesselatedSize);
+            vec3 quadMid =  (extrudeX + sizedPos[index90])/2.0;
+            vec3 hyptMid = (sizedPos[indexX] + sizedPos[indexZ])/2.0;
+
+            createVertex(sizedPos[indexZ]);
+            createVertex(hyptMid);
+            createVertex(sizedPos[index90]);
+            createVertex(sizedPos[indexX]);
+            createVertex(quadMid);
+            createVertex(extrudeX);
+            createVertex(extrude90);
+            createVertex(quadMid);
+            createVertex(sizedPos[index90]);
+        }
+
+
+        if(isDefault == -200 && removed == 0)
+        {                                               
+            vec3 newSizedPos = 0.5*(sizedPos[indexX] + sizedPos[indexZ]);
+            createVertex(newSizedPos);
+            createVertex(sizedPos[indexX]);
+            createVertex(sizedPos[index90]);
+            createVertex(sizedPos[indexZ]);
+        }
+      
     EndPrimitive();
+
 }

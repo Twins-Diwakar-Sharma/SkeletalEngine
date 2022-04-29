@@ -55,15 +55,15 @@ void Engine::initialize()
     testObject->setPosition(0,-2,-8);
     objects.push_back(testObject);
 
-    Mesh* planeMesh = new Mesh();
-    planeMesh->createPlane();
-    meshes.push_back(planeMesh);
-    Texture* planeTex = new Texture("path");
-    textures.push_back(planeTex);
-    Object* plane = new Object(planeMesh,planeTex);
-    plane->setPosition(0,-2,-8);
-    plane->setScale(25,0,25);
-    objects.push_back(plane);
+   // Mesh* planeMesh = new Mesh();
+   // planeMesh->createPlane();
+  //  meshes.push_back(planeMesh);
+ //   Texture* planeTex = new Texture("path");
+//    textures.push_back(planeTex);
+   // Object* plane = new Object(planeMesh,planeTex);
+//    plane->setPosition(0,-2,-8);
+  //  plane->setScale(25,0,25);
+ //   objects.push_back(plane);
 
     cam = new Camera();
 	cam->setPosition(0,1,0);
@@ -76,12 +76,16 @@ void Engine::initialize()
 
     // problem makers 
     terrain = new Terrain();
-    terrain->reconfigure(32,8);
+    terrain->reconfigure(8,4);  
     terrainRenderer = new TerrainRenderer();
     
 
     heightMap = new HeightMap();
     heightMap->setHeightMapTexture("heightMap");
+
+    int maxOutVert;
+    glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES, &maxOutVert);
+    std::cout << "Hard limit " << maxOutVert << std::endl;
 }
 
 void Engine::input()

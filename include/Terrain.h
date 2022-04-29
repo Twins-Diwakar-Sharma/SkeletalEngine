@@ -10,10 +10,10 @@
 class Terrain
 {
 private:
-    int startScale=32;
-    int lod=32;
+    int startScale=2;
+    int lod=2;
     int startTesselatedSize;
-    int noOfRings=2;
+    int noOfRings=0;
    
     std::vector<TerrainPlane*> planes;
     Vec2 distance;
