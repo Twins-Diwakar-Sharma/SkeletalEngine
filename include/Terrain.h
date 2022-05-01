@@ -13,7 +13,7 @@ private:
     int startScale=2;
     int lod=2;
     int startTesselatedSize;
-    int noOfRings=0;
+    int noOfRings=2;
    
     std::vector<TerrainPlane*> planes;
     Vec2 distance;

@@ -41,7 +41,7 @@ void Engine::loop()
 
 void Engine::initialize()
 {
-    proj::setPerspective(60.0f,0.1f,1000.0f,window->getAspect());
+    proj::setPerspective(60.0f,0.1f,10000.0f,window->getAspect());
     
     window = new Window();
     objectsRenderer = new Renderer();
@@ -76,16 +76,13 @@ void Engine::initialize()
 
     // problem makers 
     terrain = new Terrain();
-    terrain->reconfigure(8,4);  
+    terrain->reconfigure(128,16);  
     terrainRenderer = new TerrainRenderer();
     
 
     heightMap = new HeightMap();
     heightMap->setHeightMapTexture("heightMap");
 
-    int maxOutVert;
-    glGetIntegerv(GL_MAX_GEOMETRY_OUTPUT_VERTICES, &maxOutVert);
-    std::cout << "Hard limit " << maxOutVert << std::endl;
 }
 
 void Engine::input()
@@ -125,7 +122,7 @@ void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectsRenderer->render(objects, cam, sun);
+   // objectsRenderer->render(objects, cam, sun);
     if(wireframe)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else

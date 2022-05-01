@@ -22,7 +22,6 @@ TerrainRenderer::~TerrainRenderer()
 
 void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)
 {
-   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glPatchParameteri(GL_PATCH_VERTICES, 4);
 
@@ -62,7 +61,4 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap
     terrain->unbindMesh();
 
     ringShaderProgram->unuse();
-
-
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
