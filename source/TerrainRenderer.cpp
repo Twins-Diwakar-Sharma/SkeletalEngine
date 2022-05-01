@@ -2,7 +2,7 @@
 
 TerrainRenderer::TerrainRenderer()
 {
-    ringShaderProgram = new ShaderProgram("terrainRing",TESS);
+    ringShaderProgram = new ShaderProgram("terrainRing",GEOTESS);
     ringShaderProgram->mapUniform("projection");
     ringShaderProgram->mapCameraUniform("cam");
     ringShaderProgram->mapUniform("size");
@@ -14,7 +14,7 @@ TerrainRenderer::TerrainRenderer()
     ringShaderProgram->mapUniform("step");
     ringShaderProgram->mapUniform("tesselatedSize");
 
-    plankShaderProgram = new ShaderProgram("terrainPlank",TESS);
+    plankShaderProgram = new ShaderProgram("terrainPlank",GEOTESS);
     plankShaderProgram->mapUniform("projection");
     plankShaderProgram->mapCameraUniform("cam");
     plankShaderProgram->mapUniform("size");
@@ -34,7 +34,6 @@ TerrainRenderer::~TerrainRenderer()
 
 void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)
 {
-   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     glPatchParameteri(GL_PATCH_VERTICES, 4);
 
@@ -76,9 +75,8 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap
     ringShaderProgram->unuse();
 
     // render planks now
-    renderPlanks(terrain, cam, heightMap, sun);
+   // renderPlanks(terrain, cam, heightMap, sun);
 
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)

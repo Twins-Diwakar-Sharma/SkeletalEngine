@@ -18,9 +18,19 @@ uniform sampler2D heightMap;
 uniform int heightMapSize;
 uniform vec2 step;
 
-out vec3 fragWorldPos;
 
 const float threshold=1.5f;
+
+
+
+
+out GEO
+{
+    vec3 pos;
+    float doMode;
+    vec2 fragAbsAdjustedObjectPos;
+    vec3 fragWorldPos;
+} geoOut;
 
 vec4 quatRotate(vec4 action, vec4 victim)
 {
@@ -70,59 +80,75 @@ void main()
     p[2] * u * v;
 
 
+
+    float ringSize = size.x;
+    float tesselatedSize = size.y;
+
     vec3 sizedPos = interpolatedPos.xyz;
+/*
+    if(step.x == 1)
+    {
+        sizedPos.x = sizedPos.x - tesselatedSize;
+    }
+    if(step.x == -1)
+    {
+        sizedPos.x = sizedPos.x + tesselatedSize;
+    }
+
+    if(step.y == 1)
+    {
+        sizedPos.y
+    }*/
 
     vec3 worldPos =  sizedPos + vec3(position.x,0,position.y);
+
+    // cut if 0
+    if(rotate == 1 && sizedPos.x == 0)
+    {
+        worldPos.x = worldPos.x - tesselatedSize/2;  
+    }
+    if(rotate == 0 && sizedPos.y == 0)
+    {
+        worldPos.y = worldPos.y - tesselatedSize/2;
+    }
+
     worldPos.y = getHeightFromTexture(worldPos.x,worldPos.z);
-    
-    vec2 absSizedPos = abs(sizedPos.xz);
-    vec2 absShiftedObjectPos = sizedPos.xz;
+
+
+    vec2 adjustedSizedPos = sizedPos.xz;
     if(rotate == 1)
-        absShiftedObjectPos.x += -step.x*(2*size.x + 0.5*size.y);
+        adjustedSizedPos.x = adjustedSizedPos.x -step.x*(2*ringSize - 0.5*tesselatedSize);
     else
-        absShiftedObjectPos.y += -step.y*(2*size.x + 0.5*size.y);
+        adjustedSizedPos.y = adjustedSizedPos.y -step.y*(2*ringSize - 0.5*tesselatedSize);
+    
+    vec2 absAdjustedSizedPos = abs(adjustedSizedPos);
+    vec2 absAdjustedObjectPos = absAdjustedSizedPos/ringSize;
+    
+    geoOut.doMode = 0;
+    if(absAdjustedObjectPos.y >= threshold && int(mod(absAdjustedSizedPos.x,2*tesselatedSize)) == tesselatedSize)
+    {
+        geoOut.doMode = 1;
+        float alpha = (absAdjustedObjectPos.y - threshold)/(2.0 - threshold);
+        float heightLeft = getHeightFromTexture(worldPos.x - tesselatedSize, worldPos.z);
+        float heightRight = getHeightFromTexture(worldPos.x + tesselatedSize, worldPos.z);
+        float averageHeight = (heightLeft+heightRight)/2.0;
+        worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
+    }
+    if(absAdjustedObjectPos.x >= threshold && int(mod(absAdjustedSizedPos.y,2*tesselatedSize)) == tesselatedSize)
+    {
+        geoOut.doMode = 1;
+        float alpha = (absAdjustedObjectPos.x - threshold)/(2.0 - threshold); 
+        float heightFront = getHeightFromTexture(worldPos.x, worldPos.z - tesselatedSize);
+        float heightBack = getHeightFromTexture(worldPos.x, worldPos.z + tesselatedSize);
+        float averageHeight = (heightFront+heightBack)/2.0;
+        worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
+    }
 
-    absShiftedObjectPos = abs(absShiftedObjectPos/size.x);
+    
 
-  //  if(rotate == 1) // vertical
- //   {
-        if(int(mod(absSizedPos.y,2*size.y)) == size.y )
-        {
-            float alpha = 1;
-            if( (sizedPos.x >= 0 && step.x >= 0) || (sizedPos.x <= 0 && step.x <= 0) )
-                alpha = (2.0 - (size.y/size.x) - threshold)/(2.0 - threshold);
-            float heightFront = getHeightFromTexture(worldPos.x, worldPos.z - size.y);
-            float heightBack = getHeightFromTexture(worldPos.x, worldPos.z + size.y);
-            float averageHeight = (heightFront+heightBack)/2.0;
-            worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
-        }
- //   }  
- //   else    // horizontal
- //   {
-        if(int(mod(absSizedPos.x,2*size.y)) == size.y )
-        {
-            float alpha = 1;
-            if( (sizedPos.y >= 0 && step.y >= 0) || (sizedPos.y <= 0 && step.y <= 0) )
-                alpha = (2.0 - (size.y/size.x) - threshold)/(2.0 - threshold);
-            float heightLeft = getHeightFromTexture(worldPos.x - size.y, worldPos.z);
-            float heightRight = getHeightFromTexture(worldPos.x + size.y, worldPos.z);
-            float averageHeight = (heightLeft+heightRight)/2.0;
-            worldPos.y = (1.0 - alpha)*worldPos.y + alpha*averageHeight;
-        }
- //   }  
+    geoOut.pos = worldPos;
+    geoOut.fragWorldPos = worldPos;
 
-	vec3 viewPos = worldPos.xyz - cam.pos;
-	vec4 quatView = vec4(viewPos,0);
-	vec4 spinQuat = vec4(-cam.spin.xyz, cam.spin.w);
-	vec4 spinQuatInv = vec4(cam.spin);
-
-	quatView = quatRotate(quatView, spinQuatInv);
-	quatView = quatRotate(spinQuat, quatView);
-
-	vec4 projectedPos = projection * vec4(quatView.xyz,1.0);
-
-
-	gl_Position = projectedPos;
-    fragWorldPos = worldPos;
+    geoOut.fragAbsAdjustedObjectPos = absAdjustedObjectPos;
 
 }

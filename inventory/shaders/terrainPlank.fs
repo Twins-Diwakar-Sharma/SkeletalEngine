@@ -15,6 +15,9 @@ uniform DirectionalLight sun;
 uniform sampler2D heightMap;
 uniform int heightMapSize;
 
+in float doMode;
+in vec2 fragAbsAdjustedObjectPos;
+
 float getHeightFromTexture(float x, float z)
 {
     // rescale x,z from [-heightMapSize/2,+heightMapSize/2] in [0,1] scale
@@ -54,6 +57,8 @@ void main()
 	float diffuse = max(dot(toLight,fragNorm),0.3);
 	vec3 diffuseColor = diffuse*sun.col;
 	vec4 color = vec4(1,1,0,1);
+    if(fragAbsAdjustedObjectPos.x > 1.5 || fragAbsAdjustedObjectPos.y > 1.5)
+        color = (1.0-doMode)*vec4(0,0,1,1) + doMode*vec4(1,1,0,1);
 	outColor = vec4(diffuseColor,1.0) * color;
 	
 }

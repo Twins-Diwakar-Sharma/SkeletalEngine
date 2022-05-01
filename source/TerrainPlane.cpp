@@ -28,8 +28,6 @@ void TerrainPlane::update(Vec2& dir)
 {
     step = step + dir;
     position = position + tesselatedSize*dir; 
-    horizontalPlank.position = position + Vec2(-step[0]*tesselatedSize,-step[1]*(2*scale + 0.5*tesselatedSize));
-    verticalPlank.position = position + Vec2(-step[0]*(2*scale + 0.5*tesselatedSize),-step[1]*tesselatedSize); 
 
     bool change = false;
     dir[0] = 0;
@@ -59,6 +57,9 @@ void TerrainPlane::update(Vec2& dir)
         change = true;
         dir[1] = -1;
     }
+
+    horizontalPlank.position = position + Vec2(-step[0]*tesselatedSize,-step[1]*(2*scale + 0.5*tesselatedSize));
+    verticalPlank.position = position + Vec2(-step[0]*(2*scale + 0.5*tesselatedSize),-step[1]*tesselatedSize); 
 
     if(change && coarse)
     {

@@ -13,8 +13,8 @@ void main()
 	if(rotate == 1)
 	{
 		mat2 rot = mat2(
-			0, -1,	// first column
-			1, 0	// second column
+			0, 1,	// first column
+			-1, 0	// second column
 		);
 
 		sizedPos = rot * sizedPos;
