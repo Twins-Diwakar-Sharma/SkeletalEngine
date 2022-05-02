@@ -16,10 +16,10 @@ uniform DirectionalLight sun;
 uniform sampler2D heightMap;
 uniform int heightMapSize;
 
+const float threshold = 1.5f;
 
 // debugs
 in vec2 fragAbsSteppedObjectPos;
-in float doMode;
 
 float getHeightFromTexture(float x, float z)
 {
@@ -62,8 +62,9 @@ void main()
 	vec4 color = vec4(1,0,0,1);
     
     // debug
-    if(fragAbsSteppedObjectPos.x > 1.5 || fragAbsSteppedObjectPos.y > 1.5)
-        color = (1.0-doMode)*vec4(0,0,1,1) + doMode*vec4(0,1,0,1);
+
+    if(fragAbsSteppedObjectPos.x > threshold || fragAbsSteppedObjectPos.y > threshold)
+        color = vec4(1,0,0.4,1);
 
 	outColor = vec4(diffuseColor,1.0) * color;
 	//outColor = color;

@@ -10,8 +10,8 @@
 class Terrain
 {
 private:
-    int startScale=32;
-    int lod=32;
+    int startScale=2;
+    int lod=2;
     int startTesselatedSize;
     int noOfRings=2;
    

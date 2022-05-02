@@ -13,18 +13,6 @@ TerrainRenderer::TerrainRenderer()
     ringShaderProgram->mapDirectionalLightUniform("sun");
     ringShaderProgram->mapUniform("step");
     ringShaderProgram->mapUniform("tesselatedSize");
-
-    plankShaderProgram = new ShaderProgram("terrainPlank",GEOTESS);
-    plankShaderProgram->mapUniform("projection");
-    plankShaderProgram->mapCameraUniform("cam");
-    plankShaderProgram->mapUniform("size");
-    plankShaderProgram->mapUniform("LOD");
-    plankShaderProgram->mapUniform("position");
-    plankShaderProgram->mapUniform("rotate");
-    plankShaderProgram->mapUniform("heightMap");
-    plankShaderProgram->mapUniform("heightMapSize");
-    plankShaderProgram->mapDirectionalLightUniform("sun");
-    plankShaderProgram->mapUniform("step");
 }
 
 TerrainRenderer::~TerrainRenderer()
@@ -74,60 +62,4 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap
 
     ringShaderProgram->unuse();
 
-    // render planks now
-   // renderPlanks(terrain, cam, heightMap, sun);
-
-}
-
-void TerrainRenderer::renderPlanks(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)
-{
-
-    glPatchParameteri(GL_PATCH_VERTICES, 4);
-
-    plankShaderProgram->use();
-
-    plankShaderProgram->setUniform("LOD", terrain->getLod());
-	plankShaderProgram->setUniform("projection", proj::perspective);
-	plankShaderProgram->setUniform("cam", *cam);
-    plankShaderProgram->setUniform("heightMap",0);
-    plankShaderProgram->setUniform("heightMapSize", heightMap->mapSize);
-    plankShaderProgram->setUniform("sun", *sun);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, heightMap->getTextureId());
-
-
-
-    Vec2 size(1,1);    // size should be Vec2(size, tesselatedSize)
-    terrain->bindPlankMesh();
-
-
-    for(int i=0; i<terrain->getNoOfRings()+1; i++)
-    {
-        size[0] = terrain->getPlanes(i)->scale;
-        size[1] = terrain->getPlanes(i)->tesselatedSize;
-        plankShaderProgram->setUniform("size", size);
-        plankShaderProgram->setUniform("step", terrain->getPlanes(i)->step);
-
-        if(terrain->getPlanes(i)->step[1] != 0)
-        {
-            glEnableVertexAttribArray(0);
-            plankShaderProgram->setUniform("position", terrain->getPlanes(i)->horizontalPlank.position);
-            plankShaderProgram->setUniform("rotate",0);
-            glDrawElements(GL_PATCHES, terrain->getPlankMeshIndicesSize(), GL_UNSIGNED_INT, 0);  
-            glDisableVertexAttribArray(0);
-        }
-
-        if(terrain->getPlanes(i)->step[0] != 0)
-        {
-            glEnableVertexAttribArray(0);
-            plankShaderProgram->setUniform("position", terrain->getPlanes(i)->verticalPlank.position);
-            plankShaderProgram->setUniform("rotate",1);
-            glDrawElements(GL_PATCHES, terrain->getPlankMeshIndicesSize(), GL_UNSIGNED_INT, 0);  
-            glDisableVertexAttribArray(0);
-        }
-    }
-    terrain->unbindMesh();
-
-    plankShaderProgram->unuse();
 }

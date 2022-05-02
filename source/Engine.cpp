@@ -41,7 +41,7 @@ void Engine::loop()
 
 void Engine::initialize()
 {
-    proj::setPerspective(60.0f,0.1f,1000.0f,window->getAspect());
+    proj::setPerspective(60.0f,0.1f,10000.0f,window->getAspect());
     
     window = new Window();
     objectsRenderer = new Renderer();
@@ -55,15 +55,15 @@ void Engine::initialize()
     testObject->setPosition(0,-2,-8);
     objects.push_back(testObject);
 
-    Mesh* planeMesh = new Mesh();
-    planeMesh->createPlane();
-    meshes.push_back(planeMesh);
-    Texture* planeTex = new Texture("path");
-    textures.push_back(planeTex);
-    Object* plane = new Object(planeMesh,planeTex);
-    plane->setPosition(0,-2,-8);
-    plane->setScale(25,0,25);
-    objects.push_back(plane);
+   // Mesh* planeMesh = new Mesh();
+   // planeMesh->createPlane();
+  //  meshes.push_back(planeMesh);
+ //   Texture* planeTex = new Texture("path");
+//    textures.push_back(planeTex);
+   // Object* plane = new Object(planeMesh,planeTex);
+//    plane->setPosition(0,-2,-8);
+  //  plane->setScale(25,0,25);
+ //   objects.push_back(plane);
 
     cam = new Camera();
 	cam->setPosition(0,1,0);
@@ -74,14 +74,15 @@ void Engine::initialize()
     glEnable(GL_DEPTH_TEST);
 
 
-    // problem makers
+    // problem makers 
     terrain = new Terrain();
-    terrain->reconfigure(32,8);
+    terrain->reconfigure(128,16);  
     terrainRenderer = new TerrainRenderer();
     
 
     heightMap = new HeightMap();
     heightMap->setHeightMapTexture("heightMap");
+
 }
 
 void Engine::input()
@@ -121,7 +122,7 @@ void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectsRenderer->render(objects, cam, sun);
+   // objectsRenderer->render(objects, cam, sun);
     if(wireframe)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
