@@ -76,12 +76,8 @@ void Engine::initialize()
 
     // problem makers 
     terrain = new Terrain();
-    terrain->reconfigure(128,16);  
+    terrain->reconfigure(128,32);  
     terrainRenderer = new TerrainRenderer();
-    
-
-    heightMap = new HeightMap();
-    heightMap->setHeightMapTexture("heightMap");
 
 }
 
@@ -127,7 +123,7 @@ void Engine::render(double dt)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    terrainRenderer->render(terrain,cam,heightMap,sun);
+    terrainRenderer->render(terrain,cam,sun);
     window->swap();
 }
 
@@ -148,6 +144,5 @@ void Engine::clean()
     delete window;
     delete cam;
     delete objectsRenderer;
-    delete heightMap;
      
 }

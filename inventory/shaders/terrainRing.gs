@@ -12,9 +12,6 @@ struct Camera
 uniform mat4 projection;
 uniform Camera cam;
 
-uniform sampler2D heightMap;
-uniform int heightMapSize;
-
 uniform int size;
 uniform int tesselatedSize;
 uniform vec2 step;
@@ -22,7 +19,8 @@ uniform vec2 position;
 
 out vec3 fragWorldPos;
 
-const float threshold=1.30f;
+const float threshold=1.20;
+const float noiseSpan = 128;
 
 
 // debugs
@@ -32,32 +30,60 @@ out vec2 fragAbsSteppedObjectPosFRAG;
 out float doModeFRAG;
 out vec3 fragWorldPosFRAG;
 
+// random value between -1 and 1
+vec2 randomVec2(vec2 st)
+{
+    st = vec2( dot(st,vec2(0.650,-0.420)),
+              dot(st,vec2(-0.290,0.260)) );
+    return -1.0 + 2.0*fract(sin(st)*12024.561);
+}
+
+// this needs a global const variable : noiseSpan 
+float perlinNoise(vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+   // vec2 u = f*f*(3.0-2.0*f);
+    vec2 u = f*f*f*(f*(f*6.0-15.0)+10.0);
+    return mix( mix( dot( randomVec2(i + vec2(0.0,0.0) ), f - vec2(0.0,0.0) ),
+                     dot( randomVec2(i + vec2(1.0,0.0) ), f - vec2(1.0,0.0) ), u.x),
+                mix( dot( randomVec2(i + vec2(0.0,1.0) ), f - vec2(0.0,1.0) ),
+                     dot( randomVec2(i + vec2(1.0,1.0) ), f - vec2(1.0,1.0) ), u.x), u.y);
+}
+
+float fbm (vec2 p) 
+{
+  
+    // Initial values
+    float value = 0.0;
+    float amplitude = 1;
+
+    // Loop of octaves
+    int OCTAVES = 4;
+    for (int i = 0; i < OCTAVES; i++) 
+    {
+        value += amplitude * perlinNoise(p);
+        p *= 2.0;
+        amplitude *= 0.5;
+    }
+    return value;
+}
+
+float getProceduralHeight(float x, float z)
+{
+   vec2 p = vec2(x,z)/noiseSpan;
+   float value = fbm(p);
+  // float value = perlinNoise(p);
+   float height = value * noiseSpan;
+   return height;
+
+}
+
 vec4 quatRotate(vec4 action, vec4 victim)
 {
 	float ar = action.w;	float br = victim.w;
 	vec3 av = action.xyz;	vec3 bv = victim.xyz;
 	return vec4(ar*bv + br*av + cross(av,bv), ar*br - dot(av,bv));
-}
-
-float getHeightFromTexture(float x, float z)
-{
-    // rescale x,z from [-heightMapSize/2,+heightMapSize/2] in [0,1] scale
-    x = x + heightMapSize/2.0;
-    z = -z; // because -ve z is top
-    z = z + heightMapSize/2.0;
-    x = x/float(heightMapSize);
-    z = z/float(heightMapSize);
-
-    // get heightMapValue
-    vec4 heightMapColor = texture(heightMap,vec2(x,z));
-    float heightMapValue = heightMapColor.r;
-
-    // rescale heightMapValue from [0,1] to [-heightMapSize/2,+heightMapSize/2]
-    heightMapValue = 2*heightMapValue;
-    heightMapValue = heightMapValue - 1;
-    heightMapValue = heightMapValue * heightMapSize/2;
-
-    return heightMapValue;
 }
 
 void worldToScreenPos(vec3 worldPos, vec3 sizedPos)
@@ -82,7 +108,7 @@ void worldToScreenPos(vec3 worldPos, vec3 sizedPos)
 
 float getDefaultVertexHeight(vec3 worldPos, vec3 sizedPos)
 {
-    worldPos.y = getHeightFromTexture(worldPos.x,worldPos.z);
+    worldPos.y = getProceduralHeight(worldPos.x,worldPos.z);
     vec2 steppedSizedPos = sizedPos.xz + tesselatedSize*step;
     vec2 absSteppedSizedPos = abs(steppedSizedPos);
     vec2 absSteppedObjectPos = absSteppedSizedPos/float(size);
@@ -102,14 +128,14 @@ float getDefaultVertexHeight(vec3 worldPos, vec3 sizedPos)
             float averageHeight = 0;
             if(moddedValue.x == tesselatedSize)
             {
-                float heightLeft = getHeightFromTexture(worldPos.x - tesselatedSize,worldPos.z);
-                float heightRight = getHeightFromTexture(worldPos.x + tesselatedSize,worldPos.z);
+                float heightLeft = getProceduralHeight(worldPos.x - tesselatedSize,worldPos.z);
+                float heightRight = getProceduralHeight(worldPos.x + tesselatedSize,worldPos.z);
                 averageHeight = (heightLeft + heightRight)/2.0;
-            }
+            } 
             else if(moddedValue.y == tesselatedSize)
             {
-                float heightTop = getHeightFromTexture(worldPos.x,worldPos.z - tesselatedSize);
-                float heightBot = getHeightFromTexture(worldPos.x,worldPos.z + tesselatedSize);
+                float heightTop = getProceduralHeight(worldPos.x,worldPos.z - tesselatedSize);
+                float heightBot = getProceduralHeight(worldPos.x,worldPos.z + tesselatedSize);
                 averageHeight = (heightTop + heightBot)/2.0;
             }
 
@@ -123,7 +149,7 @@ float getDefaultVertexHeight(vec3 worldPos, vec3 sizedPos)
 
 float getQuadMidHeight(inout vec3 worldPos, vec3 sizedPos)
 {
-    worldPos.y = getHeightFromTexture(worldPos.x,worldPos.z);
+    worldPos.y = getProceduralHeight(worldPos.x,worldPos.z);
     vec2 steppedSizedPos = sizedPos.xz + tesselatedSize*step;
     vec2 absSteppedSizedPos = abs(steppedSizedPos);
     vec2 absSteppedObjectPos = absSteppedSizedPos/float(size);
@@ -142,14 +168,14 @@ float getQuadMidHeight(inout vec3 worldPos, vec3 sizedPos)
         moddedValue.y = int(mod(absSteppedSizedPos.y,2*tesselatedSize));
         if( moddedValue.x != moddedValue.y)
         {
-            float heightLeftTop = getHeightFromTexture(worldPos.x-tesselatedSize/2, worldPos.z-tesselatedSize/2);
-            float heightRightBot = getHeightFromTexture(worldPos.x+tesselatedSize/2, worldPos.z+tesselatedSize/2);
+            float heightLeftTop = getProceduralHeight(worldPos.x-tesselatedSize/2, worldPos.z-tesselatedSize/2);
+            float heightRightBot = getProceduralHeight(worldPos.x+tesselatedSize/2, worldPos.z+tesselatedSize/2);
             averageHeight = (heightLeftTop + heightRightBot)/2.0;
         }
         else
         {
-            float heightLeftBot = getHeightFromTexture(worldPos.x-tesselatedSize/2, worldPos.z+tesselatedSize/2);
-            float heightRightTop = getHeightFromTexture(worldPos.x+tesselatedSize/2,worldPos.z-tesselatedSize/2);
+            float heightLeftBot = getProceduralHeight(worldPos.x-tesselatedSize/2, worldPos.z+tesselatedSize/2);
+            float heightRightTop = getProceduralHeight(worldPos.x+tesselatedSize/2,worldPos.z-tesselatedSize/2);
             averageHeight = (heightLeftBot + heightRightTop)/2.0;
         }
         worldPos.y = (1.0 - maxAlpha)*worldPos.y + maxAlpha*averageHeight;
@@ -225,6 +251,9 @@ void findAngleIndices(inout int indexX, inout int index90, inout int indexZ, ino
     }
 
 }
+
+
+
 
 void main()
 {

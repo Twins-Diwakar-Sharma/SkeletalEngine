@@ -12,7 +12,6 @@
 #include "PlatformMesh.h"
 #include "TerrainRenderer.h"
 #include "PlankMesh.h"
-#include "HeightMap.h"
 
 #include "Window.h"
 class Engine
@@ -45,7 +44,6 @@ private:
     // Problem makers
     TerrainRenderer* terrainRenderer;
     Terrain* terrain;
-    HeightMap* heightMap;
 
     bool hold=false;
     bool wireframe=false;

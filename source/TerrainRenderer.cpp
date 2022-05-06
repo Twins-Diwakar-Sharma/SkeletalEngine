@@ -8,8 +8,6 @@ TerrainRenderer::TerrainRenderer()
     ringShaderProgram->mapUniform("size");
     ringShaderProgram->mapUniform("LOD");
     ringShaderProgram->mapUniform("position");
-    ringShaderProgram->mapUniform("heightMap");
-    ringShaderProgram->mapUniform("heightMapSize");
     ringShaderProgram->mapDirectionalLightUniform("sun");
     ringShaderProgram->mapUniform("step");
     ringShaderProgram->mapUniform("tesselatedSize");
@@ -20,7 +18,7 @@ TerrainRenderer::~TerrainRenderer()
     delete ringShaderProgram;
 }
 
-void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun)
+void TerrainRenderer::render(Terrain* terrain, Camera* cam, DirectionalLight* sun)
 {
 
     glPatchParameteri(GL_PATCH_VERTICES, 4);
@@ -30,12 +28,7 @@ void TerrainRenderer::render(Terrain* terrain, Camera* cam, HeightMap* heightMap
     ringShaderProgram->setUniform("LOD", terrain->getLod());
 	ringShaderProgram->setUniform("projection", proj::perspective);
 	ringShaderProgram->setUniform("cam", *cam);
-    ringShaderProgram->setUniform("heightMap",0);
-    ringShaderProgram->setUniform("heightMapSize", heightMap->mapSize);
     ringShaderProgram->setUniform("sun", *sun);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, heightMap->getTextureId());
 
     terrain->bindPlatformMesh();
     glEnableVertexAttribArray(0);

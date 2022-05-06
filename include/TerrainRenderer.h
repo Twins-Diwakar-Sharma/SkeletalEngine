@@ -10,7 +10,6 @@
 #include <vector>
 #include "Terrain.h"
 #include "PlankMesh.h"
-#include "HeightMap.h"
 
 class TerrainRenderer
 {
@@ -19,7 +18,7 @@ private:
 public:
     TerrainRenderer();
     ~TerrainRenderer();  
-    void render(Terrain* terrain, Camera* cam, HeightMap* heightMap, DirectionalLight* sun);
+    void render(Terrain* terrain, Camera* cam, DirectionalLight* sun);
     
 };
 
