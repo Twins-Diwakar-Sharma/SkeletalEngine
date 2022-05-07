@@ -22,13 +22,8 @@ out vec3 fragWorldPos;
 const float threshold=1.20;
 const float noiseSpan = 128;
 
+out vec3 camPos;
 
-// debugs
-out vec2 fragAbsSteppedObjectPos;
-
-out vec2 fragAbsSteppedObjectPosFRAG;
-out float doModeFRAG;
-out vec3 fragWorldPosFRAG;
 
 // random value between -1 and 1
 vec2 randomVec2(vec2 st)
@@ -56,10 +51,10 @@ float fbm (vec2 p)
   
     // Initial values
     float value = 0.0;
-    float amplitude = 1;
+    float amplitude = 0.5;
 
     // Loop of octaves
-    int OCTAVES = 4;
+    int OCTAVES = 5;
     for (int i = 0; i < OCTAVES; i++) 
     {
         value += amplitude * perlinNoise(p);
@@ -101,8 +96,7 @@ void worldToScreenPos(vec3 worldPos, vec3 sizedPos)
 	gl_Position = projectedPos;
 
     fragWorldPos = worldPos;
-    fragAbsSteppedObjectPos = abs((sizedPos.xz + tesselatedSize*step))/float(size);
-   //fragAbsSteppedObjectPos = abs((sizedPos.xz))/float(size);
+
 }
 
 
@@ -257,6 +251,7 @@ void findAngleIndices(inout int indexX, inout int index90, inout int indexZ, ino
 
 void main()
 {
+    camPos = cam.pos;
     vec3 sizedPos[3];
     sizedPos[1] = gl_in[1].gl_Position.xyz;
     sizedPos[2] = gl_in[2].gl_Position.xyz;
@@ -277,6 +272,8 @@ void main()
 
     int isDefault = -200;
     int removed = 0;
+
+
     
     if( step.y != 0 && (objectPos[indexZ].y == step.y*2 || objectPos[index90].y == step.y*2 || objectPos[indexX].y == step.y*2) )
     {

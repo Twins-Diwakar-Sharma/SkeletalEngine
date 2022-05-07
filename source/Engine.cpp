@@ -68,7 +68,7 @@ void Engine::initialize()
     cam = new Camera();
 	cam->setPosition(0,1,0);
 
-    sun = new DirectionalLight(Vec3(-1,-1,-1),Vec3(1,1,1));
+    sun = new DirectionalLight(Vec3(-1,-1,-1),Vec3(1,1,0.9));
 
     glClearColor(0.8f,0.9f,1,1);
     glEnable(GL_DEPTH_TEST);
@@ -76,7 +76,7 @@ void Engine::initialize()
 
     // problem makers 
     terrain = new Terrain();
-    terrain->reconfigure(128,32);  
+    terrain->reconfigure(128,16);  
     terrainRenderer = new TerrainRenderer();
 
 }

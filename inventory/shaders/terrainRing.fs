@@ -12,13 +12,11 @@ struct DirectionalLight
 };
 
 uniform DirectionalLight sun;
-uniform vec2 position;
 
 const float threshold = 1.20;
 const float noiseSpan = 128;
 
-// debugs
-in vec2 fragAbsSteppedObjectPos;
+in vec3 camPos;
 
 // random value between -1 and 1
 vec2 randomVec2(vec2 st)
@@ -45,7 +43,7 @@ float fbm(vec2 p)
   
     // Initial values
     float value = 0.0;
-    float amplitude = 1;
+    float amplitude = 0.5;
 
     // Loop of octaves
     int OCTAVES = 12;
@@ -86,6 +84,7 @@ vec3 getNormal(float x, float y)
 
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const float exp =  2.7182818;
@@ -97,20 +96,33 @@ void main()
 	vec3 fragNorm = getNormal(worldPos.x,worldPos.z);
 
 	vec3 toLight = normalize(-1*sun.dir);	
-	float diffuse = max(dot(toLight,fragNorm),0.1);
-	vec3 diffuseColor = diffuse*sun.col;
-	vec4 color = vec4(0.67, 0.45, 0.2, 1);
+	float diffuse = max(dot(toLight,fragNorm),0.2);
+    vec3 sunCol = vec3(1,1,0.8);
+	vec3 diffuseColor = diffuse*sunCol;
+	vec4 color = vec4(0.86, 0.56, 0.5, 1);
+   // vec4 color = vec4(0.1,0.1,0.4,1);
+
+    float grassLambda = smoothstep(0.7,0.9,fragNorm.y);
+   // vec3 grassColor = vec3(0.42, 0.52, 0.09);
+    vec3 grassColor = vec3(0.4,0.3,0.4);
+    color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);
     
-    // debug
- //   if(fragAbsSteppedObjectPos.x > threshold || fragAbsSteppedObjectPos.y > threshold)
- //       color = vec4(0.57, 0.35, 0.1, 1);
 
 	outColor = vec4(diffuseColor,1.0) * color;
+
 	//outColor = color;
 
-    float t = length(worldPos.xz - position);
-    float lamda = clamp(pow(exp,-0.005*t),0,1);
+    float t = length(worldPos.xz - camPos.xz);
+    //float lamda = pow(exp,-0.005*t);
+    vec4 lamda = vec4(pow(exp,-0.004*t),pow(exp,-0.008*t),pow(exp,-0.016*t),1);
+    vec4 fogColor = vec4(0.51,0.51,0.51,1);
+    outColor = (vec4(1.0) - lamda)*fogColor + lamda*outColor;
 
-    vec4 fogColor = vec4(0.8,0.8,0.8,1);
-    outColor = (1.0 - lamda)*fogColor + lamda*outColor;
+
+
+    vec3 skyColor = vec3(0.8,0.9,1);
+    outColor.rgb += ((1 + fragNorm.y)/20.0)*skyColor;
+    outColor.rgb += sunCol/10;
+
+    outColor.rgb = smoothstep(0,1,outColor.rgb);
 }
