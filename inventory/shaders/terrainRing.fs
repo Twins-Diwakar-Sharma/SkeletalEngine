@@ -49,7 +49,7 @@ float fbm(vec2 p)
     int OCTAVES = 12;
     for (int i = 0; i < OCTAVES; i++) 
     {
-        value += amplitude * perlinNoise(p);
+        value += amplitude * abs(perlinNoise(p));
         p *= 2.0;
         amplitude *= 0.5;
     }
@@ -102,11 +102,17 @@ void main()
 	vec4 color = vec4(0.86, 0.56, 0.5, 1);
    // vec4 color = vec4(0.1,0.1,0.4,1);
 
-    float grassLambda = smoothstep(0.7,0.9,fragNorm.y);
+    float stoneLambda = smoothstep(0.4,0.75,fragNorm.y);
    // vec3 grassColor = vec3(0.42, 0.52, 0.09);
-    vec3 grassColor = vec3(0.4,0.3,0.4);
-    color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);
+    vec3 stoneColor = vec3(0.4,0.3,0.4);
+    color.rgb = (1.0 - stoneLambda)*color.rgb + stoneLambda*(stoneColor);
     
+    float grassLambda = 0;
+    if(fragNorm.y > 0.85)
+        grassLambda = 1;
+
+    vec3 grassColor = vec3(0.42, 0.52, 0.09);
+    color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);
 
 	outColor = vec4(diffuseColor,1.0) * color;
 
