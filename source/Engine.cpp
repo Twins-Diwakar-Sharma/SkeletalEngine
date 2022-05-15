@@ -113,6 +113,7 @@ void Engine::update()
     }
     
     objects[0]->rotate(0,1,0);
+    clouds->setPosition(cam->position[0],100,cam->position[2]);
     
     if(updateTerrain)
         terrain->update(cam->position);

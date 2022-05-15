@@ -25,7 +25,7 @@ private:
     Camera* cam;
 
     float translateForward, translateSide;
-	float transVal = 0.05f;
+	float transVal = 1.0f;
 	float rotx, roty;
 
     void initialize();

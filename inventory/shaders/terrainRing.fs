@@ -108,8 +108,11 @@ void main()
     color.rgb = (1.0 - stoneLambda)*color.rgb + stoneLambda*(stoneColor);
     
     float grassLambda = 0;
-    if(fragNorm.y > 0.85)
-        grassLambda = 1;
+    float grassThreshold = 0.80;
+    if(fragNorm.y > grassThreshold)
+    {
+        grassLambda = (fragNorm.y - grassThreshold)/(1.0 - grassThreshold);
+    }
 
     vec3 grassColor = vec3(0.42, 0.52, 0.09);
     color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);
