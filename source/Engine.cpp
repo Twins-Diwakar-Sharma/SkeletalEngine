@@ -45,6 +45,7 @@ void Engine::initialize()
     
     window = new Window();
     objectsRenderer = new Renderer();
+    cloudRenderer = new CloudRenderer();
 
     Mesh* testMesh = new Mesh("alpine");
     meshes.push_back(testMesh);
@@ -55,18 +56,23 @@ void Engine::initialize()
     testObject->setPosition(0,-2,-8);
     objects.push_back(testObject);
 
-   // Mesh* planeMesh = new Mesh();
-   // planeMesh->createPlane();
-  //  meshes.push_back(planeMesh);
- //   Texture* planeTex = new Texture("path");
-//    textures.push_back(planeTex);
-   // Object* plane = new Object(planeMesh,planeTex);
+
+
+    Mesh* planeMesh = new Mesh();
+    planeMesh->createPlane();
+    meshes.push_back(planeMesh);
+    Texture* planeTex = new Texture("path");
+    textures.push_back(planeTex);
+    clouds = new Object(planeMesh,planeTex);
+    clouds->setPosition(0,100,0);
+    clouds->setScale(500,0,500);
+
 //    plane->setPosition(0,-2,-8);
   //  plane->setScale(25,0,25);
  //   objects.push_back(plane);
 
     cam = new Camera();
-	cam->setPosition(0,1,0);
+	cam->setPosition(0,30,0);
 
     sun = new DirectionalLight(Vec3(-1,-1,-1),Vec3(1,1,0.9));
 
@@ -123,6 +129,8 @@ void Engine::render(double dt)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    cloudRenderer->render(clouds,cam,sun);
     terrainRenderer->render(terrain,cam,sun);
     window->swap();
 }

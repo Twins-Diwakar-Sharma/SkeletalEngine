@@ -12,6 +12,7 @@
 #include "PlatformMesh.h"
 #include "TerrainRenderer.h"
 #include "PlankMesh.h"
+#include "CloudRenderer.h"
 
 #include "Window.h"
 class Engine
@@ -44,6 +45,8 @@ private:
     // Problem makers
     TerrainRenderer* terrainRenderer;
     Terrain* terrain;
+    CloudRenderer* cloudRenderer;
+    Object* clouds;
 
     bool hold=false;
     bool wireframe=false;

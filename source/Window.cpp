@@ -30,6 +30,7 @@ Window::Window()
     glfwSetFramebufferSizeCallback(win,resize);
 
     glfwSetWindowPos(win,100,100);
+    glfwSetInputMode(win,GLFW_CURSOR,GLFW_CURSOR_HIDDEN);
 
 }
 
