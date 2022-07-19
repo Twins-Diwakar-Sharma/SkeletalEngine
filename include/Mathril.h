@@ -4,11 +4,10 @@
 #include <iostream>
 #include <math.h>
 
-#define PI 3.141592653589793
 class Vec2
 {
     private:
-        float* data;
+        float data[2] = {0};
     public:
         Vec2();
         Vec2(float x, float y);
@@ -42,7 +41,7 @@ class Vec2
 class Vec3
 {
     private:
-        float* data;
+        float data[3] = {0};
     public:
         Vec3();
         Vec3(float x, float y, float z);
@@ -87,7 +86,7 @@ class Vec3
 class Vec4
 {
     private:
-        float* data;
+        float data[4] = {0};
     public:
         Vec4();
         Vec4(float x, float y, float z, float w);
@@ -103,8 +102,7 @@ class Vec4
         friend Vec4 operator+(Vec4& v, Vec4& w);
         friend Vec4 operator+(Vec4& v, Vec4&& w);
         friend Vec4 operator+(Vec4&& v, Vec4& w);
-        friend Vec4 operator+(Vec4&& v, Vec4&& w);
-        
+        friend Vec4 operator+(Vec4&& v, Vec4&& w);        
 
         friend Vec4 operator-(Vec4& v, Vec4& w);
         friend Vec4 operator-(Vec4& v, Vec4&& w);
@@ -122,7 +120,7 @@ class Vec4
 class Mat2
 {
     private:
-        float** data;
+        float data[2][2] = {0};
     public:
         Mat2();
         Mat2(float m00, float m01, float m10, float m11);
@@ -158,10 +156,12 @@ class Mat2
         friend std::ostream& operator<<(std::ostream& os, const Mat2& m);
 };
 
+
+  
 class Mat3
 {
     private:
-        float **data;
+        float data[3][3] ={0};
     public:
         Mat3();
         Mat3(float m00, float m01, float m02,
@@ -204,9 +204,8 @@ class Mat3
 class Mat4
 {
     private:
-        // float** data;
+         float data[4][4] = {0};
     public:
-    float** data;
          Mat4();
          Mat4(
                  float m00, float m01, float m02, float m03,
@@ -250,7 +249,7 @@ class Mat4
 class Quat
 {
     private:
-        float* data;
+        float data[4] = {0};
         static double slerp_dot_threshHold;
     public:
         Quat();
@@ -293,5 +292,6 @@ class Quat
 
         friend std::ostream& operator<<(std::ostream& os, const Quat& q);
 };
+
 
 #endif

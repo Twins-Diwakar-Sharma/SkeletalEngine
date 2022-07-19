@@ -19,35 +19,23 @@
 
 Vec2::Vec2()
 {
-    data = new float[2];
-    data[0] = 0;
-    data[1] = 0;
 }
 
-Vec2::Vec2(float x, float y)
+Vec2::Vec2(float x, float y): data{x,y}
 {
-    data = new float[2];
-    data[0] = x;
-    data[1] = y;
 }
 
 Vec2::~Vec2()
 {
-    if(data)
-       delete [] data;
 }
 
-Vec2::Vec2(Vec2& vec)
+Vec2::Vec2(Vec2& vec): data{vec.data[0],vec.data[1]}
 {
-    data = new float[2];
-    data[0] = vec.data[0];
-    data[1] = vec.data[1];
 }
 
 Vec2::Vec2(Vec2&& vec)
 {
-    data = vec.data;
-    vec.data = nullptr;
+    std::move(vec.data, vec.data + 2, data);
 }
 
 Vec2& Vec2::operator=(Vec2& vec)
@@ -60,9 +48,7 @@ Vec2& Vec2::operator=(Vec2& vec)
 
 Vec2& Vec2::operator=(Vec2&& vec)
 {
-   float* temp = data;
-   data = vec.data;
-   vec.data = temp;
+   std::move(vec.data, vec.data + 2, data);
    return *this;
 }
 
@@ -157,37 +143,23 @@ Vec2::operator float() const
 }
 
 Vec3::Vec3()
+{}
+
+Vec3::Vec3(float x, float y, float z): data{x, y, z}
 {
-    data = new float[3];
-    for(int i=0; i<3; i++)
-        data[i] = 0;
 }
 
-Vec3::Vec3(float x, float y, float z)
+Vec3::Vec3(Vec3& vec): data{vec.data[0], vec.data[1], vec.data[2]}
 {
-    data = new float[3];
-    data[0] = x;
-    data[1] = y;
-    data[2] = z;
-}
-
-Vec3::Vec3(Vec3& vec)
-{
-    data = new float[3];
-    for(int i=0; i<3; i++)
-        data[i] = vec.data[i];
 } 
 
 Vec3::Vec3(Vec3&& vec)
 {
-    data = vec.data;
-    vec.data = nullptr;
+    std::move(vec.data, vec.data + 3, data);
 }
 
 Vec3::~Vec3()
 {
-    if(data)
-        delete[] data;
 }
 
 Vec3& Vec3::operator=(Vec3& vec)
@@ -200,14 +172,13 @@ Vec3& Vec3::operator=(Vec3& vec)
 
 Vec3& Vec3::operator=(Vec3&& vec)
 {
-    float* temp = data;
-    data = vec.data;
-    vec.data = temp;
-    return *this;
+      std::move(vec.data, vec.data + 3, data);
+     return *this; 
 }
 
 float& Vec3::operator[](int n)
 {
+    
    if(n>=0 && n<3)
        return data[n];
    else
@@ -349,37 +320,23 @@ Vec3::operator float() const
 
 Vec4::Vec4()
 {
-    data = new float[4];
-    for(int i=0; i<4; i++)
-        data[i] = 0;
 }
 
-Vec4::Vec4(float x, float y, float z, float w)
+Vec4::Vec4(float x, float y, float z, float w): data{x, y, z, w}
 {
-    data = new float[4];
-    data[0] = x;
-    data[1] = y;
-    data[2] = z;
-    data[3] = w;
 }
 
 Vec4::~Vec4()
 {
-    if(data)
-       delete [] data;
 }
 
-Vec4::Vec4(Vec4& vec)
+Vec4::Vec4(Vec4& vec): data{vec.data[0], vec.data[1], vec.data[2], vec.data[3]}
 {
-    data = new float[4];
-    for(int i=0; i<4; i++)
-        data[i] = vec.data[i];
 }
 
 Vec4::Vec4(Vec4&& vec)
 {
-    data = vec.data;
-    vec.data = nullptr;
+      std::move(vec.data, vec.data+4, data);
 }
 
 Vec4& Vec4::operator=(Vec4& vec)
@@ -392,9 +349,7 @@ Vec4& Vec4::operator=(Vec4& vec)
 
 Vec4& Vec4::operator=(Vec4&& vec)
 {
-    float* temp = data;
-    data = vec.data;
-    vec.data = temp;
+     std::move(vec.data, vec.data+4, data);
     return *this;
 }
 
@@ -491,28 +446,11 @@ Vec4::operator float() const
 
 
 Mat2::Mat2()
-{
-    data = new float*[2];
-    data[0] = new float[4];
-
-    for(int i=0; i<2; i++)
-    {
-        if(i > 0)
-            data[i] = data[i-1] + 2;
-        for(int j=0; j<2; j++)
-        {
-            data[i][j] = 0;
-        }
-    }
+{ 
 }
 
 Mat2::Mat2(float m00, float m01, float m10, float m11)
 {
-    data = new float*[2];
-    data[0] = new float[4];
-    for(int i=1; i<2; i++)
-        data[i] = data[i-1] + 2;
-
     data[0][0] = m00;
     data[0][1] = m01;
     data[1][0] = m10;
@@ -521,33 +459,23 @@ Mat2::Mat2(float m00, float m01, float m10, float m11)
 
 Mat2::Mat2(Mat2& m)
 {
-    data = new float*[2];
-    data[0] = new float[4];
-
     for(int i=0; i<2; i++)
     {
-        if(i > 0)
-            data[i] = data[i-1] + 2;
         for(int j=0; j<2; j++)
         {
             data[i][j] = m.data[i][j];
         }
     }
+
 }
 
 Mat2::Mat2(Mat2&& m)
 {
-    data = m.data;
-    m.data = nullptr;
+    std::move(m.data[0], m.data[0] + 4, data[0]);
 }
 
 Mat2::~Mat2()
 {
-    if(data)
-    {
-        delete [] data[0];
-        delete [] data;
-    }
 }
 
 
@@ -564,9 +492,7 @@ Mat2& Mat2::operator=(Mat2& m)
 
 Mat2& Mat2::operator=(Mat2&& m)
 {
-    float** temp = data;
-    data = m.data;
-    m.data = temp;
+    std::move(m.data[0], m.data[0] + 4, data[0]);
     return *this;
 }
 
@@ -761,34 +687,15 @@ std::ostream& operator<<(std::ostream& os, const Mat2& m)
     return os;
 }
 
-
+  
 Mat3::Mat3()
 {
-    data = new float*[3];
-    data[0] = new float[9];
-    for(int i=0; i<3; i++)
-    {
-        if(i>0)
-             data[i] = data[i-1] + 3;
-        for(int j=0; j<3; j++)
-        {
-            data[i][j] = 0;
-        }
-    }
 }
 
 Mat3::Mat3(float m00, float m01, float m02,
            float m10, float m11, float m12,
            float m20, float m21, float m22)
-{
-
-    data = new float*[3];
-    data[0] = new float[9];
-    for(int i=1; i<3; i++)
-    {
-        data[i] = data[i-1] + 3;
-    }
-
+{ 
     data[0][0] = m00; data[0][1] = m01; data[0][2] = m02;
     data[1][0] = m10; data[1][1] = m11; data[1][2] = m12;
     data[2][0] = m20; data[2][1] = m21; data[2][2] = m22;
@@ -796,12 +703,8 @@ Mat3::Mat3(float m00, float m01, float m02,
 
 Mat3::Mat3(Mat3& mat)
 {
-    data = new float*[3];
-    data[0] = new float[9];
     for(int i=0; i<3; i++)
     {
-        if(i > 0)
-         data[i] = data[i-1] + 3;
         for(int j=0; j<3; j++)
         {
             data[i][j] = mat.data[i][j];
@@ -811,18 +714,13 @@ Mat3::Mat3(Mat3& mat)
 
 Mat3::Mat3(Mat3&& mat)
 {
-    data = mat.data;
-    mat.data = nullptr;
+    std::move(mat.data[0], mat.data[0] + 9, data[0]);
 }
 
 Mat3::~Mat3()
 {
-    if(data)
-    {
-        delete [] data[0];
-        delete [] data;
-    }
 }
+
 Mat3& Mat3::operator=(Mat3& mat)
 {
     if(this == &mat) return *this;
@@ -838,9 +736,7 @@ Mat3& Mat3::operator=(Mat3& mat)
 
 Mat3& Mat3::operator=(Mat3&& mat)
 {
-   float** temp = data;
-   data = mat.data;
-   mat.data = temp;
+    std::move(mat.data[0], mat.data[0] + 9, data[0]);
    return *this;
 }
 
@@ -1046,17 +942,9 @@ std::ostream& operator<<(std::ostream& os, const Mat3& m)
     return os;
 }
 
+
 Mat4::Mat4()
 {
-    data = new float*[4];
-    data[0] = new float[16];
-    for(int i=0; i<4; i++)
-    {
-        if(i>0)
-             data[i] = data[i-1] + 4;
-        for(int j=0; j<4; j++)
-            data[i][j] = 0;
-    }
 }
 
 Mat4::Mat4(
@@ -1066,11 +954,6 @@ Mat4::Mat4(
      float m30, float m31, float m32, float m33
                                                 )
 {
-    data = new float*[4];
-    data[0] = new float[16];
-    for(int i=1; i<4; i++)
-        data[i] = data[i-1] + 4;
-
     data[0][0] = m00;   data[0][1] = m01;   data[0][2] = m02;   data[0][3] = m03;
     data[1][0] = m10;   data[1][1] = m11;   data[1][2] = m12;   data[1][3] = m13;
     data[2][0] = m20;   data[2][1] = m21;   data[2][2] = m22;   data[2][3] = m23;
@@ -1079,12 +962,8 @@ Mat4::Mat4(
 
 Mat4::Mat4(Mat4& m)
 {
-    data = new float*[4];
-    data[0] = new float[16];
     for(int i=0; i<4; i++)
     {
-        if(i > 0)
-             data[i] = data[i-1] + 4;
         for(int j=0; j<4; j++)
             data[i][j] = m.data[i][j];
     }
@@ -1092,18 +971,11 @@ Mat4::Mat4(Mat4& m)
 
 Mat4::Mat4(Mat4&& m)
 {
-    data = m.data;
-    m.data = nullptr;
+    std::move(m.data[0],m.data[0]+16,data[0]);
 }
 
 Mat4::~Mat4()
 {
-    if(data)
-    {
-
-        delete [] data[0];
-        delete [] data;
-    }
 }
 
 Mat4& Mat4::operator=(Mat4& m)
@@ -1119,9 +991,7 @@ Mat4& Mat4::operator=(Mat4& m)
 
 Mat4& Mat4::operator=(Mat4&& m)
 {
-    float** temp = data;
-    data = m.data;
-    m.data = temp;
+    std::move(m.data[0], m.data[0]+16, data[0]);
     return *this;
 }
 
@@ -1344,41 +1214,30 @@ std::ostream& operator<<(std::ostream& os, const Mat4& m)
     return os;
 }
 
+
 double Quat::slerp_dot_threshHold = 0.9995;
 
 Quat::Quat()
 {
-    data = new float[4];
-    for(int i=0; i<3; i++)
-        data[i] = 0;
 }
 
-Quat::Quat(float r, float x, float y, float z)
+Quat::Quat(float r, float x, float y, float z) : data{r,x,y,z}
 {
-    data = new float[4];
-    data[0] = r;
-    data[1] = x;
-    data[2] = y;
-    data[3] = z;
 }
 
 Quat::Quat(Quat& q)
 {
-    data = new float[4];
     for(int i=0; i<4; i++)
         data[i] = q.data[i];
 }
 
 Quat::Quat(Quat&& q)
 {
-    data = q.data;
-    q.data = nullptr;
+    std::move(q.data, q.data+4, data);
 }
 
 Quat::~Quat()
 {
-    if(data)
-        delete [] data;
 }
 
 Quat& Quat::operator=(Quat& q)
@@ -1393,10 +1252,8 @@ Quat& Quat::operator=(Quat& q)
 
 Quat& Quat::operator=(Quat&& q)
 {
-    float* temp = data;
-    data = q.data;
-    q.data = temp;
-    return *this;
+   std::move(q.data, q.data+4, data);
+   return *this;
 }
 
 float& Quat::operator[](int n)
@@ -1597,3 +1454,4 @@ std::ostream& operator<<(std::ostream& os, const Quat& q)
     os << "[" << q.data[0] << ", " << q.data[1] << "i, " << q.data[2] << "j, " << q.data[3] << "k]";
     return os;
 }
+

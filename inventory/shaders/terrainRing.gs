@@ -57,7 +57,8 @@ float fbm (vec2 p)
     int OCTAVES = 5;
     for (int i = 0; i < OCTAVES; i++) 
     {
-        value += amplitude * abs(perlinNoise(p));
+
+        value += amplitude * (perlinNoise(p));
         p *= 2.0;
         amplitude *= 0.5;
     }
