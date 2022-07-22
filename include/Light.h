@@ -19,6 +19,9 @@ public:
     Vec3& getDirection();
     void setColor(float r, float g, float b);
     void setDirection(float x, float y, float z);
+
+    DirectionalLight& operator=(DirectionalLight&);
+    DirectionalLight& operator=(DirectionalLight&&);
 };
 
 #endif

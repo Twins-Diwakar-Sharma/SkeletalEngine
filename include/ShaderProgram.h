@@ -24,6 +24,7 @@ private:
     unsigned int programID, vertexID, fragmentID;
 
 public:
+    ShaderProgram();
     ShaderProgram(std::string name);
     ShaderProgram(std::string name, int sophistication);
     ~ShaderProgram();
@@ -42,6 +43,14 @@ public:
 	void setUniform(std::string, Mat4&);
     void setUniform(std::string name, Camera& cam);
     void setUniform(std::string name, DirectionalLight& light);
+
+    ShaderProgram& operator=(ShaderProgram&);
+    ShaderProgram& operator=(ShaderProgram&&);
+
+    ShaderProgram(ShaderProgram&);
+    ShaderProgram(ShaderProgram&&);
+
+    void listUniforms();
 	
 };
 

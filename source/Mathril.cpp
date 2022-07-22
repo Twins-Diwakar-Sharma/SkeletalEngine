@@ -1218,12 +1218,10 @@ std::ostream& operator<<(std::ostream& os, const Mat4& m)
 double Quat::slerp_dot_threshHold = 0.9995;
 
 Quat::Quat()
-{
-}
+{}
 
 Quat::Quat(float r, float x, float y, float z) : data{r,x,y,z}
-{
-}
+{}
 
 Quat::Quat(Quat& q)
 {
@@ -1237,8 +1235,7 @@ Quat::Quat(Quat&& q)
 }
 
 Quat::~Quat()
-{
-}
+{}
 
 Quat& Quat::operator=(Quat& q)
 {

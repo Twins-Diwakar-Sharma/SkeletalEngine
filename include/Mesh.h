@@ -9,16 +9,16 @@
 class Mesh
 {
 protected:
-	std::vector<float> vertexData;
-	std::vector<unsigned int> indices;
 	unsigned int vao, vbo, ebo;
-
-	void generate();
+	int noOfIndices;
+	void generate(std::vector<float>&, std::vector<unsigned int>&);
 	
 public:
 	Mesh();
 	Mesh(std::string);
 	~Mesh();
+	Mesh(Mesh&);
+	Mesh(Mesh&&);
 	void createPlane();
 	void bind();
 	void unbind();

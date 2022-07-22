@@ -68,3 +68,19 @@ void DirectionalLight::setDirection(float x, float y, float z)
     for(int i=0; i<3; i++)
         direction[i] = direction[i]/len;
 }
+
+DirectionalLight& DirectionalLight::operator=(DirectionalLight& dl)
+{
+    if(this == &dl)
+        return *this;
+    direction = dl.direction;
+    color = dl.color;
+    return *this;
+}
+
+DirectionalLight& DirectionalLight::operator=(DirectionalLight&& dl)
+{
+    direction = std::move(dl.direction);
+    color = std::move(dl.color);
+    return *this;
+}

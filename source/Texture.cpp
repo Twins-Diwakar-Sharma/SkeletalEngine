@@ -2,6 +2,9 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+Texture::Texture()
+{}
+
 Texture::Texture(std::string name)
 {
 	std::string path = "inventory/textures/" + name + ".png";
@@ -26,6 +29,32 @@ Texture::Texture(std::string name)
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	stbi_image_free(data);
+}
+
+Texture::Texture(Texture& tex)
+{
+	id = tex.id;
+	width = tex.width; 
+	height = tex.height; 
+	channels = tex.channels;
+	data = tex.data;
+	name = std::string(tex.name);
+}
+
+Texture::Texture(Texture&& tex)
+{
+	id = tex.id;
+	width = tex.width; 
+	height = tex.height; 
+	channels = tex.channels;
+	data = std::move(tex.data);
+	name = std::move(tex.name);
+	tex.id = 0;
+	tex.width = 0;
+	tex.height = 0;
+	tex.channels = 0;
+	tex.data = nullptr;
+	tex.name = "";
 }
 
 Texture::~Texture()

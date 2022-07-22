@@ -5,6 +5,12 @@ int Window::height = 512;
 
 
 Window::Window()
+{}
+
+Window::~Window()
+{}
+
+void Window::create()
 {
     if(!glfwInit())
     {
@@ -31,7 +37,6 @@ Window::Window()
 
     glfwSetWindowPos(win,100,100);
     glfwSetInputMode(win,GLFW_CURSOR,GLFW_CURSOR_HIDDEN);
-
 }
 
 void Window::resize(GLFWwindow* w, int width, int height)

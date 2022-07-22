@@ -17,6 +17,8 @@ private:
 
 public:
     Window();
+    ~Window();
+    void create();
     bool close();
     void terminate();
     void swap();

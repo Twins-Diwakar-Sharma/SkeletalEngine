@@ -2,9 +2,9 @@
 
 
 
-void Mesh::generate()
+void Mesh::generate(std::vector<float>& vertexData, std::vector<unsigned int>& indices)
 {
-	
+
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
@@ -25,36 +25,67 @@ void Mesh::generate()
 
 }
 
+Mesh::Mesh(Mesh& mesh)
+{
+	vao = mesh.vao;
+	vbo = mesh.vbo;
+	ebo = mesh.ebo;
+	noOfIndices = mesh.noOfIndices;
+}
+
+Mesh::Mesh(Mesh&& mesh)
+{
+	vao = mesh.vao;
+	vbo = mesh.vbo;
+	ebo = mesh.ebo;
+	noOfIndices = mesh.noOfIndices;
+	mesh.vao = 0;
+	mesh.vbo = 0;
+	mesh.ebo = 0;
+	mesh.noOfIndices = 0;
+}
+
 Mesh::Mesh()
 {
-	glDeleteBuffers(1, &vbo);
-	glDeleteBuffers(1, &ebo);
-	glDeleteVertexArrays(1, &vao);
+
 }
 
 Mesh::Mesh(std::string name)
 {
+	std::cout << "mesh make" << std::endl;
 	std::string path = "inventory/models/" + name + ".stc";
-	std::ifstream ifs(path);
-	std::string line;
-	
-	std::getline(ifs, line);
-	std::istringstream iss(line);
-	float f;
-	while (iss >> f)
+	std::ifstream ifs(path, std::ios::binary | std::ios::in);
+
+	int size=0;
+	ifs.read((char*)&size, sizeof(int));
+	float f=0;
+	std::vector<float> vertexData;
+	vertexData.reserve(size);
+	for(int i=0; i<size; i++)
+	{
+		ifs.read((char*)&f, sizeof(float));
 		vertexData.push_back(f);
+	}
 
-	std::getline(ifs, line);
-	std::istringstream iss2(line);
+	ifs.read((char*)&size, sizeof(int));
 	unsigned int ui;
-	while (iss2 >> ui)
+	std::vector<unsigned int> indices;
+	indices.reserve(size);
+	for(int i=0; i<size; i++)
+	{
+		ifs.read((char*)&ui, sizeof(unsigned int));
 		indices.push_back(ui);
+	}
+	noOfIndices = indices.size();
 
-	generate();
+	generate(vertexData,indices);
 }
 
 Mesh::~Mesh()
 {
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &ebo);
+	glDeleteVertexArrays(1, &vao);
 }
 
 void Mesh::createPlane()
@@ -70,20 +101,22 @@ void Mesh::createPlane()
 	// 0 1 2  0 3 2
 	indices = { 0, 1, 2, 3, 0, 2 };
 */
-	vertexData = {
+	std::vector<float> vertexData = {
 		1.0f,	0.0f,	-1.0f,	1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
 		1.0f,	0.0f,	1.0f,	1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 		-1.0f,	0.0f,	-1.0f,	0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
 		-1.0f,	0.0f,	1.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 	};
 
-	indices = {
+	std::vector<unsigned int> indices = {
 		0,	1,	3,
 		0,	3,	2
 	};
 
+	noOfIndices = 6;
 
-	generate();
+	generate(vertexData, indices);
+	
 
 }
 
@@ -99,5 +132,5 @@ void Mesh::unbind()
 
 int Mesh::indicesSize()
 {
-	return indices.size();
+	return noOfIndices;
 }

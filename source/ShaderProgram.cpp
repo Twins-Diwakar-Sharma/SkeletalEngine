@@ -1,8 +1,10 @@
 #include "ShaderProgram.h"
 
+ShaderProgram::ShaderProgram()
+{}
+
 ShaderProgram::ShaderProgram(std::string name): ShaderProgram(name, NOTHING)
-{
-}
+{}
 
 ShaderProgram::~ShaderProgram()
 {
@@ -48,7 +50,6 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 		glAttachShader(programID, geometryID);
 	}
 		 
-
 	glAttachShader(programID, vertexID);
 	glAttachShader(programID, fragmentID);
 
@@ -83,6 +84,61 @@ ShaderProgram::ShaderProgram(std::string name, int sophistication)
 
 }
 
+ShaderProgram::ShaderProgram(ShaderProgram& sp)
+{
+	programID = sp.programID;
+	vertexID = sp.vertexID; 
+	fragmentID = sp.fragmentID;
+
+	for(auto [name, loc] : sp.uniformMap)
+		uniformMap.insert( {name, loc} );
+
+}
+
+ShaderProgram::ShaderProgram(ShaderProgram&& sp)
+{
+	programID = sp.programID;
+	vertexID = sp.vertexID; 
+	fragmentID = sp.fragmentID;
+
+	for(auto [name, loc] : sp.uniformMap)
+		uniformMap.insert( {name, loc} );
+
+	sp.programID = 0;
+	sp.vertexID = 0;
+	sp.fragmentID = 0;
+}
+
+ShaderProgram& ShaderProgram::operator=(ShaderProgram& sp)
+{
+	if(this == &sp)
+		return *this;
+	programID = sp.programID;
+	vertexID = sp.vertexID; 
+	fragmentID = sp.fragmentID;
+	
+	for(auto [name, loc] : sp.uniformMap)
+		uniformMap.insert( {name, loc} );
+
+	return *this;
+}
+
+ShaderProgram& ShaderProgram::operator=(ShaderProgram&& sp)
+{
+	programID = sp.programID;
+	vertexID = sp.vertexID; 
+	fragmentID = sp.fragmentID;
+	
+
+	for(auto [h,v] : sp.uniformMap)
+		uniformMap.insert( {h,v} );
+
+	sp.programID = 0;
+	sp.vertexID = 0;
+	sp.fragmentID = 0;
+
+	return *this;
+}
 
 void ShaderProgram::createShader(unsigned int& shaderID, int shaderType, std::string filename)
 {
@@ -113,6 +169,9 @@ void ShaderProgram::createShader(unsigned int& shaderID, int shaderType, std::st
 	}
 
 }
+
+
+
 
 void ShaderProgram::use()
 {
@@ -200,4 +259,13 @@ void ShaderProgram::setUniform(std::string name, DirectionalLight& light)
 
 	glUniform3f(uniformMap[dirName],  dir[1], dir[2], dir[2]);
 	glUniform3f(uniformMap[colName], col[0], col[1], col[2]);	
+}
+
+
+void ShaderProgram::listUniforms()
+{
+	for(auto it = uniformMap.begin(); it != uniformMap.end(); ++it)
+	{
+		std::cout << it->first << " - " << it->second << std::endl;
+	}
 }
