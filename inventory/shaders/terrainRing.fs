@@ -49,7 +49,7 @@ float fbm(vec2 p)
     int OCTAVES = 12;
     for (int i = 0; i < OCTAVES; i++) 
     {
-        value += amplitude * abs(perlinNoise(p));
+        value += amplitude * (perlinNoise(p));
         p *= 2.0;
         amplitude *= 0.5;
     }
@@ -108,11 +108,8 @@ void main()
     color.rgb = (1.0 - stoneLambda)*color.rgb + stoneLambda*(stoneColor);
     
     float grassLambda = 0;
-    float grassThreshold = 0.80;
-    if(fragNorm.y > grassThreshold)
-    {
-        grassLambda = (fragNorm.y - grassThreshold)/(1.0 - grassThreshold);
-    }
+    if(fragNorm.y > 0.85)
+        grassLambda = 1;
 
     vec3 grassColor = vec3(0.42, 0.52, 0.09);
     color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);

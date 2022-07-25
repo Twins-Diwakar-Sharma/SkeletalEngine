@@ -1,6 +1,6 @@
 #include "TerrainMesh.h"
 
-void TerrainMesh::generate()
+void TerrainMesh::generate(std::vector<float>& vertexData, std::vector<unsigned int>& indices)
 {
     
     glPatchParameteri(GL_PATCH_VERTICES, 4);
@@ -19,6 +19,8 @@ void TerrainMesh::generate()
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 	
 	glBindVertexArray(0);
+
+	sizeOfIndices = indices.size();
     
 }
 
@@ -34,7 +36,7 @@ void TerrainMesh::unbind()
 
 int TerrainMesh::indicesSize()
 {
-	return indices.size();
+	return sizeOfIndices;
 }
 
 TerrainMesh::TerrainMesh()
@@ -46,7 +48,7 @@ TerrainMesh::~TerrainMesh()
     
 }
 
-void TerrainMesh::create()
+void TerrainMesh::create(std::vector<float>& vertexData, std::vector<unsigned int>& indices)
 {
 
 }

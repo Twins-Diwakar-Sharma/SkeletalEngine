@@ -2,6 +2,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+Texture::Texture()
+{
+}
+
 Texture::Texture(std::string name)
 {
 	std::string path = "inventory/textures/" + name + ".png";

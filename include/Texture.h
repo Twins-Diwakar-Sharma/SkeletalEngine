@@ -13,6 +13,7 @@ private:
 	unsigned char* data;
 	std::string name;
 public:
+	Texture();
 	Texture(std::string);
 	~Texture();
 	unsigned int getTextureId();

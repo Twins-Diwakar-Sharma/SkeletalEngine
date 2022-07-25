@@ -15,7 +15,7 @@ void Camera::setPosition(float x, float y, float z)
 
 void Camera::rotate(float x, float y, float z)
 {
-	float rad = PI / 180.0f;
+	float rad = M_PI / 180.0f;
 	float radx = x / 2 * rad, rady = y / 2 * rad, radz = z / 2 * rad;
 	float cx = std::cos(radx), sx = std::sin(radx);
 	float cy = std::cos(rady), sy = std::sin(rady);

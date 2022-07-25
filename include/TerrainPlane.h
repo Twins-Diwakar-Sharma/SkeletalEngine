@@ -2,10 +2,13 @@
 #define H_CHHALA_OBJ3CT_H
 
 #include "Mathril.h"
+#include "Debug.h"
+#include "vector"
 class TerrainPlane
 {
 public:
-    TerrainPlane* coarse=nullptr;
+    int coarse = -1;
+
     Vec2 position;
     Vec2 step;
     int scale;
@@ -16,7 +19,10 @@ public:
     TerrainPlane(TerrainPlane&&);
     ~TerrainPlane();
 
-    void update(Vec2& dir);
+    TerrainPlane& operator=(TerrainPlane&);
+    TerrainPlane& operator=(TerrainPlane&&);
+
+    bool update_ifStep2(Vec2& dir);
 };
 
 #endif
