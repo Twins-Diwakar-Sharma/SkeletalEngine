@@ -2,12 +2,10 @@
 
 TerrainPlane::TerrainPlane()
 {
-    LOG("TerrainPlane Def constr");
 }
 
 TerrainPlane::TerrainPlane(TerrainPlane& ro)
 {
-    LOG("TerrainPlane l copy");
     position = ro.position;
     step = ro.step;
     scale = ro.scale;
@@ -17,18 +15,15 @@ TerrainPlane::TerrainPlane(TerrainPlane& ro)
 
 TerrainPlane::TerrainPlane(TerrainPlane&& ro)
 {
-    LOG("TerrainPlane R copy");
     position = std::move(ro.position);
     step = std::move(ro.step);
     scale = std::move(ro.scale);
     tesselatedSize = std::move(ro.tesselatedSize);
     coarse = ro.coarse;
-    ro.coarse = nullptr;
 }
 
 TerrainPlane& TerrainPlane::operator=(TerrainPlane& ro)
 {
-    LOG("TerrainPlane l =");
     if(this == &ro)
         return *this;
     position = ro.position;
@@ -48,17 +43,16 @@ TerrainPlane& TerrainPlane::operator=(TerrainPlane&& ro)
     scale = std::move(ro.scale);
     tesselatedSize = std::move(ro.tesselatedSize);
     coarse = ro.coarse;
-    ro.coarse = nullptr;
+ 
 
     return *this;
 }
 
 TerrainPlane::~TerrainPlane()
 {
-    LOG("TerrainPlane Dstr"); 
 }
 
-void TerrainPlane::update(Vec2& dir)
+bool TerrainPlane::update_ifStep2(Vec2& dir)
 {
     step = step + dir;
     position = position + tesselatedSize*dir; 
@@ -92,8 +86,5 @@ void TerrainPlane::update(Vec2& dir)
         dir[1] = -1;
     }
 
-    if(change && coarse)
-    {
-        coarse->update(dir);
-    }
+   return change;
 }

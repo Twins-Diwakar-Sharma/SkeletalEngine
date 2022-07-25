@@ -3,10 +3,12 @@
 
 #include "Mathril.h"
 #include "Debug.h"
+#include "vector"
 class TerrainPlane
 {
 public:
-    TerrainPlane* coarse=nullptr;
+    int coarse = -1;
+
     Vec2 position;
     Vec2 step;
     int scale;
@@ -20,7 +22,7 @@ public:
     TerrainPlane& operator=(TerrainPlane&);
     TerrainPlane& operator=(TerrainPlane&&);
 
-    void update(Vec2& dir);
+    bool update_ifStep2(Vec2& dir);
 };
 
 #endif

@@ -31,10 +31,10 @@ void TerrainRenderer::render(Terrain& terrain, Camera& cam, DirectionalLight& su
 
     terrain.bindPlatformMesh();
     glEnableVertexAttribArray(0);
-    ringShaderProgram.setUniform("size", terrain.getPlanes(0)->scale);
-    ringShaderProgram.setUniform("position", terrain.getPlanes(0)->position);
-    ringShaderProgram.setUniform("step", terrain.getPlanes(0)->step);
-    ringShaderProgram.setUniform("tesselatedSize", terrain.getPlanes(0)->tesselatedSize);
+    ringShaderProgram.setUniform("size", terrain.getPlanes(0).scale);
+    ringShaderProgram.setUniform("position", terrain.getPlanes(0).position);
+    ringShaderProgram.setUniform("step", terrain.getPlanes(0).step);
+    ringShaderProgram.setUniform("tesselatedSize", terrain.getPlanes(0).tesselatedSize);
     glDrawElements(GL_PATCHES, terrain.getPlatformMeshIndicesSize(), GL_UNSIGNED_INT, 0);  
     glDisableVertexAttribArray(0);
     terrain.unbindMesh();
@@ -43,10 +43,10 @@ void TerrainRenderer::render(Terrain& terrain, Camera& cam, DirectionalLight& su
     for(int i=1; i<terrain.getNoOfRings()+1; i++)
     {
         glEnableVertexAttribArray(0);
-        ringShaderProgram.setUniform("size",terrain.getPlanes(i)->scale);
-        ringShaderProgram.setUniform("position", terrain.getPlanes(i)->position);
-        ringShaderProgram.setUniform("step", terrain.getPlanes(i)->step);
-        ringShaderProgram.setUniform("tesselatedSize", terrain.getPlanes(i)->tesselatedSize);
+        ringShaderProgram.setUniform("size",terrain.getPlanes(i).scale);
+        ringShaderProgram.setUniform("position", terrain.getPlanes(i).position);
+        ringShaderProgram.setUniform("step", terrain.getPlanes(i).step);
+        ringShaderProgram.setUniform("tesselatedSize", terrain.getPlanes(i).tesselatedSize);
         glDrawElements(GL_PATCHES, terrain.getRingMeshIndicesSize(), GL_UNSIGNED_INT, 0);  
         glDisableVertexAttribArray(0);
     }

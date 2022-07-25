@@ -14,7 +14,7 @@ private:
     int startTesselatedSize;
     int noOfRings=2;
    
-    std::vector<TerrainPlane*> planes;
+    std::vector<TerrainPlane> planes;
     Vec2 distance;
     Vec2 dir;
     
@@ -38,7 +38,7 @@ public:
 
 
     void unbindMesh();
-    TerrainPlane* getPlanes(int);
+    TerrainPlane& getPlanes(int);
 
     int getNoOfRings();
 
