@@ -3,7 +3,7 @@
 void Object::syncTransform()
 {
 
-	float conv = PI / 180.0f;
+	float conv = M_PI / 180.0f;
 	float radx = rot[0]*conv , rady = rot[1]*conv , radz = rot[2]*conv ;
 	float cx = std::cos(radx), sx = std::sin(radx);
 	float cy = std::cos(rady), sy = std::sin(rady);
@@ -16,10 +16,8 @@ void Object::syncTransform()
 
 }
 
-Object::Object(Mesh* mesh, Texture* tex)
+Object::Object(Mesh& mesh, Texture& tex) : mesh(mesh), tex(tex) 
 {
-	this->mesh = mesh;
-	this->tex = tex;
 	for (int i = 0; i < 3; i++)
 	{
 		pos[i] = 0.0f;
@@ -33,54 +31,50 @@ Object::~Object()
 {
 }
 
-Object::Object(Object& g)
+Object::Object(Object& g) : mesh(g.mesh), tex(g.tex)
 {
 	pos = g.pos;
 	rot = g.rot;
 	sca = g.sca;
 	transform = g.transform;
-	tex = g.tex;
-	mesh = g.mesh;
 }
 
-Object::Object(Object&& g)
+Object::Object(Object&& g) : mesh(g.mesh), tex(g.tex)
 {
 	pos = std::move(g.pos);
 	rot = std::move(g.rot);
 	sca = std::move(g.sca);
 	transform = std::move(g.transform);
-	tex = g.tex;
-	mesh = g.mesh;
 }
 
 void Object::bind()
 {
-	mesh->bind();
+	mesh.bind();
 }
 
 void Object::unbind()
 {
-	mesh->unbind();
+	mesh.unbind();
 }
 
-Texture* Object::getTexture()
+Texture& Object::getTexture()
 {
 	return tex;
 }
 
-Mesh* Object::getMesh()
+Mesh& Object::getMesh()
 {
 	return mesh;
 }
 
 int Object::size()
 {
-	return mesh->indicesSize();
+	return mesh.indicesSize();
 }
 
 unsigned int Object::getTextureId()
 {
-	return tex->getTextureId();
+	return tex.getTextureId();
 }
 
 void Object::translate(float dx, float dy, float dz)

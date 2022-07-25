@@ -1,7 +1,7 @@
 #include "Window.h"
 
-int Window::width = 512;
-int Window::height = 512;
+int Window::width = 1366;
+int Window::height = 768;
 
 
 Window::Window()
@@ -29,7 +29,7 @@ Window::Window()
 
     glfwSetFramebufferSizeCallback(win,resize);
 
-    glfwSetWindowPos(win,100,100);
+    glfwSetWindowPos(win,0,0);
     glfwSetInputMode(win,GLFW_CURSOR,GLFW_CURSOR_HIDDEN);
 
 }

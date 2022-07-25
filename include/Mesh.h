@@ -9,11 +9,9 @@
 class Mesh
 {
 protected:
-	std::vector<float> vertexData;
-	std::vector<unsigned int> indices;
 	unsigned int vao, vbo, ebo;
-
-	void generate();
+	int sizeOfIndices=0;
+	void generate(std::vector<float>&, std::vector<unsigned int>&);
 	
 public:
 	Mesh();

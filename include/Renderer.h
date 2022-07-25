@@ -12,11 +12,11 @@
 class Renderer
 {
 private:
-    ShaderProgram* shaderProgram;
+    ShaderProgram shaderProgram;
 public:
     Renderer();
     ~Renderer();  
-    void render(std::vector<Object*>& objects, Camera* cam, DirectionalLight* sun);
+    void render(std::vector<Object>& objects, Camera& cam, DirectionalLight& sun);
 };
 
 #endif

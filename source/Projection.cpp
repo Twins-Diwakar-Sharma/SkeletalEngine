@@ -11,7 +11,7 @@ void proj::setPerspective(float fov, float near, float far, float aspectRatio)
     proj::far = far;
     proj::fov = fov;
 
-    float radFov = fov *  PI / (180.0f);
+    float radFov = fov *  M_PI / (180.0f);
 
     float d = 1.0f / (tan(radFov / 2.0f));
     perspective[0][0] = d / aspectRatio;

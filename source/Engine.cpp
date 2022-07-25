@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 Engine::Engine()
+            : sun(Vec3(-1,-1,-1),Vec3(1,1,0.9))
 {
     //loopThread = new std::thread(&Engine::loop, this);
     //loopThread->join();
@@ -19,8 +20,9 @@ void Engine::loop()
     clock_t curr = clock();
     initialize();
 
-    std::cout << "Loop start" << std::endl;
-    while(!window->close()) // ! window close
+    LOG("Loop start");
+
+    while(!window.close()) // ! window close
     {
         elapsed = ((double)curr - (double)prev) * 1000 / CLOCKS_PER_SEC;
 		lag += elapsed;
@@ -36,45 +38,35 @@ void Engine::loop()
         curr = clock();
     }
     clean();
-    std::cout << "Loop end" << std::endl;
+    
+    LOG("Loop end");
 }
 
 void Engine::initialize()
 {
-    proj::setPerspective(60.0f,0.1f,10000.0f,window->getAspect());
+    proj::setPerspective(60.0f,0.1f,1000.0f,window.getAspect());
     
-    window = new Window();
-    objectsRenderer = new Renderer();
-    cloudRenderer = new CloudRenderer();
+   // cloudRenderer = new CloudRenderer();
 
-    Mesh* testMesh = new Mesh("alpine");
-    meshes.push_back(testMesh);
-    Texture* testTexture = new Texture("alpine");
-    textures.push_back(testTexture);
-    Object* testObject = new Object(testMesh,testTexture);
-    testObject->setScale(0.2f,0.2f,0.2f);
-    testObject->setPosition(0,-2,-8);
-    objects.push_back(testObject);
+    meshMap.emplace("alpine", "alpine");
+    textureMap.emplace("alpine", "alpine");
+    objects.emplace_back(meshMap["alpine"], textureMap["alpine"]);
+    objects[0].setScale(0.2f,0.2f,0.2f);
+    objects[0].setPosition(0,0,0);
 
+    meshMap.emplace("plane", Mesh());
+    meshMap["plane"].createPlane();
+    textureMap.emplace("path","path");
+    objects.emplace_back(meshMap["plane"], textureMap["path"]);
+    objects[1].scale(10,1,10);
 
-
-    Mesh* planeMesh = new Mesh();
-    planeMesh->createPlane();
-    meshes.push_back(planeMesh);
-    Texture* planeTex = new Texture("path");
-    textures.push_back(planeTex);
+/*
     clouds = new Object(planeMesh,planeTex);
     clouds->setPosition(0,100,0);
     clouds->setScale(500,0,500);
-
-//    plane->setPosition(0,-2,-8);
-  //  plane->setScale(25,0,25);
- //   objects.push_back(plane);
-
-    cam = new Camera();
-	cam->setPosition(0,30,0);
-
-    sun = new DirectionalLight(Vec3(-1,-1,-1),Vec3(1,1,0.9));
+*/
+    
+	cam.setPosition(0,1,0);
 
     glClearColor(0.8f,0.9f,1,1);
     glEnable(GL_DEPTH_TEST);
@@ -89,34 +81,34 @@ void Engine::initialize()
 
 void Engine::input()
 {
-    window->handleKey(translateForward, translateSide, transVal);
-	window->handleMouse(rotx, roty);
-    window->handleHold(hold);
-    window->handleTerrainUpdate(updateTerrain);
-    window->handleWireframe(wireframe);
-    window->pollEvents();
+    window.handleKey(translateForward, translateSide, transVal);
+	window.handleMouse(rotx, roty);
+    window.handleHold(hold);
+    window.handleTerrainUpdate(updateTerrain);
+    window.handleWireframe(wireframe);
+    window.pollEvents();
 }   
 
 void Engine::update()
 {
     if(hold)
     {
-        cam->setPosition(0,0,0);
+        cam.setPosition(0,0,0);
         rotx = 0; roty = 0;
-        cam->spin[0] = 1; cam->spin[1] = 0; cam->spin[2] = 0; cam->spin[3] = 0;
+        cam.spin[0] = 1; cam.spin[1] = 0; cam.spin[2] = 0; cam.spin[3] = 0;
     }
     else
     {
-        cam->rotate(rotx, roty, 0);
+        cam.rotate(rotx, roty, 0);
 	    rotx = 0;	roty = 0;
-	    cam->translate(translateForward, translateSide);
+	    cam.translate(translateForward, translateSide);
     }
     
-    objects[0]->rotate(0,1,0);
-    clouds->setPosition(cam->position[0],100,cam->position[2]);
+    objects[0].rotate(0,1,0);
+  //  clouds->setPosition(cam.position[0],100,cam.position[2]);
     
     if(updateTerrain)
-        terrain->update(cam->position);
+        terrain->update(cam.position);
 
     translateForward = 0; translateSide = 0;
 }
@@ -125,33 +117,17 @@ void Engine::render(double dt)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   // objectsRenderer->render(objects, cam, sun);
+    objectsRenderer.render(objects, cam, sun);
     if(wireframe)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    cloudRenderer->render(clouds,cam,sun);
-    terrainRenderer->render(terrain,cam,sun);
-    window->swap();
+   // cloudRenderer->render(clouds,cam,sun);
+     terrainRenderer->render(terrain,&cam,&sun);
+    window.swap();
 }
 
 void Engine::clean()
-{
-     for(int i=0; i<objects.size(); i++)
-     {
-        delete objects[i];
-     }
-     for(int i=0; i<meshes.size(); i++)
-     {
-         delete meshes[i];
-     }
-     for(int i=0; i<textures.size(); i++)
-     {
-         delete textures[i];
-     }
-    delete window;
-    delete cam;
-    delete objectsRenderer;
-     
+{    
 }

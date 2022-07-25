@@ -13,19 +13,21 @@
 #include "TerrainRenderer.h"
 #include "PlankMesh.h"
 #include "CloudRenderer.h"
-
 #include "Window.h"
+#include "Debug.h"
 class Engine
 {
 private:
     float fps = 120.0f;
     float ms_per_update=1000.0f/fps;
 
-    Window* window;
-    Camera* cam;
+    Window window;
+    Camera cam;
+
+    DirectionalLight sun;
 
     float translateForward, translateSide;
-	float transVal = 1.0f;
+	float transVal = 0.1f;
 	float rotx, roty;
 
     void initialize();
@@ -34,13 +36,13 @@ private:
     void input();
     void render(double);
 
-    Renderer* objectsRenderer;
+    Renderer objectsRenderer;
 
-    DirectionalLight* sun;
 
-    std::vector<Object*> objects;
-    std::vector<Mesh*> meshes;
-    std::vector<Texture*> textures;
+    std::vector<Object> objects;
+
+    std::map<std::string, Mesh> meshMap;
+    std::map<std::string, Texture> textureMap;
 
     // Problem makers
     TerrainRenderer* terrainRenderer;

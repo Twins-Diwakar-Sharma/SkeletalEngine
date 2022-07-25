@@ -22,6 +22,7 @@ private:
     RingMesh* ringMesh;
     PlatformMesh* platformMesh;
     PlankMesh* plankMesh;
+   
 
 public:
     Terrain();
