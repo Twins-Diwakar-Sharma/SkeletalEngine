@@ -73,9 +73,7 @@ void Engine::initialize()
 
 
     // problem makers 
-    terrain = new Terrain();
-    terrain->reconfigure(128,16);  
-    terrainRenderer = new TerrainRenderer();
+    terrain.reconfigure(128,16);  
 
 }
 
@@ -108,7 +106,7 @@ void Engine::update()
   //  clouds->setPosition(cam.position[0],100,cam.position[2]);
     
     if(updateTerrain)
-        terrain->update(cam.position);
+        terrain.update(cam.position);
 
     translateForward = 0; translateSide = 0;
 }
@@ -124,7 +122,7 @@ void Engine::render(double dt)
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
    // cloudRenderer->render(clouds,cam,sun);
-     terrainRenderer->render(terrain,&cam,&sun);
+     terrainRenderer.render(terrain,cam,sun);
     window.swap();
 }
 

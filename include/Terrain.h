@@ -5,7 +5,6 @@
 #include "PlatformMesh.h"
 #include "RingMesh.h"
 #include "TerrainPlane.h"
-#include "PlankMesh.h"
 
 class Terrain
 {
@@ -19,10 +18,8 @@ private:
     Vec2 distance;
     Vec2 dir;
     
-    RingMesh* ringMesh;
-    PlatformMesh* platformMesh;
-    PlankMesh* plankMesh;
-   
+    RingMesh ringMesh;
+    PlatformMesh platformMesh;
 
 public:
     Terrain();
@@ -39,8 +36,6 @@ public:
     void bindRingMesh();
     int getRingMeshIndicesSize();
 
-    void bindPlankMesh();
-    int getPlankMeshIndicesSize();
 
     void unbindMesh();
     TerrainPlane* getPlanes(int);

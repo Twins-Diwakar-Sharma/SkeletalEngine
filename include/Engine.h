@@ -11,7 +11,6 @@
 #include "RingMesh.h"
 #include "PlatformMesh.h"
 #include "TerrainRenderer.h"
-#include "PlankMesh.h"
 #include "CloudRenderer.h"
 #include "Window.h"
 #include "Debug.h"
@@ -45,8 +44,8 @@ private:
     std::map<std::string, Texture> textureMap;
 
     // Problem makers
-    TerrainRenderer* terrainRenderer;
-    Terrain* terrain;
+    TerrainRenderer terrainRenderer;
+    Terrain terrain;
     CloudRenderer* cloudRenderer;
     Object* clouds;
 

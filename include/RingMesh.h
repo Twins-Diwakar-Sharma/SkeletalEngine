@@ -6,7 +6,7 @@
 class RingMesh : public TerrainMesh
 {
 protected:
-    void create();
+    void create(std::vector<float>& vertexData, std::vector<unsigned int>& indices);
 public:
     RingMesh();
     ~RingMesh();

@@ -1,8 +1,8 @@
 #include "PlatformMesh.h"
 
-void PlatformMesh::create()
+void PlatformMesh::create(std::vector<float>& vertexData, std::vector<unsigned int>& indices)
 {
-    std::cout << "Platform mesh create" << std::endl;
+    LOG("Platform mesh create");
     float x = -2, z = -2;
     
     for(int i=0; i<5; i++)
@@ -35,8 +35,10 @@ void PlatformMesh::create()
 
 PlatformMesh::PlatformMesh()
 {
-    create();
-    generate();
+    std::vector<float> vertexData;
+    std::vector<unsigned int> indices;
+    create(vertexData, indices);
+    generate(vertexData, indices);
 }
 
 PlatformMesh::~PlatformMesh()

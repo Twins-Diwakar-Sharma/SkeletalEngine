@@ -134,7 +134,7 @@ build/Terrain.o: source/Terrain.cpp include/Terrain.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/basic_ios.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/istream \
- C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc include/Debug.h \
  include/PlatformMesh.h include/RingMesh.h include/TerrainPlane.h \
  include/Mathril.h C:/msys64/mingw64/include/c++/12.1.0/math.h \
  C:/msys64/mingw64/include/c++/12.1.0/cmath \
@@ -152,8 +152,7 @@ build/Terrain.o: source/Terrain.cpp include/Terrain.h \
  C:/msys64/mingw64/include/c++/12.1.0/tr1/modified_bessel_func.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_hermite.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_laguerre.tcc \
- C:/msys64/mingw64/include/c++/12.1.0/tr1/riemann_zeta.tcc \
- include/PlankMesh.h
+ C:/msys64/mingw64/include/c++/12.1.0/tr1/riemann_zeta.tcc
 include/Terrain.h:
 include/TerrainMesh.h:
 C:/msys64/mingw64/include/c++/12.1.0/vector:
@@ -299,6 +298,7 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/basic_ios.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/bits/ostream.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/istream:
 C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc:
+include/Debug.h:
 include/PlatformMesh.h:
 include/RingMesh.h:
 include/TerrainPlane.h:
@@ -320,4 +320,3 @@ C:/msys64/mingw64/include/c++/12.1.0/tr1/modified_bessel_func.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_hermite.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_laguerre.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/tr1/riemann_zeta.tcc:
-include/PlankMesh.h:

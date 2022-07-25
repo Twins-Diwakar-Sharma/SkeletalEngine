@@ -6,7 +6,7 @@
 class PlatformMesh : public TerrainMesh
 {
 protected:
-    void create();
+    void create(std::vector<float>& vertexData, std::vector<unsigned int>& indices);
 public:
     PlatformMesh();
     ~PlatformMesh();

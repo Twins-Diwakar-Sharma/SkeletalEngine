@@ -169,9 +169,8 @@ build/TerrainRenderer.o: source/TerrainRenderer.cpp \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc \
- include/PlatformMesh.h include/Terrain.h include/TerrainPlane.h \
- include/PlankMesh.h
+ C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc include/Debug.h \
+ include/PlatformMesh.h include/Terrain.h include/TerrainPlane.h
 include/TerrainRenderer.h:
 include/Mathril.h:
 C:/msys64/mingw64/include/c++/12.1.0/iostream:
@@ -356,7 +355,7 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc:
+include/Debug.h:
 include/PlatformMesh.h:
 include/Terrain.h:
 include/TerrainPlane.h:
-include/PlankMesh.h:

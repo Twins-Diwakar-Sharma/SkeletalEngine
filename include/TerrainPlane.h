@@ -2,6 +2,7 @@
 #define H_CHHALA_OBJ3CT_H
 
 #include "Mathril.h"
+#include "Debug.h"
 class TerrainPlane
 {
 public:
@@ -15,6 +16,9 @@ public:
     TerrainPlane(TerrainPlane&);
     TerrainPlane(TerrainPlane&&);
     ~TerrainPlane();
+
+    TerrainPlane& operator=(TerrainPlane&);
+    TerrainPlane& operator=(TerrainPlane&&);
 
     void update(Vec2& dir);
 };

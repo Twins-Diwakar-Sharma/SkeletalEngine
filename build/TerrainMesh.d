@@ -134,7 +134,7 @@ build/TerrainMesh.o: source/TerrainMesh.cpp include/TerrainMesh.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/basic_ios.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/bits/ostream.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/istream \
- C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc
+ C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc include/Debug.h
 include/TerrainMesh.h:
 C:/msys64/mingw64/include/c++/12.1.0/vector:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_algobase.h:
@@ -279,3 +279,4 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/basic_ios.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/bits/ostream.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/istream:
 C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc:
+include/Debug.h:

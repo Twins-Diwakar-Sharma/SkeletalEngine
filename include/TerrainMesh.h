@@ -4,16 +4,16 @@
 #include <vector>
 #include "glad/glad.h"
 #include <iostream>
+#include "Debug.h"
 
 class TerrainMesh
 {
 protected:
-    std::vector<float> vertexData;
-	std::vector<unsigned int> indices;
 	unsigned int vao, vbo, ebo;
+    int sizeOfIndices=0;
 
-    virtual void create();
-    void generate();
+    virtual void create(std::vector<float>& vertexData, std::vector<unsigned int>& indices);
+    void generate(std::vector<float>& vertexData, std::vector<unsigned int>& indices); // creates buffers and assigns sizeOfIndices
 public:
     TerrainMesh();
     ~TerrainMesh();

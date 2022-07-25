@@ -1,8 +1,8 @@
 #include "RingMesh.h"
 
-void RingMesh::create()
+void RingMesh::create(std::vector<float>& vertexData, std::vector<unsigned int>& indices)
 {
-    std::cout << "ring mesh create" << std::endl;
+    LOG("ring mesh create");
     float x = -2, z = -2;
     
     for(int i=0; i<5; i++)
@@ -42,13 +42,14 @@ void RingMesh::create()
             indices.push_back(fours[j] + i);
         }
     }
-
 }
 
 RingMesh::RingMesh()
 {
-    create();
-    generate();
+    std::vector<float> vertexData;
+    std::vector<unsigned int> indices;
+    create(vertexData,indices);
+    generate(vertexData,indices);
 }
 
 RingMesh::~RingMesh()

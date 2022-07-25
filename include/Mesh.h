@@ -11,7 +11,7 @@ class Mesh
 protected:
 	unsigned int vao, vbo, ebo;
 	int sizeOfIndices=0;
-	void generate(std::vector<float>&, std::vector<unsigned int>&);
+	void generate(std::vector<float>&, std::vector<unsigned int>&); // creates buffers and assigns sizeOfIndices
 	
 public:
 	Mesh();

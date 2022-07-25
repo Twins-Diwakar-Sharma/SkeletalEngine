@@ -12,9 +12,7 @@ Terrain::Terrain()
         }
     }
     startTesselatedSize = startScale/lod;
-    ringMesh = new RingMesh();
-    platformMesh = new PlatformMesh();
-    plankMesh = new PlankMesh();
+
 
     int scale = startScale;
     int tessSize = startTesselatedSize;
@@ -29,8 +27,7 @@ Terrain::Terrain()
 
 Terrain::~Terrain()
 {
-    delete ringMesh;
-    delete platformMesh;
+
 }
 
 void Terrain::reconfigure(int scale, int lod)
@@ -74,32 +71,22 @@ void Terrain::update(Vec3& campos)
 
 void Terrain::bindPlatformMesh()
 {
-    platformMesh->bind();
+    platformMesh.bind();
 }
 int Terrain::getPlatformMeshIndicesSize()
 {
-    return platformMesh->indicesSize();
+    return platformMesh.indicesSize();
 }
 
 
 void Terrain::bindRingMesh()
 {
-    ringMesh->bind();
+    ringMesh.bind();
 }
 
 int Terrain::getRingMeshIndicesSize()
 {
-    return ringMesh->indicesSize();
-}
-
-void Terrain::bindPlankMesh()
-{
-    plankMesh->bind();
-}
-
-int Terrain::getPlankMeshIndicesSize()
-{
-    return plankMesh->indicesSize();
+    return ringMesh.indicesSize();
 }
 
 void Terrain::unbindMesh()

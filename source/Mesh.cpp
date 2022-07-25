@@ -23,6 +23,8 @@ void Mesh::generate(std::vector<float>& vertexData, std::vector<unsigned int>& i
 	
 	glBindVertexArray(0);
 
+	sizeOfIndices = indices.size();
+
 }
 
 Mesh::Mesh()
@@ -52,7 +54,6 @@ Mesh::Mesh(std::string name)
 	unsigned int ui;
 	while (iss2 >> ui)
 		indices.push_back(ui);
-	sizeOfIndices = indices.size();
 	generate(vertexData,indices);
 }
 
@@ -84,8 +85,6 @@ void Mesh::createPlane()
 		0,	1,	3,
 		0,	3,	2
 	};
-
-	sizeOfIndices = 6;
 
 	generate(vertexData, indices);
 

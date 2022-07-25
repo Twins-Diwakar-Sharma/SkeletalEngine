@@ -145,7 +145,8 @@ build/TerrainPlane.o: source/TerrainPlane.cpp include/TerrainPlane.h \
  C:/msys64/mingw64/include/c++/12.1.0/tr1/modified_bessel_func.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_hermite.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_laguerre.tcc \
- C:/msys64/mingw64/include/c++/12.1.0/tr1/riemann_zeta.tcc
+ C:/msys64/mingw64/include/c++/12.1.0/tr1/riemann_zeta.tcc \
+ include/Debug.h
 include/TerrainPlane.h:
 include/Mathril.h:
 C:/msys64/mingw64/include/c++/12.1.0/iostream:
@@ -301,3 +302,4 @@ C:/msys64/mingw64/include/c++/12.1.0/tr1/modified_bessel_func.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_hermite.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/tr1/poly_laguerre.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/tr1/riemann_zeta.tcc:
+include/Debug.h:
