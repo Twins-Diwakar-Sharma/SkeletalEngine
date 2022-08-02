@@ -2,9 +2,9 @@
 
 
 
-void Mesh::generate()
+void Mesh::generate(std::vector<float>& vertexData, std::vector<unsigned int>& indices)
 {
-	std::cout << "mesh generate " << std::endl;
+	
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
@@ -23,14 +23,22 @@ void Mesh::generate()
 	
 	glBindVertexArray(0);
 
+	sizeOfIndices = indices.size();
+
 }
 
 Mesh::Mesh()
 {
+	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &ebo);
+	glDeleteVertexArrays(1, &vao);
 }
 
 Mesh::Mesh(std::string name)
 {
+	std::vector<float> vertexData;
+	std::vector<unsigned int> indices;
+
 	std::string path = "inventory/models/" + name + ".stc";
 	std::ifstream ifs(path);
 	std::string line;
@@ -46,8 +54,7 @@ Mesh::Mesh(std::string name)
 	unsigned int ui;
 	while (iss2 >> ui)
 		indices.push_back(ui);
-
-	generate();
+	generate(vertexData,indices);
 }
 
 Mesh::~Mesh()
@@ -67,20 +74,19 @@ void Mesh::createPlane()
 	// 0 1 2  0 3 2
 	indices = { 0, 1, 2, 3, 0, 2 };
 */
-	vertexData = {
+	std::vector<float> vertexData = {
 		1.0f,	0.0f,	-1.0f,	1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
 		1.0f,	0.0f,	1.0f,	1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 		-1.0f,	0.0f,	-1.0f,	0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
 		-1.0f,	0.0f,	1.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 	};
 
-	indices = {
+	std::vector<unsigned int> indices = {
 		0,	1,	3,
 		0,	3,	2
 	};
 
-
-	generate();
+	generate(vertexData, indices);
 
 }
 
@@ -96,5 +102,5 @@ void Mesh::unbind()
 
 int Mesh::indicesSize()
 {
-	return indices.size();
+	return sizeOfIndices;
 }

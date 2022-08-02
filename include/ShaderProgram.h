@@ -4,13 +4,17 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
 #include <iostream>
 #include <map>
 #include "Mathril.h"
 #include "Camera.h"
 #include "Light.h"
+
+#define NOTHING 0
+#define GEO 1
+#define TESS 2
+#define GEOTESS 3
 
 class ShaderProgram
 {
@@ -21,6 +25,8 @@ private:
 
 public:
     ShaderProgram(std::string name);
+    ShaderProgram(std::string name, int sophistication);
+    ~ShaderProgram();
     void createShader(unsigned int& shaderID, int shaderType, std::string filename);
     void use();
     void unuse();
@@ -30,6 +36,7 @@ public:
 
     void setUniform(std::string, float, float);
 	void setUniform(std::string, int);
+    void setUniform(std::string, Vec2&);
 	void setUniform(std::string, Vec3&);
 	void setUniform(std::string, Vec3&&);
 	void setUniform(std::string, Mat4&);

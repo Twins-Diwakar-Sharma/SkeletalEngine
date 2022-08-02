@@ -10,11 +10,12 @@ class Object
 private:
 	Vec3 pos,rot,sca;
 	Mat4 transform;
-	Mesh* mesh;
-	Texture* tex;
+	Mesh& mesh;
+	Texture& tex;
 	void syncTransform();
+
 public:
-	Object(Mesh* mesh, Texture* tex);
+	Object(Mesh& mesh, Texture& tex);
 	~Object();
 	Object(Object&);
 	Object(Object&&);
@@ -33,8 +34,8 @@ public:
 
 	Mat4& getTransform();
 
-	Texture* getTexture();
-	Mesh* getMesh();
+	Texture& getTexture();
+	Mesh& getMesh();
 };
 
 

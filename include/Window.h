@@ -1,7 +1,7 @@
 #ifndef KHIDKI
 #define KHIDKI
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "Projection.h"
@@ -24,6 +24,10 @@ public:
     void handleKey(float& t, float& s, float val);
     void handleMouse(float& rx, float& ry);
     void pollEvents();
+
+    void handleHold(bool& hold);
+    void handleWireframe(bool& wireframe);
+    void handleTerrainUpdate(bool& terrainUpdate);
 };
 
 #endif

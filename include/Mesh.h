@@ -3,17 +3,15 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 
 class Mesh
 {
 protected:
-	std::vector<float> vertexData;
-	std::vector<unsigned int> indices;
 	unsigned int vao, vbo, ebo;
-
-	void generate();
+	int sizeOfIndices=0;
+	void generate(std::vector<float>&, std::vector<unsigned int>&); // creates buffers and assigns sizeOfIndices
 	
 public:
 	Mesh();

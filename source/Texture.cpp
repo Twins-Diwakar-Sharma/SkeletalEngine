@@ -2,6 +2,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+Texture::Texture()
+{
+}
+
 Texture::Texture(std::string name)
 {
 	std::string path = "inventory/textures/" + name + ".png";
@@ -30,6 +34,7 @@ Texture::Texture(std::string name)
 
 Texture::~Texture()
 {
+	glDeleteTextures(1, &id);
 }
 
 unsigned int Texture::getTextureId()

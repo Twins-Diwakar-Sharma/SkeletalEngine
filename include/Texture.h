@@ -1,7 +1,7 @@
 #ifndef H_T3XTUR3_H
 #define H_T3XTUR3_H
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <iostream>
 #include <string>
 
@@ -13,6 +13,7 @@ private:
 	unsigned char* data;
 	std::string name;
 public:
+	Texture();
 	Texture(std::string);
 	~Texture();
 	unsigned int getTextureId();
