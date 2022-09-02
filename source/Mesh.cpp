@@ -90,6 +90,40 @@ void Mesh::createPlane()
 
 }
 
+void Mesh::createPlane2D()
+{
+	std::vector<float> vertexData = {
+		-1.0f, 1.0f, 0.0f, 1.0f,
+		1.0f, 1.0f, 1.0f, 1.0f,
+		1.0f, -1.0f, 1.0f, 0.0f,
+		-1.0f, -1.0f, 0.0f, 0.0f
+	};
+
+	std::vector<unsigned int> indices = {
+		0, 1, 3,
+		3, 1, 2
+	};
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(float), &vertexData[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &ebo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+	
+	glBindVertexArray(0);
+
+	sizeOfIndices = indices.size();
+}
+
 void Mesh::bind()
 {
 	glBindVertexArray(vao);

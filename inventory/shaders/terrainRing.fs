@@ -1,6 +1,8 @@
 #version 430
 
-out vec4 outColor;
+layout (location=0) out vec4 gPosition;
+layout (location=1) out vec4 gAlbedo;
+layout (location=2) out vec4 gNormal;
 
 in vec3 fragWorldPos;
 
@@ -91,9 +93,11 @@ const float exp =  2.7182818;
 
 void main()
 {
+    vec4 outColor;
 	vec3 worldPos = fragWorldPos;
 
-	vec3 fragNorm = getNormal(worldPos.x,worldPos.z);
+	//vec3 fragNorm = getNormal(worldPos.x,worldPos.z);
+    vec3 fragNorm = vec3(0,1,0);
 
 	vec3 toLight = normalize(-1*sun.dir);	
 	float diffuse = max(dot(toLight,fragNorm),0.2);
@@ -102,6 +106,7 @@ void main()
 	vec4 color = vec4(0.86, 0.56, 0.5, 1);
    // vec4 color = vec4(0.1,0.1,0.4,1);
 
+/*
     float stoneLambda = smoothstep(0.4,0.75,fragNorm.y);
    // vec3 grassColor = vec3(0.42, 0.52, 0.09);
     vec3 stoneColor = vec3(0.4,0.3,0.4);
@@ -113,7 +118,7 @@ void main()
 
     vec3 grassColor = vec3(0.42, 0.52, 0.09);
     color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);
-
+*/
 	outColor = vec4(diffuseColor,1.0) * color;
 
 	//outColor = color;
@@ -125,10 +130,15 @@ void main()
     outColor = (vec4(1.0) - lamda)*fogColor + lamda*outColor;
 
 
-
+/*
     vec3 skyColor = vec3(0.8,0.9,1);
     outColor.rgb += ((1 + fragNorm.y)/20.0)*skyColor;
     outColor.rgb += sunCol/10;
 
     outColor.rgb = smoothstep(0,1,outColor.rgb);
+*/
+
+    gPosition = vec4(worldPos,1);
+    gAlbedo = outColor;
+    gNormal = vec4(fragNorm,1);
 }

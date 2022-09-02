@@ -28,6 +28,9 @@ public:
     void handleHold(bool& hold);
     void handleWireframe(bool& wireframe);
     void handleTerrainUpdate(bool& terrainUpdate);
+
+    int getWidth();
+    int getHeight();
 };
 
 #endif

@@ -9,7 +9,6 @@ private:
 
 
 public:
-
 	Quat spin;
 	Vec3 position;
 

@@ -119,3 +119,13 @@ void Window::handleTerrainUpdate(bool& terrainUpdate)
     if(glfwGetKey(win, GLFW_KEY_L) == GLFW_PRESS && glfwGetKey(win, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         terrainUpdate = false;
 }
+
+int Window::getWidth()
+{
+    return Window::width;
+}
+
+int Window::getHeight()
+{
+    return Window::height;
+}

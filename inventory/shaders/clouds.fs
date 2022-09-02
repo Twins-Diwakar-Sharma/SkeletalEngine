@@ -1,6 +1,8 @@
 #version 430
 
-out vec4 outColor;
+layout (location=0) out vec4 gPosition;
+layout (location=1) out vec4 gAlbedo;
+layout (location=2) out vec4 gNormal;
 
 in vec3 fragWorldPos;
 
@@ -91,6 +93,7 @@ const float exp =  2.7182818;
 
 void main()
 {
+    vec4 outColor;
 	vec3 worldPos = fragWorldPos;
 	float divider = 0.5;
 	float value = getProceduralHeight(worldPos.x/divider, worldPos.z/divider);
@@ -102,4 +105,8 @@ void main()
 
 
 	outColor.rgb = (1-value)*skyColor + value;
+
+    gPosition = vec4(worldPos,1);
+    gAlbedo = outColor;
+    gNormal = vec4(0,-1,0,1);
 }

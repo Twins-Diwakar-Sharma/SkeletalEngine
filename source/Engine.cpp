@@ -54,12 +54,17 @@ void Engine::initialize()
     objects[0].setScale(0.2f,0.2f,0.2f);
     objects[0].setPosition(0,0,0);
 
+    objects.emplace_back(meshMap["alpine"], textureMap["alpine"]);
+    objects[1].setScale(0.25f,0.25f,0.25f);
+    objects[1].setPosition(1,0,0.5f);
+
+/*
     meshMap.emplace("plane", Mesh());
     meshMap["plane"].createPlane();
     textureMap.emplace("path","path");
     objects.emplace_back(meshMap["plane"], textureMap["path"]);
     objects[1].scale(10,1,10);
-
+*/
 /*
     clouds = new Object(planeMesh,planeTex);
     clouds->setPosition(0,100,0);
@@ -71,9 +76,12 @@ void Engine::initialize()
     glClearColor(0.8f,0.9f,1,1);
     glEnable(GL_DEPTH_TEST);
 
-
-    // problem makers 
     terrain.reconfigure(128,16);  
+
+    deferredShadingFramebuffer.setWidth(window.getWidth());
+    deferredShadingFramebuffer.setHeight(window.getHeight());
+    deferredShadingFramebuffer.attachColors(3);
+    deferredShadingFramebuffer.attachDepthRender();
 
 }
 
@@ -102,7 +110,7 @@ void Engine::update()
 	    cam.translate(translateForward, translateSide);
     }
     
-    objects[0].rotate(0,1,0);
+   // objects[0].rotate(0,1,0);
   //  clouds->setPosition(cam.position[0],100,cam.position[2]);
     
     if(updateTerrain)
@@ -113,16 +121,26 @@ void Engine::update()
 
 void Engine::render(double dt)
 {
+    deferredShadingFramebuffer.use();
+    deferredShadingFramebuffer.bindViewport();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    objectsRenderer.render(objects, cam, sun);
     if(wireframe)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    objectsRenderer.render(objects, cam, sun);
+    terrainRenderer.render(terrain,cam,sun);
+    deferredShadingFramebuffer.unuse();
+
+
+    glViewport(0, 0, window.getWidth(), window.getHeight());
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    deferredRenderer.render(deferredShadingFramebuffer);
 
    // cloudRenderer->render(clouds,cam,sun);
-     terrainRenderer.render(terrain,cam,sun);
+    // terrainRenderer.render(terrain,cam,sun);
     window.swap();
 }
 

@@ -13,6 +13,7 @@ uniform mat4 projection;
 uniform mat4 transform;
 uniform Camera cam;
 
+out vec3 fragPos;
 out vec2 fragTex;
 out vec3 fragNor;
 
@@ -47,4 +48,5 @@ void main()
     fragTex = tex;
 	vec3 normal = nor;
 	fragNor = normalize((transform * vec4(normal,0.0) ).xyz) ;
+	fragPos = worldPos.xyz;
 }

@@ -67,6 +67,7 @@ float fbm (vec2 p)
 
 float getProceduralHeight(float x, float z)
 {
+    return 0;
    vec2 p = vec2(x,z)/noiseSpan;
    float value = fbm(p);
   // float value = perlinNoise(p);

@@ -1,5 +1,6 @@
-build/Renderer.o: source/Renderer.cpp include/Renderer.h \
- include/Mathril.h C:/msys64/mingw64/include/c++/12.1.0/iostream \
+build/DeferredRenderer.o: source/DeferredRenderer.cpp \
+ include/DeferredRenderer.h include/Mathril.h \
+ C:/msys64/mingw64/include/c++/12.1.0/iostream \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/c++config.h \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/os_defines.h \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/cpu_defines.h \
@@ -169,8 +170,8 @@ build/Renderer.o: source/Renderer.cpp include/Renderer.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc \
- include/Projection.h include/Object.h include/Texture.h
-include/Renderer.h:
+ include/Framebuffer.h
+include/DeferredRenderer.h:
 include/Mathril.h:
 C:/msys64/mingw64/include/c++/12.1.0/iostream:
 C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/c++config.h:
@@ -352,6 +353,4 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc:
-include/Projection.h:
-include/Object.h:
-include/Texture.h:
+include/Framebuffer.h:

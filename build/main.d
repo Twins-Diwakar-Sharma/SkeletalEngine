@@ -182,7 +182,7 @@ build/main.o: source/main.cpp include/Engine.h \
  include/RingMesh.h include/TerrainMesh.h include/Debug.h \
  include/PlatformMesh.h include/TerrainRenderer.h include/Terrain.h \
  include/TerrainPlane.h include/CloudRenderer.h include/Window.h \
- include/GLFW/glfw3.h
+ include/GLFW/glfw3.h include/Framebuffer.h include/DeferredRenderer.h
 include/Engine.h:
 C:/msys64/mingw64/include/c++/12.1.0/map:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_tree.h:
@@ -387,3 +387,5 @@ include/TerrainPlane.h:
 include/CloudRenderer.h:
 include/Window.h:
 include/GLFW/glfw3.h:
+include/Framebuffer.h:
+include/DeferredRenderer.h:

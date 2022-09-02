@@ -18,6 +18,7 @@ public:
 	Mesh(std::string);
 	~Mesh();
 	void createPlane();
+	void createPlane2D();
 	void bind();
 	void unbind();
 	int indicesSize();

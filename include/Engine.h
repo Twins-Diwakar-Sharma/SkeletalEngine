@@ -14,6 +14,10 @@
 #include "CloudRenderer.h"
 #include "Window.h"
 #include "Debug.h"
+#include "Framebuffer.h"
+#include "DeferredRenderer.h"
+
+
 class Engine
 {
 private:
@@ -52,6 +56,8 @@ private:
     bool hold=false;
     bool wireframe=false;
     bool updateTerrain=true;
+    Framebuffer deferredShadingFramebuffer;
+    DeferredRenderer deferredRenderer;
 
 public:
     Engine();
