@@ -2,6 +2,7 @@
 #define H_M4THR1L_H
 
 #include <iostream>
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 class Vec2

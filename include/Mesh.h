@@ -19,6 +19,7 @@ public:
 	~Mesh();
 	void createPlane();
 	void createPlane2D();
+	void createSkybox();
 	void bind();
 	void unbind();
 	int indicesSize();

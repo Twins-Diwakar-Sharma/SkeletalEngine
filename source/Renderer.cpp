@@ -6,20 +6,20 @@ Renderer::Renderer() : shaderProgram("objects")
     shaderProgram.mapUniform("transform");
     shaderProgram.mapUniform("albedo");
     shaderProgram.mapCameraUniform("cam");
-    shaderProgram.mapDirectionalLightUniform("sun");
+    //shaderProgram.mapDirectionalLightUniform("sun");
 }
 
 Renderer::~Renderer()
 {
 }
 
-void Renderer::render(std::vector<Object>& objects, Camera& cam, DirectionalLight& sun)
+void Renderer::render(std::vector<Object>& objects, Camera& cam)
 {
     shaderProgram.use();
     shaderProgram.setUniform("projection",proj::perspective);
     shaderProgram.setUniform("albedo",0);
     shaderProgram.setUniform("cam", cam);
-    shaderProgram.setUniform("sun", sun);
+    //shaderProgram.setUniform("sun", sun);
 
     for(int i=0; i<objects.size(); i++)
     {

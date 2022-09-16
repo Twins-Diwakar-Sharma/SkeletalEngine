@@ -10,11 +10,10 @@ class DeferredRenderer
 {
 private:
     ShaderProgram shaderProgram;
-    Mesh quad;
 public:
     DeferredRenderer();
     ~DeferredRenderer();  
-    void render(Framebuffer&);
+    void render(Mesh& quad, Framebuffer&);
 };
 
 #endif

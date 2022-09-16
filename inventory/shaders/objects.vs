@@ -40,13 +40,20 @@ void main()
 	quatView = quatRotate(quatView, spinQuatInv);
 	quatView = quatRotate(spinQuat, quatView);
 
-	vec4 projectedPos = projection * vec4(quatView.xyz,1.0);
+	viewPos = quatView.xyz;
+	vec4 projectedPos = projection * vec4(viewPos,1.0);
 
 
 	gl_Position = projectedPos;
 
+	fragPos = worldPos.xyz;
     fragTex = tex;
 	vec3 normal = nor;
-	fragNor = normalize((transform * vec4(normal,0.0) ).xyz) ;
-	fragPos = worldPos.xyz;
+	fragNor = normalize((transform * vec4(normal,0.0) ).xyz);
+/*
+	vec4 quatFragNor = vec4(fragNor,0);
+	quatFragNor = quatRotate(quatFragNor, spinQuatInv);
+	quatFragNor = quatRotate(spinQuat, quatFragNor);
+	fragNor = normalize(quatFragNor.xyz);
+*/
 }

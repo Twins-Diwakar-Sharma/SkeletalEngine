@@ -15,25 +15,29 @@ build/Engine.o: source/Engine.cpp include/Engine.h \
  C:/msys64/mingw64/include/c++/12.1.0/type_traits \
  C:/msys64/mingw64/include/c++/12.1.0/bits/move.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/utility.h \
+ C:/msys64/mingw64/include/c++/12.1.0/compare \
+ C:/msys64/mingw64/include/c++/12.1.0/concepts \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_iterator_base_types.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/iterator_concepts.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/ptr_traits.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/ranges_cmp.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_iterator_base_funcs.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/concept_check.h \
  C:/msys64/mingw64/include/c++/12.1.0/debug/assertions.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_iterator.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/ptr_traits.h \
+ C:/msys64/mingw64/include/c++/12.1.0/new \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/exception.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_construct.h \
  C:/msys64/mingw64/include/c++/12.1.0/debug/debug.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/predefined_ops.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/allocator.h \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/c++allocator.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/new_allocator.h \
- C:/msys64/mingw64/include/c++/12.1.0/new \
- C:/msys64/mingw64/include/c++/12.1.0/bits/exception.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/memoryfwd.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_function.h \
  C:/msys64/mingw64/include/c++/12.1.0/backward/binders.h \
  C:/msys64/mingw64/include/c++/12.1.0/ext/alloc_traits.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/alloc_traits.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/stl_construct.h \
  C:/msys64/mingw64/include/c++/12.1.0/ext/aligned_buffer.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/node_handle.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_map.h \
@@ -107,6 +111,9 @@ build/Engine.o: source/Engine.cpp include/Engine.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/basic_string.h \
  C:/msys64/mingw64/include/c++/12.1.0/string_view \
  C:/msys64/mingw64/include/c++/12.1.0/bits/functional_hash.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/ranges_base.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/max_size_type.h \
+ C:/msys64/mingw64/include/c++/12.1.0/numbers \
  C:/msys64/mingw64/include/c++/12.1.0/bits/string_view.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/ext/string_conversions.h \
  C:/msys64/mingw64/include/c++/12.1.0/cstdlib \
@@ -139,16 +146,25 @@ build/Engine.o: source/Engine.cpp include/Engine.h \
  C:/msys64/mingw64/include/c++/12.1.0/istream \
  C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc \
  C:/msys64/mingw64/include/c++/12.1.0/thread \
+ C:/msys64/mingw64/include/c++/12.1.0/stop_token \
+ C:/msys64/mingw64/include/c++/12.1.0/atomic \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_base.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_lockfree_defines.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_wait.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/std_mutex.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/std_thread.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/unique_ptr.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/c++/12.1.0/semaphore \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/semaphore_base.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/chrono.h \
  C:/msys64/mingw64/include/c++/12.1.0/ratio \
  C:/msys64/mingw64/include/c++/12.1.0/limits \
  C:/msys64/mingw64/include/c++/12.1.0/ctime \
  C:/msys64/mingw64/include/c++/12.1.0/bits/parse_numbers.h \
- include/Renderer.h include/Mathril.h \
- C:/msys64/mingw64/include/c++/12.1.0/math.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_timed_wait.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/this_thread_sleep.h \
+ C:/msys64/mingw64/include/semaphore.h include/Renderer.h \
+ include/Mathril.h C:/msys64/mingw64/include/c++/12.1.0/math.h \
  C:/msys64/mingw64/include/c++/12.1.0/cmath \
  C:/msys64/mingw64/include/math.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/specfun.h \
@@ -182,7 +198,8 @@ build/Engine.o: source/Engine.cpp include/Engine.h \
  include/RingMesh.h include/TerrainMesh.h include/Debug.h \
  include/PlatformMesh.h include/TerrainRenderer.h include/Terrain.h \
  include/TerrainPlane.h include/CloudRenderer.h include/Window.h \
- include/GLFW/glfw3.h include/Framebuffer.h include/DeferredRenderer.h
+ include/GLFW/glfw3.h include/Framebuffer.h include/DeferredRenderer.h \
+ include/LightRenderer.h include/SkyboxRenderer.h
 include/Engine.h:
 C:/msys64/mingw64/include/c++/12.1.0/map:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_tree.h:
@@ -200,25 +217,29 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_pair.h:
 C:/msys64/mingw64/include/c++/12.1.0/type_traits:
 C:/msys64/mingw64/include/c++/12.1.0/bits/move.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/utility.h:
+C:/msys64/mingw64/include/c++/12.1.0/compare:
+C:/msys64/mingw64/include/c++/12.1.0/concepts:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_iterator_base_types.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/iterator_concepts.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/ptr_traits.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/ranges_cmp.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_iterator_base_funcs.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/concept_check.h:
 C:/msys64/mingw64/include/c++/12.1.0/debug/assertions.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_iterator.h:
-C:/msys64/mingw64/include/c++/12.1.0/bits/ptr_traits.h:
+C:/msys64/mingw64/include/c++/12.1.0/new:
+C:/msys64/mingw64/include/c++/12.1.0/bits/exception.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/stl_construct.h:
 C:/msys64/mingw64/include/c++/12.1.0/debug/debug.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/predefined_ops.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/allocator.h:
 C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/c++allocator.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/new_allocator.h:
-C:/msys64/mingw64/include/c++/12.1.0/new:
-C:/msys64/mingw64/include/c++/12.1.0/bits/exception.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/memoryfwd.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_function.h:
 C:/msys64/mingw64/include/c++/12.1.0/backward/binders.h:
 C:/msys64/mingw64/include/c++/12.1.0/ext/alloc_traits.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/alloc_traits.h:
-C:/msys64/mingw64/include/c++/12.1.0/bits/stl_construct.h:
 C:/msys64/mingw64/include/c++/12.1.0/ext/aligned_buffer.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/node_handle.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_map.h:
@@ -298,6 +319,9 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/refwrap.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/basic_string.h:
 C:/msys64/mingw64/include/c++/12.1.0/string_view:
 C:/msys64/mingw64/include/c++/12.1.0/bits/functional_hash.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/ranges_base.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/max_size_type.h:
+C:/msys64/mingw64/include/c++/12.1.0/numbers:
 C:/msys64/mingw64/include/c++/12.1.0/bits/string_view.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/ext/string_conversions.h:
 C:/msys64/mingw64/include/c++/12.1.0/cstdlib:
@@ -330,14 +354,24 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/ostream.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/istream:
 C:/msys64/mingw64/include/c++/12.1.0/bits/istream.tcc:
 C:/msys64/mingw64/include/c++/12.1.0/thread:
+C:/msys64/mingw64/include/c++/12.1.0/stop_token:
+C:/msys64/mingw64/include/c++/12.1.0/atomic:
+C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_base.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_lockfree_defines.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_wait.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/std_mutex.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/std_thread.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/unique_ptr.h:
-C:/msys64/mingw64/include/c++/12.1.0/bits/this_thread_sleep.h:
+C:/msys64/mingw64/include/c++/12.1.0/semaphore:
+C:/msys64/mingw64/include/c++/12.1.0/bits/semaphore_base.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/chrono.h:
 C:/msys64/mingw64/include/c++/12.1.0/ratio:
 C:/msys64/mingw64/include/c++/12.1.0/limits:
 C:/msys64/mingw64/include/c++/12.1.0/ctime:
 C:/msys64/mingw64/include/c++/12.1.0/bits/parse_numbers.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/atomic_timed_wait.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/this_thread_sleep.h:
+C:/msys64/mingw64/include/semaphore.h:
 include/Renderer.h:
 include/Mathril.h:
 C:/msys64/mingw64/include/c++/12.1.0/math.h:
@@ -389,3 +423,5 @@ include/Window.h:
 include/GLFW/glfw3.h:
 include/Framebuffer.h:
 include/DeferredRenderer.h:
+include/LightRenderer.h:
+include/SkyboxRenderer.h:

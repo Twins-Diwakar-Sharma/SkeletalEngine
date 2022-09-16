@@ -18,6 +18,7 @@ uniform vec2 step;
 uniform vec2 position;
 
 out vec3 fragWorldPos;
+out vec3 fragViewPos;
 
 const float threshold=1.20;
 const float noiseSpan = 128;
@@ -98,6 +99,7 @@ void worldToScreenPos(vec3 worldPos, vec3 sizedPos)
 	gl_Position = projectedPos;
 
     fragWorldPos = worldPos;
+    fragViewPos = quatView.xyz;
 
 }
 

@@ -7,7 +7,6 @@ TerrainRenderer::TerrainRenderer() : ringShaderProgram("terrainRing", GEOTESS)
     ringShaderProgram.mapUniform("size");
     ringShaderProgram.mapUniform("LOD");
     ringShaderProgram.mapUniform("position");
-    ringShaderProgram.mapDirectionalLightUniform("sun");
     ringShaderProgram.mapUniform("step");
     ringShaderProgram.mapUniform("tesselatedSize");
 }
@@ -17,7 +16,7 @@ TerrainRenderer::~TerrainRenderer()
 
 }
 
-void TerrainRenderer::render(Terrain& terrain, Camera& cam, DirectionalLight& sun)
+void TerrainRenderer::render(Terrain& terrain, Camera& cam)
 {
 
     glPatchParameteri(GL_PATCH_VERTICES, 4);
@@ -27,7 +26,6 @@ void TerrainRenderer::render(Terrain& terrain, Camera& cam, DirectionalLight& su
     ringShaderProgram.setUniform("LOD", terrain.getLod());
 	ringShaderProgram.setUniform("projection", proj::perspective);
 	ringShaderProgram.setUniform("cam", cam);
-    ringShaderProgram.setUniform("sun", sun);
 
     terrain.bindPlatformMesh();
     glEnableVertexAttribArray(0);

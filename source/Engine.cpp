@@ -1,7 +1,7 @@
 #include "Engine.h"
 
 Engine::Engine()
-            : sun(Vec3(-1,-1,-1),Vec3(1,1,0.9))
+            : sun(Vec3(-1,-1,-1),Vec3(1,1,0.8))
 {
     //loopThread = new std::thread(&Engine::loop, this);
     //loopThread->join();
@@ -57,14 +57,6 @@ void Engine::initialize()
     objects.emplace_back(meshMap["alpine"], textureMap["alpine"]);
     objects[1].setScale(0.25f,0.25f,0.25f);
     objects[1].setPosition(1,0,0.5f);
-
-/*
-    meshMap.emplace("plane", Mesh());
-    meshMap["plane"].createPlane();
-    textureMap.emplace("path","path");
-    objects.emplace_back(meshMap["plane"], textureMap["path"]);
-    objects[1].scale(10,1,10);
-*/
 /*
     clouds = new Object(planeMesh,planeTex);
     clouds->setPosition(0,100,0);
@@ -78,10 +70,22 @@ void Engine::initialize()
 
     terrain.reconfigure(128,16);  
 
+    // post processing
+    screenQuad.createPlane2D();
     deferredShadingFramebuffer.setWidth(window.getWidth());
     deferredShadingFramebuffer.setHeight(window.getHeight());
-    deferredShadingFramebuffer.attachColors(3);
+    deferredShadingFramebuffer.attachColorTexture(GL_RGBA16, GL_RGBA);
+    deferredShadingFramebuffer.attachColorTexture(GL_RGBA16, GL_RGBA);
+    deferredShadingFramebuffer.attachColorTexture(GL_RGBA16, GL_RGBA);
+    deferredShadingFramebuffer.setDrawBuffers();
     deferredShadingFramebuffer.attachDepthRender();
+
+    lightFramebuffer.setWidth(window.getWidth());
+    lightFramebuffer.setHeight(window.getHeight());
+    lightFramebuffer.attachColorTexture(GL_RGBA16, GL_RGBA);
+    lightFramebuffer.setDrawBuffers();
+
+    skyboxTexture.generateCubeMap("lake");
 
 }
 
@@ -123,24 +127,32 @@ void Engine::render(double dt)
 {
     deferredShadingFramebuffer.use();
     deferredShadingFramebuffer.bindViewport();
+    glClearColor(0.8f,0.9f,1,1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     if(wireframe)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    objectsRenderer.render(objects, cam, sun);
-    terrainRenderer.render(terrain,cam,sun);
+    skyboxRenderer.render(skyboxTexture, cam); // always first, skybox is somehow dependent
+    objectsRenderer.render(objects, cam);
+    terrainRenderer.render(terrain, cam);
+
     deferredShadingFramebuffer.unuse();
+
+    lightFramebuffer.use();
+    lightFramebuffer.bindViewport();
+    glClearColor(0.8f,0.9f,1,1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    lightRenderer.render(screenQuad, deferredShadingFramebuffer, sun, cam);
+    lightFramebuffer.unuse();
 
 
     glViewport(0, 0, window.getWidth(), window.getHeight());
+    glClearColor(0.8f,0.9f,1,1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    deferredRenderer.render(deferredShadingFramebuffer);
+    deferredRenderer.render(screenQuad, lightFramebuffer);
 
-   // cloudRenderer->render(clouds,cam,sun);
-    // terrainRenderer.render(terrain,cam,sun);
     window.swap();
 }
 

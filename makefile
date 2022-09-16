@@ -10,7 +10,7 @@ resDir	=inventory
 libDir	=library
 
 #flags
-cc		=g++
+cc		=g++ -std=c++20
 incl	=-I$(incDir)
 lib		=-lglad -lglfw3dll
 flag	=-pthread -MP -MD

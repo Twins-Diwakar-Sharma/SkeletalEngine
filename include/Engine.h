@@ -16,6 +16,8 @@
 #include "Debug.h"
 #include "Framebuffer.h"
 #include "DeferredRenderer.h"
+#include "LightRenderer.h"
+#include "SkyboxRenderer.h"
 
 
 class Engine
@@ -56,8 +58,15 @@ private:
     bool hold=false;
     bool wireframe=false;
     bool updateTerrain=true;
+
+    Mesh screenQuad;
     Framebuffer deferredShadingFramebuffer;
+    Framebuffer lightFramebuffer;
+
+    LightRenderer lightRenderer;
     DeferredRenderer deferredRenderer;
+    SkyboxRenderer skyboxRenderer;
+    Texture skyboxTexture;
 
 public:
     Engine();

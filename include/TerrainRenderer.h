@@ -17,7 +17,7 @@ private:
 public:
     TerrainRenderer();
     ~TerrainRenderer();  
-    void render(Terrain& terrain, Camera& cam, DirectionalLight& sun);
+    void render(Terrain& terrain, Camera& cam);
     
 };
 

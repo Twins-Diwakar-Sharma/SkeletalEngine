@@ -2,22 +2,18 @@
 
 DeferredRenderer::DeferredRenderer() : shaderProgram("deferred")
 {
-    quad.createPlane2D();
-    shaderProgram.mapUniform("gPosition");
     shaderProgram.mapUniform("gAlbedo");
-    shaderProgram.mapUniform("gNormal");
 }
 
 DeferredRenderer::~DeferredRenderer()
 {}
 
-void DeferredRenderer::render(Framebuffer& deferredShadingFramebuffer)
+void DeferredRenderer::render(Mesh& quad, Framebuffer& deferredShadingFramebuffer)
 {
     shaderProgram.use();
-    deferredShadingFramebuffer.bindTextures();
-    shaderProgram.setUniform("gPosition",0);
-    shaderProgram.setUniform("gAlbedo",1);
-    shaderProgram.setUniform("gNormal",2);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, deferredShadingFramebuffer.getColorAttachmentId(0));
+    shaderProgram.setUniform("gAlbedo",0);
     quad.bind();
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);

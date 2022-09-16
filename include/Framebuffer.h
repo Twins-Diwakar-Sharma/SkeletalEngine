@@ -4,28 +4,30 @@
 #include "glad/glad.h"
 #include <vector>
 
-#define max_color_attachments 3
+#define max_color_attachments 6
 class Framebuffer
 {
 private:
     unsigned int fBuffer;
     unsigned int colorAttachments[max_color_attachments];
     unsigned int depthAttachment;
-    std::vector<unsigned int> drawAttachments;
-    int num_of_color_attachments;
+    int num_of_color_attachments=0;
     int screenWidth, screenHeight;
 public:
     Framebuffer();
     ~Framebuffer();
     void setWidth(int);
     void setHeight(int);
-    void attachColors(int num_of_color_attachments);
     void attachDepthTexture();
     void attachDepthRender();
     void bindViewport();
-    void bindTextures();
+    void bindAllTextures();
+    unsigned int getColorAttachmentId(unsigned int index);
     void use();
     void unuse();
+
+    void setDrawBuffers();
+    void attachColorTexture(int internalFormat, int texelFormat);
 };
 
 #endif

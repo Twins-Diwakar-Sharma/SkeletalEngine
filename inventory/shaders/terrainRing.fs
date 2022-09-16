@@ -4,21 +4,21 @@ layout (location=0) out vec4 gPosition;
 layout (location=1) out vec4 gAlbedo;
 layout (location=2) out vec4 gNormal;
 
-in vec3 fragWorldPos;
-
-
-struct DirectionalLight
+struct Camera
 {
-	vec3 dir;
-	vec3 col;
+	vec4 spin;
+	vec3 pos;
 };
 
-uniform DirectionalLight sun;
+in vec3 fragWorldPos;
+in vec3 fragViewPos;
 
 const float threshold = 1.20;
 const float noiseSpan = 128;
 
 in vec3 camPos;
+
+uniform Camera cam;
 
 // random value between -1 and 1
 vec2 randomVec2(vec2 st)
@@ -91,6 +91,14 @@ vec3 getNormal(float x, float y)
 
 const float exp =  2.7182818;
 
+
+vec4 quatRotate(vec4 action, vec4 victim)
+{
+	float ar = action.w;	float br = victim.w;
+	vec3 av = action.xyz;	vec3 bv = victim.xyz;
+	return vec4(ar*bv + br*av + cross(av,bv), ar*br - dot(av,bv));
+}
+
 void main()
 {
     vec4 outColor;
@@ -99,10 +107,10 @@ void main()
 	//vec3 fragNorm = getNormal(worldPos.x,worldPos.z);
     vec3 fragNorm = vec3(0,1,0);
 
-	vec3 toLight = normalize(-1*sun.dir);	
+	/*vec3 toLight = normalize(-1*sun.dir);	
 	float diffuse = max(dot(toLight,fragNorm),0.2);
     vec3 sunCol = vec3(1,1,0.8);
-	vec3 diffuseColor = diffuse*sunCol;
+	vec3 diffuseColor = diffuse*sunCol;*/
 	vec4 color = vec4(0.86, 0.56, 0.5, 1);
    // vec4 color = vec4(0.1,0.1,0.4,1);
 
@@ -119,7 +127,7 @@ void main()
     vec3 grassColor = vec3(0.42, 0.52, 0.09);
     color.rgb = (1.0 - grassLambda)*color.rgb + grassLambda*(grassColor);
 */
-	outColor = vec4(diffuseColor,1.0) * color;
+	outColor =  color;
 
 	//outColor = color;
 
@@ -138,7 +146,16 @@ void main()
     outColor.rgb = smoothstep(0,1,outColor.rgb);
 */
 
-    gPosition = vec4(worldPos,1);
+    gPosition = vec4(fragViewPos,1);
     gAlbedo = outColor;
     gNormal = vec4(fragNorm,1);
+
+    /* ----
+    vec4 spinQuat = vec4(-cam.spin.xyz, cam.spin.w);
+	vec4 spinQuatInv = vec4(cam.spin);
+	vec4 quatFragNorm = vec4(fragNorm,0);
+	quatFragNorm = quatRotate(quatFragNorm, spinQuatInv);
+	quatFragNorm = quatRotate(spinQuat, quatFragNorm);
+	gNormal = vec4(quatFragNorm.xyz,1);
+    ---- */
 }

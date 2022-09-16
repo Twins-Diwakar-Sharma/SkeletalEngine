@@ -15,6 +15,7 @@ private:
 public:
 	Texture();
 	Texture(std::string);
+	void generateCubeMap(std::string);
 	~Texture();
 	unsigned int getTextureId();
 	std::string& getName();
