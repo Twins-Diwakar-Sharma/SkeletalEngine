@@ -1,5 +1,6 @@
 # executables
 binary/*
+binary/SkeletalEngine.exe
 
 # library
 library/*
