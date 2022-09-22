@@ -150,12 +150,12 @@ void main()
     gAlbedo = outColor;
     gNormal = vec4(fragNorm,1);
 
-    /* ----
+
     vec4 spinQuat = vec4(-cam.spin.xyz, cam.spin.w);
 	vec4 spinQuatInv = vec4(cam.spin);
 	vec4 quatFragNorm = vec4(fragNorm,0);
 	quatFragNorm = quatRotate(quatFragNorm, spinQuatInv);
 	quatFragNorm = quatRotate(spinQuat, quatFragNorm);
 	gNormal = vec4(quatFragNorm.xyz,1);
-    ---- */
+
 }

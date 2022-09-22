@@ -5,6 +5,7 @@ LightRenderer::LightRenderer() : shaderProgram("light")
     shaderProgram.mapUniform("gPosition");
     shaderProgram.mapUniform("gAlbedo");
     shaderProgram.mapUniform("gNormal");
+    shaderProgram.mapUniform("ambientOcclusion");
     shaderProgram.mapCameraUniform("cam");
     shaderProgram.mapDirectionalLightUniform("sun");
 }
@@ -12,7 +13,7 @@ LightRenderer::LightRenderer() : shaderProgram("light")
 LightRenderer::~LightRenderer()
 {}
 
-void LightRenderer::render(Mesh& quad, Framebuffer& deferredShadingFramebuffer, DirectionalLight& sun, Camera& cam)
+void LightRenderer::render(Mesh& quad, Framebuffer& deferredShadingFramebuffer, Framebuffer& aoFramebuffer, DirectionalLight& sun, Camera& cam)
 {
     shaderProgram.use();
     glActiveTexture(GL_TEXTURE0);
@@ -21,9 +22,12 @@ void LightRenderer::render(Mesh& quad, Framebuffer& deferredShadingFramebuffer, 
     glBindTexture(GL_TEXTURE_2D, deferredShadingFramebuffer.getColorAttachmentId(1));
     glActiveTexture(GL_TEXTURE2);
     glBindTexture(GL_TEXTURE_2D, deferredShadingFramebuffer.getColorAttachmentId(2));
+    glActiveTexture(GL_TEXTURE3);
+    glBindTexture(GL_TEXTURE_2D, aoFramebuffer.getColorAttachmentId(0));
     shaderProgram.setUniform("gPosition",0);
     shaderProgram.setUniform("gAlbedo",1);
     shaderProgram.setUniform("gNormal",2);
+    shaderProgram.setUniform("ambientOcclusion",3);
     shaderProgram.setUniform("sun",sun);
     shaderProgram.setUniform("cam",cam);
     quad.bind();

@@ -28,6 +28,8 @@ public:
 
     void setDrawBuffers();
     void attachColorTexture(int internalFormat, int texelFormat);
+    int getWidth();
+    int getHeight();
 };
 
 #endif

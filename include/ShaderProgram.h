@@ -10,6 +10,7 @@
 #include "Mathril.h"
 #include "Camera.h"
 #include "Light.h"
+#include <vector>
 
 #define NOTHING 0
 #define GEO 1
@@ -33,6 +34,7 @@ public:
     void mapUniform(std::string uniform);
     void mapCameraUniform(std::string uniform);
     void mapDirectionalLightUniform(std::string uniform);
+    void mapArrayUniform(std::string uniform, int size);
 
     void setUniform(std::string, float, float);
 	void setUniform(std::string, int);
@@ -42,6 +44,7 @@ public:
 	void setUniform(std::string, Mat4&);
     void setUniform(std::string name, Camera& cam);
     void setUniform(std::string name, DirectionalLight& light);
+    void setUniform(std::string name, std::vector<Vec3>& kernels);
 	
 };
 

@@ -9,6 +9,7 @@ struct Camera
 layout (location = 0) in vec3 pos;
 
 out vec3 fragTex;
+out vec3 fragPos;
 
 uniform mat4 projection;
 uniform Camera cam;
@@ -33,9 +34,9 @@ void main()
 	quatView = quatRotate(spinQuat, quatView);
 
 	vec3 viewPos = quatView.xyz;
-
     vec4 projectedPos = projection * vec4(viewPos,1.0);
     
-
     gl_Position = projectedPos;
+
+	fragPos = viewPos;
 }

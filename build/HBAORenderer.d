@@ -1,6 +1,5 @@
-build/TerrainRenderer.o: source/TerrainRenderer.cpp \
- include/TerrainRenderer.h include/Mathril.h \
- C:/msys64/mingw64/include/c++/12.1.0/iostream \
+build/HBAORenderer.o: source/HBAORenderer.cpp include/HBAORenderer.h \
+ include/Mathril.h C:/msys64/mingw64/include/c++/12.1.0/iostream \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/c++config.h \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/os_defines.h \
  C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/cpu_defines.h \
@@ -176,10 +175,18 @@ build/TerrainRenderer.o: source/TerrainRenderer.cpp \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc \
- include/Projection.h include/RingMesh.h include/TerrainMesh.h \
- include/Debug.h include/PlatformMesh.h include/Terrain.h \
- include/TerrainPlane.h
-include/TerrainRenderer.h:
+ include/Framebuffer.h include/Mesh.h include/Projection.h \
+ C:/msys64/mingw64/include/c++/12.1.0/random \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/random.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/uniform_int_dist.h \
+ C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/opt_random.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/random.tcc \
+ C:/msys64/mingw64/include/c++/12.1.0/numeric \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_numeric.h \
+ C:/msys64/mingw64/include/c++/12.1.0/bit \
+ C:/msys64/mingw64/include/c++/12.1.0/pstl/glue_numeric_defs.h \
+ C:/msys64/mingw64/include/c++/12.1.0/pstl/execution_defs.h
+include/HBAORenderer.h:
 include/Mathril.h:
 C:/msys64/mingw64/include/c++/12.1.0/iostream:
 C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/c++config.h:
@@ -367,10 +374,16 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc:
+include/Framebuffer.h:
+include/Mesh.h:
 include/Projection.h:
-include/RingMesh.h:
-include/TerrainMesh.h:
-include/Debug.h:
-include/PlatformMesh.h:
-include/Terrain.h:
-include/TerrainPlane.h:
+C:/msys64/mingw64/include/c++/12.1.0/random:
+C:/msys64/mingw64/include/c++/12.1.0/bits/random.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/uniform_int_dist.h:
+C:/msys64/mingw64/include/c++/12.1.0/x86_64-w64-mingw32/bits/opt_random.h:
+C:/msys64/mingw64/include/c++/12.1.0/bits/random.tcc:
+C:/msys64/mingw64/include/c++/12.1.0/numeric:
+C:/msys64/mingw64/include/c++/12.1.0/bits/stl_numeric.h:
+C:/msys64/mingw64/include/c++/12.1.0/bit:
+C:/msys64/mingw64/include/c++/12.1.0/pstl/glue_numeric_defs.h:
+C:/msys64/mingw64/include/c++/12.1.0/pstl/execution_defs.h:

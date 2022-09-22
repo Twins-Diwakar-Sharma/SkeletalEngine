@@ -18,6 +18,7 @@
 #include "DeferredRenderer.h"
 #include "LightRenderer.h"
 #include "SkyboxRenderer.h"
+#include "HBAORenderer.h"
 
 
 class Engine
@@ -61,11 +62,14 @@ private:
 
     Mesh screenQuad;
     Framebuffer deferredShadingFramebuffer;
+    Framebuffer hbaoFramebuffer;
     Framebuffer lightFramebuffer;
 
     LightRenderer lightRenderer;
     DeferredRenderer deferredRenderer;
     SkyboxRenderer skyboxRenderer;
+    HBAORenderer hbaoRenderer;
+
     Texture skyboxTexture;
 
 public:

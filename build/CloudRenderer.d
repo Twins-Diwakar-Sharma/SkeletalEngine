@@ -170,12 +170,11 @@ build/CloudRenderer.o: source/CloudRenderer.cpp include/CloudRenderer.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/uses_allocator.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_multimap.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/erase_if.h include/Camera.h \
- include/Light.h include/Mesh.h \
- C:/msys64/mingw64/include/c++/12.1.0/vector \
+ include/Light.h C:/msys64/mingw64/include/c++/12.1.0/vector \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h \
  C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h \
- C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc \
+ C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc include/Mesh.h \
  include/Projection.h include/Object.h include/Texture.h
 include/CloudRenderer.h:
 include/Mathril.h:
@@ -360,12 +359,12 @@ C:/msys64/mingw64/include/c++/12.1.0/bits/stl_multimap.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/erase_if.h:
 include/Camera.h:
 include/Light.h:
-include/Mesh.h:
 C:/msys64/mingw64/include/c++/12.1.0/vector:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_uninitialized.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_vector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/stl_bvector.h:
 C:/msys64/mingw64/include/c++/12.1.0/bits/vector.tcc:
+include/Mesh.h:
 include/Projection.h:
 include/Object.h:
 include/Texture.h:

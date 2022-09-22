@@ -1,7 +1,7 @@
 #include "Engine.h"
 
 Engine::Engine()
-            : sun(Vec3(-1,-1,-1),Vec3(1,1,0.8))
+            : sun(Vec3(-1,-1,-1),Vec3(1,1,0.6f))
 {
     //loopThread = new std::thread(&Engine::loop, this);
     //loopThread->join();
@@ -56,7 +56,7 @@ void Engine::initialize()
 
     objects.emplace_back(meshMap["alpine"], textureMap["alpine"]);
     objects[1].setScale(0.25f,0.25f,0.25f);
-    objects[1].setPosition(1,0,0.5f);
+    objects[1].setPosition(0.225f,0,0);
 /*
     clouds = new Object(planeMesh,planeTex);
     clouds->setPosition(0,100,0);
@@ -79,6 +79,12 @@ void Engine::initialize()
     deferredShadingFramebuffer.attachColorTexture(GL_RGBA16, GL_RGBA);
     deferredShadingFramebuffer.setDrawBuffers();
     deferredShadingFramebuffer.attachDepthRender();
+
+    hbaoFramebuffer.setWidth(window.getWidth());
+    hbaoFramebuffer.setHeight(window.getHeight());
+    hbaoFramebuffer.attachColorTexture(GL_RED, GL_RED);
+    hbaoFramebuffer.setDrawBuffers();
+    hbaoFramebuffer.attachDepthRender();
 
     lightFramebuffer.setWidth(window.getWidth());
     lightFramebuffer.setHeight(window.getHeight());
@@ -133,18 +139,26 @@ void Engine::render(double dt)
          glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     else
          glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    skyboxRenderer.render(skyboxTexture, cam); // always first, skybox is somehow dependent
+    skyboxRenderer.render(skyboxTexture, cam); // always first, skybox is somehow dependent on order
     objectsRenderer.render(objects, cam);
     terrainRenderer.render(terrain, cam);
-
     deferredShadingFramebuffer.unuse();
+
+    hbaoFramebuffer.use();
+    hbaoFramebuffer.bindViewport();
+    glClearColor(0.8f,0.9f,1,1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    hbaoRenderer.render(screenQuad, deferredShadingFramebuffer);
+    hbaoFramebuffer.unuse();
+
 
     lightFramebuffer.use();
     lightFramebuffer.bindViewport();
     glClearColor(0.8f,0.9f,1,1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    lightRenderer.render(screenQuad, deferredShadingFramebuffer, sun, cam);
+    lightRenderer.render(screenQuad, deferredShadingFramebuffer, hbaoFramebuffer, sun, cam);
     lightFramebuffer.unuse();
 
 
@@ -158,4 +172,4 @@ void Engine::render(double dt)
 
 void Engine::clean()
 {    
-}
+} 

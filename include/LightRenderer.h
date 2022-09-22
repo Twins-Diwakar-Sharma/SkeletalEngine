@@ -15,7 +15,7 @@ private:
 public:
     LightRenderer();
     ~LightRenderer();  
-    void render(Mesh& quad, Framebuffer& fb, DirectionalLight& sun, Camera& cam);
+    void render(Mesh& quad, Framebuffer& fb, Framebuffer& ao, DirectionalLight& sun, Camera& cam);
 };
 
 #endif

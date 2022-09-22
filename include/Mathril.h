@@ -13,7 +13,7 @@ class Vec2
         Vec2();
         Vec2(float x, float y);
         ~Vec2();
-        Vec2(Vec2&);
+        Vec2(const Vec2&);
         Vec2(Vec2&&);
 
         Vec2& operator=(Vec2&);
@@ -46,7 +46,7 @@ class Vec3
     public:
         Vec3();
         Vec3(float x, float y, float z);
-        Vec3(Vec3&);
+        Vec3(const Vec3&);
         Vec3(Vec3&&);
         ~Vec3();
 
@@ -92,7 +92,7 @@ class Vec4
         Vec4();
         Vec4(float x, float y, float z, float w);
         ~Vec4();
-        Vec4(Vec4&);
+        Vec4(const Vec4&);
         Vec4(Vec4&&);
 
         Vec4& operator=(Vec4&);
@@ -125,7 +125,7 @@ class Mat2
     public:
         Mat2();
         Mat2(float m00, float m01, float m10, float m11);
-        Mat2(Mat2&);
+        Mat2(const Mat2&);
         Mat2(Mat2&&);
         ~Mat2();
 
@@ -168,7 +168,7 @@ class Mat3
         Mat3(float m00, float m01, float m02,
              float m10, float m11, float m12,
              float m20, float m21, float m22);
-        Mat3(Mat3&);
+        Mat3(const Mat3&);
         Mat3(Mat3&&);
         ~Mat3();
 
@@ -215,7 +215,7 @@ class Mat4
                  float m30, float m31, float m32, float m33
              );
 
-         Mat4(Mat4&);
+         Mat4(const Mat4&);
          Mat4(Mat4&&);
          ~Mat4();
 
@@ -255,7 +255,7 @@ class Quat
     public:
         Quat();
         Quat(float r, float x, float y, float z);
-        Quat(Quat&);
+        Quat(const Quat&);
         Quat(Quat&&);
         ~Quat();
 

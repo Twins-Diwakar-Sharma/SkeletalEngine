@@ -3,13 +3,8 @@
 layout (location=0) out vec4 gPosition;
 layout (location=1) out vec4 gAlbedo;
 layout (location=2) out vec4 gNormal;
-/*
-struct DirectionalLight
-{
-	vec3 dir;
-	vec3 col;
-};
-*/
+
+
 in vec2 fragTex;
 in vec3 fragNor;
 in vec3 fragPos;

@@ -104,3 +104,13 @@ void Framebuffer::unuse()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+int Framebuffer::getWidth()
+{
+    return screenWidth;
+}
+
+int Framebuffer::getHeight()
+{
+    return screenHeight;
+}

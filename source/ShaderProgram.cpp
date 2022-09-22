@@ -152,6 +152,17 @@ void ShaderProgram::mapDirectionalLightUniform(std::string lightName)
 }
 
 
+void ShaderProgram::mapArrayUniform(std::string uniform, int size)
+{
+	for(int i=0; i<size; i++)
+	{
+		std::string uniformName = uniform + "[" + std::to_string(i) + "]";
+		const char* cUniformName = uniformName.c_str();
+		int loc = glGetUniformLocation(programID, cUniformName);
+		uniformMap.insert(std::pair <std::string,int> (uniformName, loc));
+	}
+}
+
 void ShaderProgram::setUniform(std::string uniformName, float x, float y)
 {
 	glUniform2f(uniformMap[uniformName], x, y);
@@ -198,6 +209,15 @@ void ShaderProgram::setUniform(std::string name, DirectionalLight& light)
 	Vec3 dir = light.getDirection();
 	Vec3 col = light.getColor();
 
-	glUniform3f(uniformMap[dirName],  dir[1], dir[2], dir[2]);
+	glUniform3f(uniformMap[dirName],  dir[0], dir[1], dir[2]);
 	glUniform3f(uniformMap[colName], col[0], col[1], col[2]);	
+}
+
+void ShaderProgram::setUniform(std::string name, std::vector<Vec3>& kernels)
+{
+	for(int i=0; i<kernels.size(); i++)
+	{
+		std::string uniName = name + "[" + std::to_string(i) + "]";
+		glUniform3f(uniformMap[uniName], kernels[i][0], kernels[i][1], kernels[i][2]);
+	}
 }

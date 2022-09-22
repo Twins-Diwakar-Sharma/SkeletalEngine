@@ -46,14 +46,14 @@ void main()
 
 	gl_Position = projectedPos;
 
-	fragPos = worldPos.xyz;
+	fragPos = viewPos;
     fragTex = tex;
 	vec3 normal = nor;
 	fragNor = normalize((transform * vec4(normal,0.0) ).xyz);
-/*
+
 	vec4 quatFragNor = vec4(fragNor,0);
 	quatFragNor = quatRotate(quatFragNor, spinQuatInv);
 	quatFragNor = quatRotate(spinQuat, quatFragNor);
 	fragNor = normalize(quatFragNor.xyz);
-*/
+
 }
