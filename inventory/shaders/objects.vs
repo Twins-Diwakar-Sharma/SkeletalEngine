@@ -1,4 +1,4 @@
-#version 400
+#version 430
 struct Camera
 {
 	vec4 spin;
@@ -26,7 +26,8 @@ vec4 quatRotate(vec4 action, vec4 victim)
 
 void main()
 {
-    vec4 objectPos = vec4(pos,1);
+	vec3 position = pos;
+    vec4 objectPos = vec4(position,1);
     vec4 worldPos = transform * objectPos;
   
 
@@ -44,5 +45,6 @@ void main()
 	gl_Position = projectedPos;
 
     fragTex = tex;
-	fragNor = normalize((transform * vec4(nor,0.0) ).xyz) ;
+	vec3 normal = nor;
+	fragNor = normalize((transform * vec4(normal,0.0) ).xyz) ;
 }
